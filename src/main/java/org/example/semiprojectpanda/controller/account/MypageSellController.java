@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MypageSellController {
     @GetMapping("/mypage/sell") //진짜 주소
     public String MypageSell() {
-        return "account/mypage-sell"; // JSP 파일 위치
+        return "account/mypage-sell"; // JSP 파일 위치 !
     }
 }
