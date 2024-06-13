@@ -7,70 +7,13 @@
 <head>
    <meta charset="UTF-8">
    <title>Insert title here</title>
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Dancing+Script:wght@400..700&family=East+Sea+Dokdo&family=Jua&family=Gaegu&family=Gamja+Flower&family=Pacifico&family=Single+Day&display=swap" rel="stylesheet">
    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-   <style>
-      body {
-         font-family: 'Jua', sans-serif;
-      }
-      .category-section {
-         padding: 20px;
-         background-color: #f8f9fa;
-      }
-      .category-list {
-         display: flex;
-         overflow-x: auto;
-         white-space: nowrap;
-         margin: 30px 0;
-      }
-      .category-list::-webkit-scrollbar {
-         display: none; /* 스크롤바 숨기기 */
-      }
-      .category-item {
-         display: inline-block;
-         text-align: center;
-         cursor: pointer;
-         margin-right: 50px;
-         flex: 0 0 auto;
-         width: 150px;
-      }
-      .category-item span {
-         display: block;
-         margin-top: 10px;
-         font-size: 1.2em;
-      }
-      .product-section {
-         padding: 20px;
-      }
-      .product-card {
-         margin-bottom: 20px;
-         border: 1px solid #e0e0e0;
-         border-radius: 10px;
-         overflow: hidden;
-         transition: transform 0.2s;
-      }
-      .product-card:hover {
-         transform: scale(1.05);
-      }
-      .product-card img {
-         width: 100%;
-         height: auto;
-      }
-      .product-info {
-         padding: 10px;
-      }
-      .product-info h3 {
-         font-size: 1.5em;
-         margin-bottom: 10px;
-      }
-      .product-info p {
-         margin-bottom: 5px;
-         color: #555;
-      }
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
+   <style>
       /* 위로 가는 버튼 */
       .scroll-to-top {
          position: fixed;
@@ -94,212 +37,255 @@
       .scroll-to-top:hover {
          background-color: #45a049;
       }
+
+      /* 카테고리 스크롤 */
+      #scroll {
+         display: flex;
+         overflow-x: auto;
+         -webkit-overflow-scrolling: touch;
+         scrollbar-width: none; /* Firefox */
+         scroll-behavior: smooth;
+      }
+      #scroll::-webkit-scrollbar {
+         display: none;
+      }
+      #scroll > a {
+         flex: 0 0 auto;
+         width: 100px;
+         margin-right: 70px;
+         text-align: center;
+      }
+
+      .slider-button {
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+         background-color: #45a049;
+         color: white;
+         border: none;
+         border-radius: 50%;
+         width: 40px;
+         height: 40px;
+         cursor: pointer;
+         z-index: 1000;
+      }
+
+      .slider-button:hover {
+         color: #45a049;
+         background-color: white;
+      }
+
+      .prev {
+         left: 5px;
+      }
+
+      .next {
+         right: 5px;
+      }
+
       div.sel{
-         float: right;
+         margin-left: 88%;
       }
    </style>
 </head>
+
 <body>
-   <div style="width: 100%; height: 150px; background-color: #4CAF50">
-      <b style="color: black; font-size: 100px; margin-left: 40%;">PANDA 🐼</b>
+
+<div class="flex flex-col min-h-screen relative">
+
+   <section class="py-8 px-6 md:px-8 bg-gray-100 relative">
+      <button class="slider-button prev" onclick="slide(-1)">&#10094;</button>
+      <button class="slider-button next" onclick="slide(1)">&#10095;</button>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6" id="scroll">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+            <i class="bi bi-justify" style="font-size: 2em;"></i>
+            <span>ALL</span>
+         </a>
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+            <i class="bi bi-incognito" style="font-size: 2em;"></i>
+            <span>패션/잡화</span>
+         </a>
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+            <i class="bi bi-pc-display-horizontal" style="font-size: 2em;"></i>
+            <span>디지털기기</span>
+         </a>
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+            <i class="bi bi-house" style="font-size: 2em;"></i>
+            <span>생활가전</span>
+         </a>
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+            <i class="bi bi-lamp" style="font-size: 2em;"></i>
+            <span>가구/인테리어</span>
+         </a>
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+            <i class="bi bi-controller" style="font-size: 2em;"></i>
+            <span>취미/게임/음반</span>
+         </a>
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+            <i class="bi bi-scissors" style="font-size: 2em;"></i>
+            <span>뷰티</span>
+         </a>
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+            <i class="bi bi-book" style="font-size: 2em;"></i>
+            <span>도서/티켓</span>
+         </a>
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+            <i class="bi bi-bicycle" style="font-size: 2em;"></i>
+            <span>스포츠</span>
+         </a>
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+            <i class="bi bi-piggy-bank" style="font-size: 2em;"></i>
+            <span>반려동물용품</span>
+         </a>
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+            <i class="bi bi-box-seam" style="font-size: 2em;"></i>
+            <span>기타 중고물품</span>
+         </a>
+      </div>
+   </section>
+   <br>
+   <div class="sel">
+      <label for="choices">Filter</label>
+      <select id="choices" name="choices" style="border: 1px solid black;">
+         <option value="">최신순</option>
+         <option value="">추천순(찜)</option>
+         <option value="">낮은가격순</option>
+         <option value="">높은가격순</option>
+      </select>
    </div>
 
-<section class="category-section">
-   <div class="category-list">
-      <div class="category-item" id="allcate">
-         <i class="bi bi-list" style="font-size: 2em;"></i>
-         <span>All</span>
+   <section class="py-8 px-6 md:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+         <c:forEach var="product" items="${products}">
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+               <img
+                       src="/placeholder.svg"
+                       width="300"
+                       height="200"
+                       alt="Product"
+                       class="rounded-t-lg object-cover w-full h-48"
+                       style="aspect-ratio:300/200;object-fit:cover"
+               />
+               <div class="p-4">
+                  <h3 class="text-lg font-medium mb-2"><c:out value="${product.title}"/></h3>
+                  <p><c:out value="${product.price}"/></p>
+                  <p class="text-gray-500 mb-4"><c:out value="${product.location}"/></p>
+               </div>
+            </div>
+         </c:forEach>
       </div>
-      <div class="category-item" id="fashioncate">
-         <i class="bi bi-incognito" style="font-size: 2em;"></i>
-         <span>패션/잡화</span>
-      </div>
-      <div class="category-item" id="digitalcate">
-         <i class="bi bi-pc-display-horizontal" style="font-size: 2em;"></i>
-         <span>디지털기기</span>
-      </div>
-      <div class="category-item" id="housecate">
-         <i class="bi bi-house" style="font-size: 2em;"></i>
-         <span>생활가전</span>
-      </div>
-      <div class="category-item" id="furniturecate">
-         <i class="bi bi-lamp" style="font-size: 2em;"></i>
-         <span>가구/인테리어</span>
-      </div>
-      <div class="category-item" id="hobbycate">
-         <i class="bi bi-controller" style="font-size: 2em;"></i>
-         <span>취미/게임/음반</span>
-      </div>
-      <div class="category-item" id="beauticate">
-         <i class="bi bi-scissors" style="font-size: 2em;"></i>
-         <span>뷰티</span>
-      </div>
-      <div class="category-item" id="bookcate">
-         <i class="bi bi-book" style="font-size: 2em;"></i>
-         <span>도서/티켓</span>
-      </div>
-      <div class="category-item" id="sportcate">
-         <i class="bi bi-bicycle" style="font-size: 2em;"></i>
-         <span>스포츠</span>
-      </div>
-      <div class="category-item" id="petcate">
-         <i class="bi bi-piggy-bank" style="font-size: 2em;"></i>
-         <span>반려동물용품</span>
-      </div>
-      <div class="category-item" id="othercate">
-         <i class="bi bi-box2" style="font-size: 2em;"></i>
-         <span>기타 중고물품</span>
-      </div>
-   </div>
-</section>
-   <div class="sel">
-   <label for="choices">Filter</label>
-   <select id="choices" name="choices">
-      <option value="">최신순</option>
-      <option value="">추천순(찜)</option>
-      <option value="">낮은가격순</option>
-      <option value="">높은가격순</option>
-   </select>
-   </div>
-   <br>
-   <hr>
-   <%-- AJAX 통해 글 주르륵 --%>
-   <c:forEach var="product" items="${products}">
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3><c:out value="${product.title}"/></h3>
-               <p><c:out value="${product.price}"/></p>
-               <p><c:out value="${product.location}"/></p>
+   </section>
+
+   <section class="py-8 px-6 md:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+            <img
+                    src="/placeholder.svg"
+                    width="300"
+                    height="200"
+                    alt="Product"
+                    class="rounded-t-lg object-cover w-full h-48"
+                    style="aspect-ratio:300/200;object-fit:cover"
+            />
+            <div class="p-4">
+               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
+               <p class="text-gray-500 mb-4">$50</p>
+            </div>
+         </div>
+
+         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+            <img
+                    src="/placeholder.svg"
+                    width="300"
+                    height="200"
+                    alt="Product"
+                    class="rounded-t-lg object-cover w-full h-48"
+                    style="aspect-ratio:300/200;object-fit:cover"
+            />
+            <div class="p-4">
+               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
+               <p class="text-gray-500 mb-4">$50</p>
+            </div>
+         </div>
+
+         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+            <img
+                    src="/placeholder.svg"
+                    width="300"
+                    height="200"
+                    alt="Product"
+                    class="rounded-t-lg object-cover w-full h-48"
+                    style="aspect-ratio:300/200;object-fit:cover"
+            />
+            <div class="p-4">
+               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
+               <p class="text-gray-500 mb-4">$50</p>
+            </div>
+         </div>
+
+         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+            <img
+                    src="/placeholder.svg"
+                    width="300"
+                    height="200"
+                    alt="Product"
+                    class="rounded-t-lg object-cover w-full h-48"
+                    style="aspect-ratio:300/200;object-fit:cover"
+            />
+            <div class="p-4">
+               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
+               <p class="text-gray-500 mb-4">$50</p>
+            </div>
+         </div>
+
+         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+            <img
+                    src="/placeholder.svg"
+                    width="300"
+                    height="200"
+                    alt="Product"
+                    class="rounded-t-lg object-cover w-full h-48"
+                    style="aspect-ratio:300/200;object-fit:cover"
+            />
+            <div class="p-4">
+               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
+               <p class="text-gray-500 mb-4">$50</p>
+            </div>
+         </div>
+
+         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+            <img
+                    src="/placeholder.svg"
+                    width="300"
+                    height="200"
+                    alt="Product"
+                    class="rounded-t-lg object-cover w-full h-48"
+                    style="aspect-ratio:300/200;object-fit:cover"
+            />
+            <div class="p-4">
+               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
+               <p class="text-gray-500 mb-4">$50</p>
+            </div>
+         </div>
+
+         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+            <img
+                    src="/placeholder.svg"
+                    width="300"
+                    height="200"
+                    alt="Product"
+                    class="rounded-t-lg object-cover w-full h-48"
+                    style="aspect-ratio:300/200;object-fit:cover"
+            />
+            <div class="p-4">
+               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
+               <p class="text-gray-500 mb-4">$50</p>
             </div>
          </div>
       </div>
-   </c:forEach>
-   <section class="product-section">
-   <div class="row">
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$50</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$75</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$100</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$80</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$80</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$80</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$80</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$80</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$80</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$80</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$80</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="product-card">
-            <img src="https://via.placeholder.com/300x200">
-            <div class="product-info">
-               <h3>우사기 탁상시계</h3>
-               <p>$80</p>
-               <p>서울시 금천구 독산동</p>
-            </div>
-         </div>
-      </div>
-   </div>
-</section>
+   </section>
+
+</div>
 
 <!-- 위로 가는 버튼 -->
 <button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">
@@ -323,78 +309,16 @@
       document.documentElement.scrollTop = 0;
    }
 
-   // ajax
-   function Category(category) {
-      $.ajax({
-         url: '?', // 게시글을 로드할 경로
-         type: 'GET',
-         data: { category: category },
-         success: function(data) {
-            $('#product-list').html(data);
-         },
-         error: function() {
-            alert('비상');
-         }
+   // 슬라이드 버튼 기능
+   function slide(direction) {
+      const scrollContainer = document.getElementById('scroll');
+      const scrollAmount = 300; // 원하는 스크롤 양 설정
+      scrollContainer.scrollBy({
+         top: 0,
+         left: direction * scrollAmount,
+         behavior: 'smooth'
       });
    }
-
-   // 각 카테고리 클릭 -> category클래스에 카테고리 이름 보냄
-   $("#allcate").click(function (){
-      category('all');
-   });
-   $("#fashioncate").click(function (){
-      category('fashion');
-   });
-   $("#digitalcate").click(function (){
-      category('digital');
-   });
-   $("#housecate").click(function (){
-      category('house');
-   });
-   $("#fashioncate").click(function (){
-      category('fashion');
-   });
-   $("#hobbycate").click(function (){
-      category('hobby');
-   });
-   $("#beauticate").click(function (){
-      category('beauti');
-   });
-   $("#bookcate").click(function (){
-      category('book');
-   });
-   $("#sportcate").click(function (){
-      category('sport');
-   });
-   $("#petcate").click(function (){
-      category('pet');
-   });
-   $("#othercate").click(function (){
-      category('other');
-   });
-
-
-   // 이미지 슬라이더
-   const sliderImages = document.getElementById('sliderImages');
-   const images = sliderImages.getElementsByTagName('img');
-   let currentIndex = 0;
-
-   document.getElementById('prevBtn').addEventListener('click', function() {
-      currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
-      updateSlider();
-   });
-
-   document.getElementById('nextBtn').addEventListener('click', function() {
-      currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
-      updateSlider();
-   });
-
-   function updateSlider() {
-      const translateX = -currentIndex * 300; // 이미지의 너비에 맞게 조정
-      sliderImages.style.transform = `translateX(${translateX}px)`;
-   }
-
 </script>
 </body>
 </html>
-
