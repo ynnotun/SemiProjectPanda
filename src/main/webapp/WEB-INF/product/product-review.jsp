@@ -50,7 +50,8 @@
 // v0 by Vercel.
 // https://v0.dev/t/Q9GBgLaNBI4
 -->
-
+<div class="bg-white dark:bg-gray-950 text-gray-950 dark:text-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
 <div class="mx-auto max-w-md px-4 py-8 sm:px-6 lg:px-8">
     <div class="space-y-6">
 
@@ -166,6 +167,8 @@
             </button>
 
         </div>
+    </div>
+</div>
     </div>
 </div>
 </body>

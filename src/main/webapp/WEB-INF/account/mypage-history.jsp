@@ -30,6 +30,9 @@
     </style>
 </head>
 <body>
+
+<div class="bg-white dark:bg-gray-950 text-gray-950 dark:text-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
 <div class="flex flex-col min-h-screen">
     <section class="py-8 px-6 md:px-8">
         <div class="search-result-message items-center justify-between mb-6">
@@ -125,6 +128,8 @@
             </div>
         </div>
     </section>
+</div>
+    </div>
 </div>
 </body>
 </html>
