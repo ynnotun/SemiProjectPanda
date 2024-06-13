@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: minseok
-  Date: 24. 6. 13.
-  Time: 오전 11:07
+  User: woo
+  Date: 2024. 6. 13.
+  Time: 오후 2:21
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,44 +14,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
-    <title></title>
-
-    <style>
-        .round-button{
-            border-radius: 20px;
-        }
-        .round-button-secondary{
-            border-radius: 20px;
-        }
-        .round-button-secondary:hover{
-            background-color: black;
-            color: white !important;
-        }
-    </style>
+    <title>Title</title>
 </head>
 <body>
-
 <div class="bg-white dark:bg-gray-950 text-gray-950 dark:text-gray-50 min-h-screen">
     <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
 <div class="flex flex-col min-h-screen">
     <section class="py-8 px-6 md:px-8">
-        <div class="search-result-message items-center justify-between mb-6">
+        <div class="flex items-center justify-between mb-6">
             <h2 class="text-2xl font-bold"><a href="">"oo" 검색 결과</a></h2>
-        </div>
-        <div class="flex items-center justify-between">
-            <a class="text-sm underline" href="#">
-            </a>
-            <div class="flex w-full justify-start mb-4">
-                <button class="round-button items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white  h-9 px-3 border-1 mr-2 bg-black hover:bg-gray-200">
-                    판매내역
-                </button>
-                <button class="round-button-secondary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-9 px-3 mr-2 bg-gray-200">
-                    구매내역
-                </button>
-                <button class="round-button-secondary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-9 px-3 mr-2 bg-gray-200">
-                    찜목록
-                </button>
-            </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">

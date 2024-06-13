@@ -22,6 +22,8 @@
 // v0 by Vercel.
 // https://v0.dev/t/wV48KM6fZ1E
 -->
+<div class="bg-white dark:bg-gray-950 text-gray-950 dark:text-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
 <div class="bg-white dark:bg-gray-950 p-4 md:p-6 grid gap-6">
 
     <!-- Post Your Item -->
@@ -62,7 +64,28 @@
             <div>
                 # 미리보기 리스트 출력? #
             </div>
-
+            <div class="mt-3">
+                <button
+                        type="button"
+                        class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:hover:bg-green-800">
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="mr-2 h-5 w-5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" x2="12" y1="3" y2="15"></line>
+                    </svg>
+                    Upload Photo
+                </button>
+            </div>
         </div>
 
         <!-- 중고제품 설명 입력 -->
@@ -95,9 +118,6 @@
                             type="number"
                             id="price"
                             placeholder="Enter the price"/>
-                    <div>
-                        Negotiable<!-- 생략? -->
-                    </div>
                 </div>
             </div>
 
@@ -180,6 +200,8 @@
         </div>
 
     </form>
+</div>
+    </div>
 </div>
 </body>
 </html>
