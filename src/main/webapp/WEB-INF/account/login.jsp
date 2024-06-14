@@ -16,16 +16,26 @@
 
     <title></title>
 </head>
+<style>
+    .max-w-md {
+        max-width: 35rem;
+    }
+    @media (min-width: 768px) {
+        .md\:p-8 {
+            padding: 2rem;
+        }
+    }
+</style>
 <body>
 <!--
 // v0 by Vercel.
 // https://v0.dev/t/ygoB4EqIhCg
 -->
 
-<div class="w-full max-w-md mx-auto p-6 md:p-8">
+<div class="w-full max-w-md mx-auto p-6 md:p-8" style="height: 100%">
     <h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
     <form class="space-y-4">
-        <div>
+        <div style="padding-top: 15px;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="email">
@@ -70,7 +80,7 @@
                     Remember me
                 </label>
             </div>
-            <a class="text-sm text-[#4CAF50] hover:underline" href="#">
+            <a class="text-sm text-[#4CAF50] hover:underline" href="./seachpassword">
                 Forgot password?
             </a>
         </div>
@@ -80,8 +90,8 @@
             Login
         </button>
         <div class="text-center text-sm text-gray-500">
-            Don't have an account?{" "}
-            <a class="text-[#4CAF50] hover:underline" href="#">
+            Don't have an account?
+            <a class="text-[#4CAF50] hover:underline" href="./singup">
                 Register
             </a>
         </div>

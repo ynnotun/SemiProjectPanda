@@ -49,8 +49,18 @@
     }
     @media (min-width: 768px) {
         .md\:p-8 {
-            padding: 0rem;
+            padding: 2rem;
         }
+    }
+    .propileimg{
+        border: 1px solid #ddd;
+        width: 150px;
+        height: 150px;
+        border-radius: 200px;
+        cursor: pointer;
+    }
+    .max-w-md {
+        max-width: 35rem;
     }
 </style>
 <body>
@@ -63,7 +73,7 @@
     <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
     <form class="space-y-4">
         <div class="page" id="page1" style="width: 100%">
-        <div>
+        <div style="padding-bottom: 15px;">
            <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="name">
@@ -75,7 +85,7 @@
                     id="name"
                     placeholder="Enter your full name"/>
         </div>
-        <div>
+        <div style="padding-bottom: 15px;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="phone">
@@ -87,7 +97,7 @@
                     id="phone"
                     placeholder="Enter your phone number"/>
         </div>
-        <div>
+        <div style="padding-bottom: 15px;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="address">
@@ -99,7 +109,7 @@
                     id="address"
                     placeholder="Enter your address"/>
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center" style="padding-bottom: 15px;">
             <div class="flex-1">
                 <label
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -116,7 +126,23 @@
                 Check Availability
             </button>
         </div>
-        <div>
+            <div class="flex items-center" style="padding-bottom: 15px;">
+                <div class="flex-1">
+                    <label
+                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            for="email">
+                        Email Check
+                    </label>
+                    <input
+                            class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            id="emailcheck"
+                            placeholder="email check"/>
+                </div>
+                <button class="emailchecked">
+                    Check
+                </button>
+            </div>
+        <div style="padding-bottom: 15px;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="password">
@@ -128,7 +154,7 @@
                     id="password"
                     placeholder="Enter your password"/>
         </div>
-        <div>
+        <div style="padding-bottom: 15px;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="confirm-password">
@@ -140,7 +166,7 @@
                     id="confirm-password"
                     placeholder="Confirm your password"/>
         </div>
-        <div>
+        <div style="padding-bottom: 15px;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="dob">
@@ -168,7 +194,7 @@
                     <div>
                         <button
                                 class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:hover:bg-green-800"
-                                type="button" id="back" style="margin-bottom: 10px;">
+                                type="button" id="back" style="margin-bottom: 15px;">
                             back
                         </button>
                         <label for="nickname" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -187,47 +213,33 @@
                             </button>
                         </div>
                     </div>
-                    <div>
+                    <div style="padding-top: 15px;">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Default Profile Options</label>
                         <div class="mt-1 grid grid-cols-3 gap-3">
                             <div class="relative">
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
-                                    <img src="/placeholder.svg" alt="Profile 1" class="h-full w-full object-cover" />
+                                    <img src="https://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg"
+                                         alt="Profile 1" class="h-full w-full object-cover propileimg"
+                                    onclick=""/>
                                 </div>
-                                <div class="absolute inset-0 flex items-center justify-center bg-green-500 bg-opacity-75 opacity-0 transition-opacity hover:opacity-100">
-                                    <button
-                                            type="button"
-                                            class="inline-flex items-center rounded-full bg-white px-2 py-1 text-xs font-medium text-green-600 shadow-sm hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                        Select
-                                    </button>
+
+                            </div>
+                            <div class="relative">
+                                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
+                                    <img src="https://e7.pngegg.com/pngimages/170/523/png-clipart-kakaotalk-kakao-friends-sticker-kakaotalk-white-face-thumbnail.png"
+                                         alt="Profile 2" class="h-full w-full object-cover propileimg"
+                                    onclick=""/>
                                 </div>
                             </div>
                             <div class="relative">
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
-                                    <img src="/placeholder.svg" alt="Profile 2" class="h-full w-full object-cover" />
-                                </div>
-                                <div class="absolute inset-0 flex items-center justify-center bg-green-500 bg-opacity-75 opacity-0 transition-opacity hover:opacity-100">
-                                    <button
-                                            type="button"
-                                            class="inline-flex items-center rounded-full bg-white px-2 py-1 text-xs font-medium text-green-600 shadow-sm hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                        Select
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="relative">
-                                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
-                                    <img src="/placeholder.svg" alt="Profile 3" class="h-full w-full object-cover" />
-                                </div>
-                                <div class="absolute inset-0 flex items-center justify-center bg-green-500 bg-opacity-75 opacity-0 transition-opacity hover:opacity-100">
-                                    <button
-                                            type="button"
-                                            class="inline-flex items-center rounded-full bg-white px-2 py-1 text-xs font-medium text-green-600 shadow-sm hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                        Select
-                                    </button>
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWGkRSo6snU44wyzDqcXn9sjH3iynRMBcesw&s"
+                                         alt="Profile 3" class="h-full w-full object-cover propileimg"
+                                    onclick=""/>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-3">
+                        <div class="mt-3"style="padding-top: 15px;">
                             <button
                                     type="button"
                                     class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:hover:bg-green-800">
