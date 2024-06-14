@@ -17,6 +17,34 @@
     <title></title>
 </head>
 <body>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">Membership Cancellation Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to cancel your membership? This action cannot be undone.</p>
+                <br>
+                <p>If you proceed, you will lose access to:
+                <ul>
+                    <li>∙ Premium content and features</li>
+                    <li>∙ Saved preferences and data</li>
+                </ul>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" style="background-color: #ff4141; border: 0px;">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!--
 // v0 by Vercel.
 // https://v0.dev/t/d59eRWti5iV
@@ -40,7 +68,7 @@
                 />
                 <button
                         type="button"
-                        class="ml-3 inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:hover:bg-green-800 whitespace-nowrap"
+                        class="ml-3 inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 whitespace-nowrap"
                 >
                     중복체크
                 </button>
@@ -75,7 +103,7 @@
             />
         </div>
         <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Default Profile Options</label>
+            <label class="block text-sm font-medium text-gray-700 ">Default Profile Options</label>
             <div class="mt-1 grid grid-cols-3 gap-3">
                 <div class="relative">
                     <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
@@ -120,7 +148,7 @@
             <div class="mt-3">
                 <button
                         type="button"
-                        class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:hover:bg-green-800"
+                        class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                 >
                     <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -143,15 +171,15 @@
             </div>
         </div>
         <div>
-            <label for="interests" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label for="interests" class="block text-sm font-medium text-gray-700 ">
                 Interests
             </label>
             <div class="mt-1 flex flex-wrap gap-2">
-                <div class="flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-800 dark:text-green-200">
+                <div class="flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
                     <span>Photography</span>
                     <button
                             type="button"
-                            class="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-green-200 text-green-800 hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:text-green-200 dark:hover:bg-green-600"
+                            class="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-green-200 text-green-800 hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                     >
                         <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -170,11 +198,11 @@
                         </svg>
                     </button>
                 </div>
-                <div class="flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-800 dark:text-green-200">
+                <div class="flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
                     <span>Gardening</span>
                     <button
                             type="button"
-                            class="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-green-200 text-green-800 hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:text-green-200 dark:hover:bg-green-600"
+                            class="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-green-200 text-green-800 hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                     >
                         <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -193,11 +221,11 @@
                         </svg>
                     </button>
                 </div>
-                <div class="flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-800 dark:text-green-200">
+                <div class="flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
                     <span>Cooking</span>
                     <button
                             type="button"
-                            class="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-green-200 text-green-800 hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:text-green-200 dark:hover:bg-green-600"
+                            class="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-green-200 text-green-800 hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                     >
                         <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +246,7 @@
                 </div>
                 <input
                         type="text"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
                         placeholder="Add an interest"
                 />
             </div>
@@ -226,11 +254,16 @@
         <div>
             <button
                     type="button"
-                    class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:hover:bg-green-800"
+                    class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
             >
                 Complete Registration
             </button>
         </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #ff4141; border: 0px; float: right;">
+            Delete Account
+        </button>
+        <div style="clear: both"></div>
     </div>
 </div>
 </body>

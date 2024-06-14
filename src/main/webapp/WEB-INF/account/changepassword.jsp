@@ -25,13 +25,13 @@
 <div class="mx-auto max-w-md space-y-6 py-12">
     <div class="space-y-2 text-center">
         <h1 class="text-3xl font-bold">비밀번호 재설정</h1>
-        <p class="text-gray-500 dark:text-gray-400">
+        <p class="text-gray-500 ">
             안전한 비밀번호로 내정보를 보호하세요.
         </p>
-        <p class="text-gray-500 dark:text-gray-400">
+        <p class="text-gray-500 ">
             다른 아이디/사이트에서 사용한 적 없는 비밀번호,
         </p>
-        <p class="text-gray-500 dark:text-gray-400">
+        <p class="text-gray-500 ">
             이전에 사용한 적 없는 비밀번호가 안전합니다.
         </p>
 

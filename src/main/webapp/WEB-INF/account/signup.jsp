@@ -25,10 +25,11 @@
         width: 150px;
         height: 40px;
         top: 12px;
+        left: -55px;
     }
     .container {
         position: relative;
-        width: 200%;
+        width: 300%;
         height: 100vh;
         overflow: hidden;
     }
@@ -37,15 +38,18 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        transition: transform 0.2s ease-in-out;
+        transition: transform 0.6s ease-in-out;
     }
 
     #page2 {
         transform: translateX(300%);
     }
+    .w-full {
+        width: 90%;
+    }
 
     .w-full1{
-        width: 95%;
+        width: 85%;
     }
     @media (min-width: 768px) {
         .md\:p-8 {
@@ -62,6 +66,9 @@
     .max-w-md {
         max-width: 35rem;
     }
+    .hidden {
+        display: none;
+    }
 </style>
 <body>
 <!--
@@ -69,11 +76,11 @@
 // https://v0.dev/t/ouRbB40Wl7q
 -->
 
-<div class="w-full max-w-md mx-auto p-6 md:p-8 container">
+<div class="w-full mx-auto p-6 md:p-8 container">
     <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
-    <form class="space-y-4">
+    <form class="space-y-4" action="">
         <div class="page" id="page1" style="width: 100%">
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
            <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="name">
@@ -85,7 +92,7 @@
                     id="name"
                     placeholder="Enter your full name"/>
         </div>
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="phone">
@@ -97,7 +104,7 @@
                     id="phone"
                     placeholder="Enter your phone number"/>
         </div>
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="address">
@@ -109,7 +116,7 @@
                     id="address"
                     placeholder="Enter your address"/>
         </div>
-        <div class="flex items-center" style="padding-bottom: 15px;">
+        <div class="flex items-center" style="padding-bottom: 15px; width: 40%; margin: auto;">
             <div class="flex-1">
                 <label
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -122,11 +129,11 @@
                         id="email"
                         placeholder="Enter your email"/>
             </div>
-            <button class="emailchecked">
+            <button class="emailchecked" id="checkButton" type="button">
                 Check Availability
             </button>
         </div>
-            <div class="flex items-center" style="padding-bottom: 15px;">
+            <div class="flex items-center hidden" id="emailCheckSection" style="padding-bottom: 15px; width: 40%; margin: auto;">
                 <div class="flex-1">
                     <label
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -138,11 +145,11 @@
                             id="emailcheck"
                             placeholder="email check"/>
                 </div>
-                <button class="emailchecked">
+                <button class="emailchecked" type="button">
                     Check
                 </button>
             </div>
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="password">
@@ -154,7 +161,7 @@
                     id="password"
                     placeholder="Enter your password"/>
         </div>
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="confirm-password">
@@ -166,7 +173,7 @@
                     id="confirm-password"
                     placeholder="Confirm your password"/>
         </div>
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="dob">
@@ -175,13 +182,13 @@
             <input
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     type="date"
-                    id="dob" style="margin-bottom: 15px"/>
+                    id="dob" style="margin-bottom: 15px;"/>
+            <button
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
+                    type="button" id="next">
+                Next
+            </button>
         </div>
-        <button
-                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
-                type="button" id="next">
-            Next
-        </button>
         </div>
         <div class="page" id="page2" style="width: 100%">
             <!--
@@ -193,28 +200,28 @@
                 <div class="space-y-6">
                     <div>
                         <button
-                                class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:hover:bg-green-800"
+                                class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                                 type="button" id="back" style="margin-bottom: 15px;">
                             back
                         </button>
-                        <label for="nickname" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <label for="nickname" class="block text-sm font-medium text-gray-700 ">
                             Nickname
                         </label>
                         <div class="mt-1 flex items-center">
                             <input
                                     id="nickname"
                                     type="text"
-                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
                                     placeholder="Enter your nickname" style="height: 30px"/>
                             <button
                                     type="button"
-                                    class="ml-3 inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:hover:bg-green-800">
+                                    class="ml-3 inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                                 Check Availability
                             </button>
                         </div>
                     </div>
                     <div style="padding-top: 15px;">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Default Profile Options</label>
+                        <label class="block text-sm font-medium text-gray-700 ">Default Profile Options</label>
                         <div class="mt-1 grid grid-cols-3 gap-3">
                             <div class="relative">
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
@@ -242,7 +249,7 @@
                         <div class="mt-3"style="padding-top: 15px;">
                             <button
                                     type="button"
-                                    class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:hover:bg-green-800">
+                                    class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                                 <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -265,7 +272,7 @@
                     <div>
                         <button
                                 type="button"
-                                class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:bg-green-700 dark:hover:bg-green-800">
+                                class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                             Complete Registration
                         </button>
                     </div>
@@ -273,6 +280,7 @@
             </div>
         </div>
     </form>
+</div>
 </div>
 
 
@@ -286,6 +294,11 @@
         $("#page1").css("transform", "translateX(0)");
         $("#page2").css("transform", "translateX(100%)");
     })
+    $(document).ready(function() {
+        $("#checkButton").click(function() {
+            $("#emailCheckSection").removeClass('hidden');
+        });
+    });
 </script>
 </body>
 </html>

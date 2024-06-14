@@ -17,12 +17,12 @@
     <title>Title</title>
 </head>
 <body>
-<div class="bg-white dark:bg-gray-950 text-gray-950 dark:text-gray-50 min-h-screen">
+<div class="bg-white  text-gray-950  min-h-screen">
     <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
 <div class="flex flex-col min-h-screen">
     <section class="py-8 px-6 md:px-8">
         <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold"><a href="">"oo" 검색 결과</a></h2>
+            <h2 class="text-2xl font-bold"><a href="">"oo" 님이 판매중인 상품</a></h2>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">

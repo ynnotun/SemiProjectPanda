@@ -1,3 +1,5 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: minseok
@@ -205,7 +207,7 @@
 // https://v0.dev/t/4WkJbGjVd8r
 -->
 
-<div class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50 min-h-screen">
+<div class="bg-white  text-gray-900  min-h-screen">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             <div class="">
@@ -214,72 +216,22 @@
                 <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
                      class="swiper mySwiper2 rounded-lg">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-1.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-2.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-3.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-4.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-5.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-6.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-7.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-8.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-9.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-10.jpg"/>
-                        </div>
+                        <c:forEach items="${imageDtoList}" var="imageDto">
+                            <div class="swiper-slide">
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${imageDto.imagefilename}"/>
+                            </div>
+                        </c:forEach>
                     </div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
                 </div>
                 <div thumbsSlider="" class="swiper mySwiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-1.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-2.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-3.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-4.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-5.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-6.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-7.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-8.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-9.jpg"/>
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="https://swiperjs.com/demos/images/nature-10.jpg"/>
-                        </div>
+                        <c:forEach items="${imageDtoList}" var="imageDto">
+                            <div class="swiper-slide">
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${imageDto.imagefilename}"/>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
 
@@ -311,15 +263,17 @@
             </div>
             <div class="grid gap-6">
                 <div>
-                    <h1 class="text-3xl font-bold text-[black]">Vintage Leather Briefcase
+                    <h1 class="text-3xl font-bold text-[black]">${productDto.producttitle}
                         <%--                        찜버튼 class에 active 넣으면 활성화--%>
                         <div id='heart' class='button'></div>
                     </h1>
-                    <p class="text-lg text-gray-500 dark:text-gray-400" id="productAddress">
-                        Handcrafted in Italy, this classic leather briefcase is in excellent condition.
+                    <p class="text-lg text-gray-500 " id="productAddress">
+                        ${productDto.productaddress}
                     </p>
                     <div class="flex items-center justify-between my-3">
-                        <div class="text-4xl font-bold text-[#4CAF50]">$150</div>
+                        <div class="text-4xl font-bold text-[#4CAF50]">
+                            <fmt:formatNumber value="${productDto.productprice}" type="currency"/>
+                        </div>
                     </div>
                     <div class="flex items-center gap-2">
                             <span class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border-2 border-[#4CAF50]">
@@ -327,64 +281,31 @@
                                      src="https://generated.vusercontent.net/placeholder-user.jpg"/>
                             </span>
                         <div>
-                            <div class="font-medium text-[black]">John Doe</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Top Seller</div>
+                            <div class="font-medium text-[black]">${userDto.username}</div>
+                            <div class="text-sm text-gray-500 ">Top Seller</div>
                         </div>
 
                     </div>
                     <div class="prose max-w-none">
                         <h2 class=" text-[black] font-bold text-2xl my-3">Item Description</h2>
                         <p class=" text-[black]">
-                            This vintage leather briefcase is a timeless piece that exudes sophistication and
-                            elegance. Crafted
-                            with high-quality Italian leather, it features a spacious interior with multiple
-                            compartments to
-                            keep your belongings organized. The sturdy construction and well-designed details make
-                            this
-                            briefcase a durable and practical accessory for both professional and personal use.
-                            This vintage leather briefcase is a timeless piece that exudes sophistication and
-                            elegance. Crafted
-                            with high-quality Italian leather, it features a spacious interior with multiple
-                            compartments to
-                            keep your belongings organized. The sturdy construction and well-designed details make
+                            ${productDto.productcontent}
                         </p>
                     </div>
                 </div>
                 <div class="grid gap-4">
+                    <p>${productDto.productaddress}</p>
                     <!-- 지도를 표시할 div 입니다 -->
                     <div id="map" style="width:100%;height:250px;"></div>
-                    <script type="text/javascript"
-                            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e18b4a131af7b6c7a7ea0d069757da3a&libraries=services"></script>
 
-                    <script>
-                        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                            mapOption = {
-                                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                                level: 3 // 지도의 확대 레벨
-                            };
 
-                        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-                        var map = new kakao.maps.Map(mapContainer, mapOption);
-
-                        var point = new kakao.maps.LatLng(33.450701, 126.570667);
-                        marker = new kakao.maps.Marker({position: point});
-                        marker.setMap(map);
-                        getAddr();
-
-                        function getAddr() {
-                            let geocoder = new kakao.maps.services.Geocoder();
-                            let callback = function (result) {
-                                document.getElementById("productAddress").innerText = result[0].road_address.address_name;
-
-                            }
-                            geocoder.coord2Address(point.getLng(), point.getLat(), callback);
-                        }
-                    </script>
-                </div>
-                <div class="grid gap-4">
 
                     <div class="flex gap-4">
-                        <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#4CAF50] text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 hover:brightness-125">
+
+                        <button
+                                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#4CAF50] text-white h-11 rounded-md px-8 border-[#4CAF50]"
+
+                        >
                             Chat Now
                         </button>
 
@@ -400,6 +321,34 @@
                             Delete
                         </button>
                     </div>
+                    <script type="text/javascript"
+                            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e18b4a131af7b6c7a7ea0d069757da3a&libraries=services"></script>
+
+                    <script>
+                        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                            mapOption = {
+                                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                                level: 3 // 지도의 확대 레벨
+                            };
+
+                        // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+                        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+                        var locationX = ${productDto.productlocationx};
+                        var locationY = ${productDto.productlocationy};
+
+                        var point = new kakao.maps.LatLng(locationX, locationY);
+                        marker = new kakao.maps.Marker({position: point});
+                        marker.setMap(map);
+                        getAddr();
+
+                        function getAddr() {
+                            let geocoder = new kakao.maps.services.Geocoder();
+                            let callback = function (result) {
+                            }
+                            geocoder.coord2Address(point.getLng(), point.getLat(), callback);
+                        }
+                    </script>
                 </div>
             </div>
         </div>
@@ -411,7 +360,7 @@
         // https://v0.dev/t/5ItBx9Nadon
         -->
 
-        <div class="flex flex-col bg-white dark:bg-gray-900">
+        <div class="flex flex-col bg-white">
             <div class="flex-1 overflow-y-auto p-4">
                 <div class="space-y-4">
 
@@ -442,7 +391,7 @@
 
                     <%--                    판매자 채팅--%>
                     <div class="flex items-start gap-3 justify-end">
-                        <div class="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-lg max-w-[75%]">
+                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">
                             <p class="font-medium">Jane Smith</p>
                             <p>John Doe님과 거래 예약되었습니다.</p>
                         </div>
@@ -455,7 +404,7 @@
 
                     <%--                    판매자 채팅--%>
                     <div class="flex items-start gap-3 justify-end">
-                        <div class="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-lg max-w-[75%]">
+                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">
                             <p class="font-medium">Jane Smith</p>
                             <p>John Doe님과 거래 완료되었습니다.</p>
                         </div>
@@ -572,6 +521,23 @@
     // }
 
 </script>
+
+<%--오픈채팅 버튼--%>
+<script>
+    function openChatting(){
+        console.log("asdf")
+        let connectUser = ${connectedUserNum};
+        if (connectUser == null){
+            alert("djqtdjd")
+        }else {
+            alert("하이")
+        }
+    }
+</script>
+
+
+
+
 
 </body>
 </html>
