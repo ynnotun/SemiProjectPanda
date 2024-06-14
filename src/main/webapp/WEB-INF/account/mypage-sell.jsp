@@ -22,7 +22,7 @@
 <div class="flex flex-col min-h-screen">
     <section class="py-8 px-6 md:px-8">
         <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold"><a href="">"oo" 검색 결과</a></h2>
+            <h2 class="text-2xl font-bold"><a href="">"oo" 님이 판매중인 상품</a></h2>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
