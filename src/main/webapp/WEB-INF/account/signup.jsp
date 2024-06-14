@@ -25,10 +25,11 @@
         width: 150px;
         height: 40px;
         top: 12px;
+        left: -55px;
     }
     .container {
         position: relative;
-        width: 200%;
+        width: 300%;
         height: 100vh;
         overflow: hidden;
     }
@@ -37,15 +38,18 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        transition: transform 0.2s ease-in-out;
+        transition: transform 0.6s ease-in-out;
     }
 
     #page2 {
         transform: translateX(300%);
     }
+    .w-full {
+        width: 90%;
+    }
 
     .w-full1{
-        width: 95%;
+        width: 85%;
     }
     @media (min-width: 768px) {
         .md\:p-8 {
@@ -69,11 +73,11 @@
 // https://v0.dev/t/ouRbB40Wl7q
 -->
 
-<div class="w-full max-w-md mx-auto p-6 md:p-8 container">
+<div class="w-full mx-auto p-6 md:p-8 container">
     <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
     <form class="space-y-4">
         <div class="page" id="page1" style="width: 100%">
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
            <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="name">
@@ -85,7 +89,7 @@
                     id="name"
                     placeholder="Enter your full name"/>
         </div>
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="phone">
@@ -97,7 +101,7 @@
                     id="phone"
                     placeholder="Enter your phone number"/>
         </div>
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="address">
@@ -109,7 +113,7 @@
                     id="address"
                     placeholder="Enter your address"/>
         </div>
-        <div class="flex items-center" style="padding-bottom: 15px;">
+        <div class="flex items-center" style="padding-bottom: 15px; width: 40%; margin: auto;">
             <div class="flex-1">
                 <label
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -126,7 +130,7 @@
                 Check Availability
             </button>
         </div>
-            <div class="flex items-center" style="padding-bottom: 15px;">
+            <div class="flex items-center" style="padding-bottom: 15px; width: 40%; margin: auto;">
                 <div class="flex-1">
                     <label
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -142,7 +146,7 @@
                     Check
                 </button>
             </div>
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="password">
@@ -154,7 +158,7 @@
                     id="password"
                     placeholder="Enter your password"/>
         </div>
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="confirm-password">
@@ -166,7 +170,7 @@
                     id="confirm-password"
                     placeholder="Confirm your password"/>
         </div>
-        <div style="padding-bottom: 15px;">
+        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="dob">
@@ -175,13 +179,13 @@
             <input
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     type="date"
-                    id="dob" style="margin-bottom: 15px"/>
+                    id="dob" style="margin-bottom: 15px;"/>
+            <button
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
+                    type="button" id="next">
+                Next
+            </button>
         </div>
-        <button
-                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
-                type="button" id="next">
-            Next
-        </button>
         </div>
         <div class="page" id="page2" style="width: 100%">
             <!--
@@ -273,6 +277,7 @@
             </div>
         </div>
     </form>
+</div>
 </div>
 
 
