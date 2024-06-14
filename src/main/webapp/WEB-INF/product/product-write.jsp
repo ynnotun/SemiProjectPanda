@@ -34,6 +34,7 @@
                     platform.</p>
             </div>
 
+            <!-- 폼태그 시작 -->
             <form class="grid gap-6">
                 <!-- 게시글 제목 입력란 -->
                 <div class="grid gap-2">
@@ -171,9 +172,13 @@
                     </button>
                 </div>
             </form>
+            <!-- 폼태그 끝 -->
         </div>
     </div>
 </div>
+<!-- usernum, producttitle, productcontent, productprice, productaddress, categorynum,
+     productcreatedat, productopenchat, productlocationx, productlocationy -->
+<!-- 카테고리 입력필요, 오픈채팅방 입력필요 -->
 
 <!-- 이미지 업로드 이벤트 -->
 <script>
