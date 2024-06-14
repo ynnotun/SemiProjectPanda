@@ -113,7 +113,7 @@
             </button>
         </div>
     </div>
-    <div class="text-center text-sm text-gray-500 dark:text-gray-400 px-6 py-6">
+    <div class="text-center text-sm text-gray-500  px-6 py-6">
         Thank you for being part of our community. We appreciate your feedback and wish you all the best.
     </div>
 </div>

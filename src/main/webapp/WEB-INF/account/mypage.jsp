@@ -27,7 +27,7 @@
 // v0 by Vercel.
 // https://v0.dev/t/rhPpxxFMCAR
 -->
-<div class="bg-white dark:bg-gray-950 text-gray-950 dark:text-gray-50 min-h-screen">
+<div class="bg-white  text-gray-950  min-h-screen">
     <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
         <div class="grid ">
             <div class="grid gap-8">
@@ -39,7 +39,7 @@
             </span>
                         <div class="grid gap-1">
                             <h1 class="text-2xl font-bold">John Doe</h1>
-                            <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 ">
                                 <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="24"
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-4">
-                        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
                            <span class="text-green-500">
                                 <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +83,7 @@
                             <span>4.8</span>
                         </div>
                         <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-6"></div>
-                        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
                             <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -104,15 +104,15 @@
                             <span>125 reviews</span>
                         </div>
                         <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-6"></div>
-                        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
                             <img src="../image/good-member.svg" alt="">
                             <span>우수회원</span>
                         </div>
-                        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
                             <img src="../image/normal-member.svg" alt="">
                             <span>일반회원</span>
                         </div>
-                        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
                             <img src="../image/bad-member.svg" alt="">
                             <span>주의회원</span>
                         </div>
@@ -314,7 +314,7 @@
                                         />
                                         <div class="grid gap-1">
                                             <div class="font-medium">Vintage Typewriter</div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">$75</div>
+                                            <div class="text-sm text-gray-500 ">$75</div>
                                         </div>
                                     </div>
                                     <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
@@ -337,7 +337,7 @@
                                         />
                                         <div class="grid gap-1">
                                             <div class="font-medium">Vintage Camera</div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">$150</div>
+                                            <div class="text-sm text-gray-500 ">$150</div>
                                         </div>
                                     </div>
                                     <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
@@ -360,7 +360,7 @@
                                         />
                                         <div class="grid gap-1">
                                             <div class="font-medium">Vintage Radio</div>
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">$100</div>
+                                            <div class="text-sm text-gray-500 ">$100</div>
                                         </div>
                                     </div>
                                     <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
@@ -455,7 +455,7 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                <p class="text-sm text-gray-500 ">
                                     John is a fantastic seller! He was very responsive and the item arrived in perfect condition. I
                                     would definitely buy from him again.
                                 </p>
@@ -542,7 +542,7 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                <p class="text-sm text-gray-500 ">
                                     John was great to work with, but the item I received had a minor scratch that wasn't mentioned in
                                     the listing. Still, I'm happy with the purchase.
                                 </p>
