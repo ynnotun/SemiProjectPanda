@@ -22,15 +22,15 @@
 // v0 by Vercel.
 // https://v0.dev/t/wV48KM6fZ1E
 -->
-<div class="bg-white dark:bg-gray-950 text-gray-950 dark:text-gray-50 min-h-screen">
+<div class="bg-white  text-gray-950  min-h-screen">
     <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
 
-        <div class="bg-white dark:bg-gray-950 p-4 md:p-6 grid gap-6">
+        <div class="bg-white  p-4 md:p-6 grid gap-6">
 
             <!-- Post Your Item -->
             <div class="grid gap-2">
                 <h1 class="text-2xl font-bold">Post Your Item</h1>
-                <p class="text-gray-500 dark:text-gray-400">List your item for sale on our second-hand trading
+                <p class="text-gray-500 ">List your item for sale on our second-hand trading
                     platform.</p>
             </div>
 
@@ -151,7 +151,7 @@
         file:border-0 file:bg-transparent file:text-sm file:font-medium
         placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2
         focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed
-        disabled:opacity-50 bg-green-50 dark:bg-green-900/20 text-green-500 dark:text-green-400
+        disabled:opacity-50 bg-green-50 text-green-500
         px-3 py-1 rounded-full"
                                 placeholder="Add a hashtag"
                                 onkeyup="handleHashtagInput(event)"
@@ -239,7 +239,7 @@
         hashtagContainer.innerHTML = '';
         hashtags.forEach(tag => {
             const tagElement = document.createElement('div');
-            tagElement.className = 'bg-green-50 dark:bg-green-900/20 text-green-500 dark:text-green-400 px-3 py-1 rounded-full';
+            tagElement.className = 'bg-green-50 text-green-500 px-3 py-1 rounded-full';
             tagElement.textContent = tag;
             hashtagContainer.appendChild(tagElement);
         });
