@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class WishDto {
     private int wishnum;
     private int usernum;
-    private String productnum;
+    private int productnum;
 }
