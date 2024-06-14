@@ -205,7 +205,7 @@
 // https://v0.dev/t/4WkJbGjVd8r
 -->
 
-<div class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50 min-h-screen">
+<div class="bg-white  text-gray-900  min-h-screen">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             <div class="">
@@ -315,7 +315,7 @@
                         <%--                        찜버튼 class에 active 넣으면 활성화--%>
                         <div id='heart' class='button'></div>
                     </h1>
-                    <p class="text-lg text-gray-500 dark:text-gray-400" id="productAddress">
+                    <p class="text-lg text-gray-500 " id="productAddress">
                         Handcrafted in Italy, this classic leather briefcase is in excellent condition.
                     </p>
                     <div class="flex items-center justify-between my-3">
@@ -328,7 +328,7 @@
                             </span>
                         <div>
                             <div class="font-medium text-[black]">John Doe</div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Top Seller</div>
+                            <div class="text-sm text-gray-500 ">Top Seller</div>
                         </div>
 
                     </div>
@@ -411,7 +411,7 @@
         // https://v0.dev/t/5ItBx9Nadon
         -->
 
-        <div class="flex flex-col bg-white dark:bg-gray-900">
+        <div class="flex flex-col bg-white">
             <div class="flex-1 overflow-y-auto p-4">
                 <div class="space-y-4">
 
@@ -442,7 +442,7 @@
 
                     <%--                    판매자 채팅--%>
                     <div class="flex items-start gap-3 justify-end">
-                        <div class="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-lg max-w-[75%]">
+                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">
                             <p class="font-medium">Jane Smith</p>
                             <p>John Doe님과 거래 예약되었습니다.</p>
                         </div>
@@ -455,7 +455,7 @@
 
                     <%--                    판매자 채팅--%>
                     <div class="flex items-start gap-3 justify-end">
-                        <div class="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-lg max-w-[75%]">
+                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">
                             <p class="font-medium">Jane Smith</p>
                             <p>John Doe님과 거래 완료되었습니다.</p>
                         </div>
