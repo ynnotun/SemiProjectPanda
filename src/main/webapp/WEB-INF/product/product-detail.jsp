@@ -14,10 +14,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mo-js/1.7.1/mo.umd.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title></title>
     <style>
-
+        *:hover{
+            transition: 500ms;
+        }
         /*하트스타일*/
         .button {
             float: right;
@@ -66,77 +70,89 @@
         }
 
 
-
-        /* slider__wrap */
-        .slider__wrap {
+        /*<!-- Link Swiper's CSS -->*/
+        /*<!-- Demo styles -->*/
+        html,
+        body {
             position: relative;
-            width: 100%;
-            height: 450px;
+            height: 100%;
         }
 
-        .slider__img {
-            position: relative;
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swiper {
             width: 100%;
             height: 100%;
-            overflow: hidden;
         }
 
-        .slider__img img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: all 300ms ease-in-out;
-        }
-
-        .slider__img img.active {
-            opacity: 1;
-        }
-
-        .slider__thumb {
-            left: 50%;
-            top: 50%;
-            width: 100%;
-            overflow: scroll;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .slider__thumb img {
-            height: 100px;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .slider__thumb img.active {
-            border: 2px solid #fff;
-        }
-
-        .slider__btn a {
-            position: absolute;
-            top: 0;
-            width: 100px;
-            height: 100%;
-
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 12px;
-
-
-            transition: all 300ms ease-in-out;
         }
 
-        .slider__btn a.next {
-            right: 0;
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
+        body {
+            background: #000;
+            color: #000;
+        }
 
+        .swiper {
+            width: 100%;
+            height: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
+        .swiper-slide {
+            background-size: cover;
+            background-position: center;
+        }
 
+        .mySwiper2 {
+            height: 80%;
+            width: 100%;
+        }
 
+        .mySwiper {
+            height: 20%;
+            box-sizing: border-box;
+            padding: 10px 0;
+        }
+
+        .mySwiper .swiper-slide {
+            width: 25%;
+            height: 100%;
+            opacity: 0.4;
+        }
+
+        .mySwiper .swiper-slide-thumb-active {
+            opacity: 1;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.5rem;
+        }
 
 
         /*드롭다운 스타일*/
@@ -147,14 +163,14 @@
             right: 0;
         }
 
-        .button {
+        .dropdown .button {
             color: white;
             font-size: 40px;
             transform: translate(30%, -20%);
         }
 
-        #drop-content {
-            width: 100px;
+        .drop-content {
+            width: 70px;
             text-align: center;
             vertical-align: middle;
             height: auto;
@@ -169,14 +185,15 @@
             z-index: 1;
         }
 
-        #drop-content a {
+        .drop-content a {
             display: block;
-            font-size: 18px;
+            font-size: 14px;
+            padding: 2px;
             color: black;
             text-decoration: none;
         }
 
-        #drop-content a:hover{
+        .drop-content a:hover {
             background-color: #e3e3e3;
         }
     </style>
@@ -191,16 +208,105 @@
 <div class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50 min-h-screen">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            <div class="grid">
-                <div class="slider__wrap">
-                    <div class="slider__img rounded-lg"></div>
-                    <div class="slider__thumb"></div>
-                    <div class="slider__btn">
-                        <a class="prev" title="이전이미지"></a>
-                        <a class="next" title="다음이미지"></a>
+            <div class="">
+                <!-- Swiper -->
+
+                <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+                     class="swiper mySwiper2 rounded-lg">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-1.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-2.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-3.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-4.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-5.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-6.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-7.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-8.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-9.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-10.jpg"/>
+                        </div>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+                <div thumbsSlider="" class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-1.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-2.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-3.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-4.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-5.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-6.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-7.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-8.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-9.jpg"/>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-10.jpg"/>
+                        </div>
                     </div>
                 </div>
-                <!-- //main -->
+
+                <!-- Swiper JS -->
+                <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+                <!-- Initialize Swiper -->
+                <script>
+                    var swiper = new Swiper(".mySwiper", {
+                        loop: true,
+                        spaceBetween: 10,
+                        slidesPerView: 4,
+                        freeMode: true,
+                        watchSlidesProgress: true,
+                    });
+                    var swiper2 = new Swiper(".mySwiper2", {
+                        loop: true,
+                        spaceBetween: 10,
+                        navigation: {
+                            nextEl: ".swiper-button-next",
+                            prevEl: ".swiper-button-prev",
+                        },
+                        thumbs: {
+                            swiper: swiper,
+                        },
+                    });
+                </script>
 
             </div>
             <div class="grid gap-6">
@@ -278,18 +384,18 @@
                 <div class="grid gap-4">
 
                     <div class="flex gap-4">
-                        <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#4CAF50] text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8">
+                        <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#4CAF50] text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 hover:brightness-125">
                             Chat Now
                         </button>
 
                         <button
-                                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#E5E7EB] text-[black] h-11 rounded-md px-8 border-[#4CAF50] hover:bg-[blue] hover:text-white"
+                                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#E5E7EB] text-[black] h-11 rounded-md px-8 border-[#4CAF50] hover:bg-blue-500 hover:text-white"
                         >
                             Update
                         </button>
 
                         <button
-                                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#E5E7EB] text-[black] h-11 rounded-md px-8 border-[#4CAF50] hover:bg-[red] hover:text-white"
+                                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#E5E7EB] text-[black] h-11 rounded-md px-8 border-[#4CAF50] hover:bg-red-500 hover:text-white"
                         >
                             Delete
                         </button>
@@ -309,8 +415,7 @@
             <div class="flex-1 overflow-y-auto p-4">
                 <div class="space-y-4">
 
-
-                    <%--                    구매자 채팅--%>
+                    <%--                    구매자 채팅 시작--%>
                     <div class="flex items-start gap-3">
                         <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
                           <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
@@ -323,8 +428,9 @@
                             <p>John Doe님이 채팅을 시작하였습니다.</p>
 
                             <div class="dropdown">
-                                <span class="material-symbols-outlined button" onclick="dp_menu()">more_vert</span>
-                                <div style="display: none;" id="drop-content">
+                                <span class="material-symbols-outlined button chat-menu"
+                                      onclick="">more_vert</span>
+                                <div style="display: none;" class="drop-content">
                                     <a href='#'>거래예약</a>
                                     <a href='#'>거래완료</a>
                                 </div>
@@ -332,17 +438,6 @@
                         </div>
                     </div>
 
-
-                    <%--                    구매자 채팅--%>
-                    <div class="flex items-start gap-3">
-                        <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center">
-                          <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JD</span>
-                        </span>
-                        <div class="bg-[#4CAF50] text-white px-4 py-2 rounded-lg max-w-[75%]">
-                            <p class="font-medium">John Doe</p>
-                            <p>John Doe님이 채팅을 시작하였습니다.</p>
-                        </div>
-                    </div>
 
 
                     <%--                    판매자 채팅--%>
@@ -356,17 +451,6 @@
                         </span>
                     </div>
 
-
-                    <%--                    구매자 채팅--%>
-                    <div class="flex items-start gap-3">
-                        <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center">
-                          <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JD</span>
-                        </span>
-                        <div class="bg-[#4CAF50] text-white px-4 py-2 rounded-lg max-w-[75%]">
-                            <p class="font-medium">John Doe</p>
-                            <p>John Doe님이 채팅을 시작하였습니다.</p>
-                        </div>
-                    </div>
 
 
                     <%--                    판매자 채팅--%>
@@ -459,129 +543,33 @@
 </script>
 
 
-
-
-
 <script>
-    let images = [
-        "https://generated.vusercontent.net/placeholder.svg",
-        "https://generated.vusercontent.net/placeholder-user.jpg",
-        "https://generated.vusercontent.net/placeholder.svg",
-        "https://generated.vusercontent.net/placeholder-user.jpg",
-        "https://generated.vusercontent.net/placeholder.svg",
-        "https://generated.vusercontent.net/placeholder-user.jpg",
-        "https://generated.vusercontent.net/placeholder.svg",
-        "https://generated.vusercontent.net/placeholder-user.jpg",
-        "https://generated.vusercontent.net/placeholder.svg",
-        "https://generated.vusercontent.net/placeholder-user.jpg",
-        "https://generated.vusercontent.net/placeholder.svg",
-        "https://generated.vusercontent.net/placeholder-user.jpg"
-    ];
+    let dropContent = document.getElementsByClassName("drop-content");
+    let chatMenu = document.getElementsByClassName("chat-menu");
+    for (let i = 0; i < chatMenu.length; i++) {
+        chatMenu[i].addEventListener("click", function () {
+            if (dropContent[i].style.display === "none") {
+                for (let i = 0; i < dropContent.length; i++) {
+                    dropContent[i].style.display = "none";
+                }
+                dropContent[i].style.display = "block";
 
-    function imageSlider(parent, images) {
-        let currentIndex = 0;
+            } else {
+                dropContent[i].style.display = "none";
 
-        // 선택자
-        let slider = {
-            parent: parent,
-            images: parent.querySelector(".slider__img"),
-            thumbnails: parent.querySelector(".slider__thumb"),
-            prevBtn: parent.querySelector(".slider__btn .prev"),
-            nextBtn: parent.querySelector(".slider__btn .next")
-        };
-
-        // 이미지 출력하기
-        slider.images.innerHTML = images.map((image, index) => {
-            return `<img src="\${image}" alt="이미지\${index}" class="rounded-lg mx-2">`;
-        }).join("");
-
-        // 이미지 활성화(active)하기
-        let imageNodes = slider.images.querySelectorAll("img");
-        imageNodes[currentIndex].classList.add("active");
-
-
-        // 썸네일 이미지 출력하기
-        slider.thumbnails.innerHTML = slider.images.innerHTML;
-
-        // 썸네일 활성화(active)하기
-        let thumnailNodes = slider.thumbnails.querySelectorAll("img");
-        thumnailNodes[currentIndex].classList.add("active");
-
-        // 썸네일 이미지 클릭하기_for문
-        // for(let i=0; i<thumnailNodes.length; i++){
-        //     thumnailNodes[i].addEventListener("click", function(){      //this값을 가져올 수 있음
-        //         slider.thumbnails.querySelector("img.active").classList.remove("active");
-        //         thumnailNodes[i].classList.add("active");
-
-        //         imageNodes[currentIndex].classList.remove("active");
-        //         currentIndex = i;
-        //         imageNodes[currentIndex].classList.add("active");
-        //     });
-        // }
-
-        // 썸네일 이미지 클릭하기_forEach()
-        thumnailNodes.forEach((thumb, index) => {
-            thumb.addEventListener("click", function () {
-                thumnailNodes[currentIndex].classList.remove("active");
-                thumnailNodes[index].classList.add("active");
-
-                imageNodes[currentIndex].classList.remove("active");
-                currentIndex = index;
-                imageNodes[currentIndex].classList.add("active");
-            });
-        });
-
-        // 왼쪽 버튼 클릭하기
-        slider.prevBtn.addEventListener("click", () => {
-            imageNodes[currentIndex].classList.remove("active");
-            currentIndex--;
-
-            // 0 4 3 2 1 0 4 3 2 1...
-            if (currentIndex < 0) currentIndex = images.length - 1;
-
-            imageNodes[currentIndex].classList.add("active");
-
-            // 썸네일 버튼 클릭하기
-            thumnailNodes[currentIndex].classList.remove("active");
-            thumnailNodes[currentIndex].classList.add("active");
-        });
-
-        // 오른쪽 버튼 클릭하기
-        slider.nextBtn.addEventListener("click", () => {
-            imageNodes[currentIndex].classList.remove("active");
-            thumnailNodes[currentIndex].classList.remove("active");
-
-            // 1 2 3 4 0 1 2 3 4...
-            currentIndex = (currentIndex + 1) % images.length;
-
-            imageNodes[currentIndex].classList.add("active");
-            thumnailNodes[currentIndex].classList.add("active");
-
-
-        });
-
-
-    };
-
-    imageSlider(document.querySelector(".slider__wrap"), images);
-
-</script>
-
-
-
-
-<script>
-    let click = document.getElementById("drop-content");
-
-    function dp_menu() {
-        if (click.style.display === "none") {
-            click.style.display = "block";
-
-        } else {
-            click.style.display = "none";
-
-        }
+            }
+        })
     }
+
+    // function  {
+    //     if (click.style.display === "none") {
+    //         click.style.display = "block";
+    //
+    //     } else {
+    //         click.style.display = "none";
+    //
+    //     }
+    // }
 
 </script>
 
