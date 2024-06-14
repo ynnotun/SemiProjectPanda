@@ -50,8 +50,8 @@
                     id="email"
                     placeholder="Enter your email" style="width: 95%"/>
         </div>
-        <button class="emailchecked">
-            Check Availability
+        <button class="emailchecked" id="verification">
+            인증코드 전송
         </button>
     </div>
     <div class="flex items-center" style="padding-bottom: 15px;">
@@ -66,8 +66,8 @@
                     id="emailcheck"
                     placeholder="email check" style="width: 95%"/>
         </div>
-        <button class="emailchecked">
-            Check
+        <button class="emailchecked" id="verificationcheck">
+            인증
         </button>
     </div>
     <button
@@ -76,5 +76,47 @@
         Find
     </button>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#verificationForm').on('submit', function (e) {
+            e.preventDefault();
+            const emailData = {
+                email: $('#email').val()
+            };
+            $.ajax({
+                url: '/mail/send',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(emailData),
+                success: function (response) {
+                    alert('인증코드를 보냈습니다.');
+                },
+                error: function (error) {
+                    alert('인증코드를 못보냈습니다.');
+                }
+            });
+        });
+
+        $('#verificationcheck').on('submit', function (e) {
+            e.preventDefault();
+            const verifyData = {
+                code: $('#verificationCode').val()
+            };
+            $.ajax({
+                url: '/verify',
+                type: 'POST',
+                data: verifyData,
+                success: function (response) {
+                    alert('인증되었습니다');
+                },
+                error: function (error) {
+                    alert('인증번호가 잘못되었습니다.');
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
