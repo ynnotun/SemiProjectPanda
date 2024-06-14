@@ -38,26 +38,26 @@ public class DetailController {
         return "product/product-detail";
     }
 
-    @GetMapping("/product/wish")
-    @ResponseBody
-    public Map<String, String> wish(
-            @RequestParam("usernum") int usernum,
-            @RequestParam("productnum") int productnum
-    ) {
-        Map<String, String> result = new HashMap<>();
-        WishDto wishDto = WishDto.builder()
-                .usernum(usernum)
-                .productnum(productnum).build();
-
-        int check = detailService.checkWish(wishDto);
-        if (check == 0) {
-            result.put("status", "wish add");
-            detailService.insertWish(wishDto);
-        } else {
-            result.put("status", "wish delete");
-            detailService.deleteWish(wishDto);
-        }
-
-        return result;
-    }
+//    @GetMapping("/product/wish")
+//    @ResponseBody
+//    public Map<String, String> wish(
+//            @RequestParam("usernum") int usernum,
+//            @RequestParam("productnum") int productnum
+//    ) {
+//        Map<String, String> result = new HashMap<>();
+//        WishDto wishDto = WishDto.builder()
+//                .usernum(usernum)
+//                .productnum(productnum).build();
+//
+//        int check = detailService.checkWish(wishDto);
+//        if (check == 0) {
+//            result.put("status", "wish add");
+//            detailService.insertWish(wishDto);
+//        } else {
+//            result.put("status", "wish delete");
+//            detailService.deleteWish(wishDto);
+//        }
+//
+//        return result;
+//    }
 }

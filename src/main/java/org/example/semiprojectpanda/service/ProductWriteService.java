@@ -10,6 +10,6 @@ public class ProductWriteService {
     private ProductMapperInter productMapper;
     public void insertProduct(ProductDto productDto)
     {
-        productMapper.insertProduct(productDto);
+//        productMapper.insertProduct(productDto);
     }
 }

@@ -32,18 +32,18 @@ public class DetailService {
     public ProductDto getProductByProductnum(int productnum) {
         return productMapperInter.getProductByProductnum(productnum);
     }
-
-    public void insertWish(WishDto wishDto) {
-        wishMapperInter.insertWish(wishDto);
-    }
-
-    public int checkWish(WishDto wishDto) {
-        return wishMapperInter.checkWishByUsernumAndProductnum(wishDto);
-    }
-
-    public void deleteWish(WishDto wishDto) {
-        wishMapperInter.deleteWish(wishDto);
-    }
+//
+//    public void insertWish(WishDto wishDto) {
+//        wishMapperInter.insertWish(wishDto);
+//    }
+//
+//    public int checkWish(WishDto wishDto) {
+//        return wishMapperInter.checkWishByUsernumAndProductnum(wishDto);
+//    }
+//
+//    public void deleteWish(WishDto wishDto) {
+//        wishMapperInter.deleteWish(wishDto);
+//    }
 
 
 }
