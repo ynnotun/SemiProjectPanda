@@ -66,6 +66,9 @@
     .max-w-md {
         max-width: 35rem;
     }
+    .hidden {
+        display: none;
+    }
 </style>
 <body>
 <!--
@@ -75,7 +78,7 @@
 
 <div class="w-full mx-auto p-6 md:p-8 container">
     <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
-    <form class="space-y-4">
+    <form class="space-y-4" action="">
         <div class="page" id="page1" style="width: 100%">
         <div style="padding-bottom: 15px; width: 40%; margin: auto;">
            <label
@@ -126,11 +129,11 @@
                         id="email"
                         placeholder="Enter your email"/>
             </div>
-            <button class="emailchecked">
+            <button class="emailchecked" id="checkButton" type="button">
                 Check Availability
             </button>
         </div>
-            <div class="flex items-center" style="padding-bottom: 15px; width: 40%; margin: auto;">
+            <div class="flex items-center hidden" id="emailCheckSection" style="padding-bottom: 15px; width: 40%; margin: auto;">
                 <div class="flex-1">
                     <label
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -142,7 +145,7 @@
                             id="emailcheck"
                             placeholder="email check"/>
                 </div>
-                <button class="emailchecked">
+                <button class="emailchecked" type="button">
                     Check
                 </button>
             </div>
@@ -291,6 +294,11 @@
         $("#page1").css("transform", "translateX(0)");
         $("#page2").css("transform", "translateX(100%)");
     })
+    $(document).ready(function() {
+        $("#checkButton").click(function() {
+            $("#emailCheckSection").removeClass('hidden');
+        });
+    });
 </script>
 </body>
 </html>
