@@ -17,6 +17,34 @@
     <title></title>
 </head>
 <body>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">Membership Cancellation Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to cancel your membership? This action cannot be undone.</p>
+                <br>
+                <p>If you proceed, you will lose access to:
+                <ul>
+                    <li>∙ Premium content and features</li>
+                    <li>∙ Saved preferences and data</li>
+                </ul>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" style="background-color: #ff4141; border: 0px;">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!--
 // v0 by Vercel.
 // https://v0.dev/t/d59eRWti5iV
@@ -231,6 +259,11 @@
                 Complete Registration
             </button>
         </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #ff4141; border: 0px; float: right;">
+            Delete Account
+        </button>
+        <div style="clear: both"></div>
     </div>
 </div>
 </body>
