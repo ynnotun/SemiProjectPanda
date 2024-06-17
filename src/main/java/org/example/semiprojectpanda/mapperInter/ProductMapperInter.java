@@ -1,11 +1,9 @@
 package org.example.semiprojectpanda.mapperInter;
 
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.example.semiprojectpanda.dto.ProductDto;
-
-import java.util.List;
 
 @Mapper
 public interface ProductMapperInter {
@@ -14,6 +12,13 @@ public interface ProductMapperInter {
 
     @Select("SELECT * FROM PRODUCT WHERE productnum = #{productnum}")
     ProductDto getProductByProductnum(int productnum);
+
+    @Update("""
+            UPDATE PRODUCT
+            SET customernum = #{customernum}, productstatus = #{productstatus}
+            WHERE productnum = #{productnum};
+            """)
+    void updateProductStatusAndCustomer(ProductDto productDto);
 
 //    //판매내역 불러오기
 //    @Select("select * from PRODUCT where usernum=#{usernum} ") //url에 ?usernum=1 ->파라미터(매개변수)를 받아온다.
