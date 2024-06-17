@@ -1,5 +1,6 @@
 package org.example.semiprojectpanda.mapperInter;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -8,7 +9,12 @@ import org.example.semiprojectpanda.dto.ProductDto;
 @Mapper
 public interface ProductMapperInter {
 
-//    public void insertProduct(ProductDto productDto);//상품 추가
+    //product 추가
+    @Insert("""
+        insert into PRODUCT (usernum, producttitle, productcontent, productprice, productaddress, categorynum, productcreatedat, productopenchat, productlocationx, productlocationy)
+          values (#{usernum}, #{producttitle}, #{productcontent}, #{productprice}, #{productaddress}, #{categorynum}, now(), #{productopenchat}, #{productlocationx}, #{productlocationy})
+      """)
+    void insertProduct(ProductDto productDto);
 
     @Select("SELECT * FROM PRODUCT WHERE productnum = #{productnum}")
     ProductDto getProductByProductnum(int productnum);

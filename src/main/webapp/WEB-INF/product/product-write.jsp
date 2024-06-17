@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -131,6 +132,35 @@
                                 placeholder="Enter the location"
                                 onclick="openDaumPostcode()"/>
                     </div>
+                </div>
+
+                <!-- 카테고리 입력 -->
+                <div class="grid gap-2">
+                    <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="category">
+                        Category
+                    </label>
+                    <div class="flex items-center gap-2">
+                        <select class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="category">
+                            <option hidden="hidden">Select category</option>
+                            <c:forEach var="category" items="${categories}">
+                                <option value="${category.categorynum}">${category.categoryname}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 오픈 채팅 입력 -->
+                <div class="grid gap-2">
+                    <label
+                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            for="openchat">
+                        KakaoTalk OpenChat
+                    </label>
+                    <!-- 클릭하면 도로명 주소 입력 API 팝업 출력 -->
+                    <input
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            id="openchat"
+                            placeholder="Enter the Kakaotalk openchat"/>
                 </div>
 
                 <!-- 해시태그 이벤트 -->
