@@ -3,8 +3,8 @@ package org.example.semiprojectpanda.service;
 import org.example.semiprojectpanda.dto.ProductDto;
 import lombok.RequiredArgsConstructor;
 import org.example.semiprojectpanda.dto.WishDto;
+
 import org.example.semiprojectpanda.mapperInter.WishMapperInter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class WishService {
+
     private final WishMapperInter wishMapperInter;
 
     public void insertWish(WishDto wishDto) {
