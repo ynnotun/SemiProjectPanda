@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ChatDto {
-    private int wishnum;
+    private int chatnum;
     private int usernum;
-    private String productnum;
+    private int productnum;
+    private String chatcontent;
 }

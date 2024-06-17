@@ -9,8 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @AllArgsConstructor
-public class WishDto {
-    private int wishnum;
+public class ChatLogDto {
+    private int chatnum;
     private int usernum;
+    private String usernickname;
+    private String userprofileimage;
     private int productnum;
+    private String chatcontent;
 }

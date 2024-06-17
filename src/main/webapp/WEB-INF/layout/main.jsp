@@ -59,6 +59,8 @@
       .slider-button {
          position: absolute;
          top: 50%;
+         margin-left: -30px;
+         margin-right: -30px;
          transform: translateY(-50%);
          background-color: #45a049;
          color: white;
@@ -88,57 +90,58 @@
       }
    </style>
 </head>
-
 <body>
 
 
+<div class="bg-white  text-gray-900  min-h-screen">
+   <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
 <div class="flex flex-col min-h-screen relative">
 
    <section class="py-8 px-6 md:px-8 bg-gray-100 relative">
       <button class="slider-button prev" onclick="slide(-1)">&#10094;</button>
       <button class="slider-button next" onclick="slide(1)">&#10095;</button>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6" id="scroll">
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
             <i class="bi bi-justify" style="font-size: 2em;"></i>
             <span>ALL</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
             <i class="bi bi-incognito" style="font-size: 2em;"></i>
             <span>패션/잡화</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
             <i class="bi bi-pc-display-horizontal" style="font-size: 2em;"></i>
             <span>디지털기기</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
             <i class="bi bi-house" style="font-size: 2em;"></i>
             <span>생활가전</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
             <i class="bi bi-lamp" style="font-size: 2em;"></i>
             <span>가구/인테리어</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
             <i class="bi bi-controller" style="font-size: 2em;"></i>
             <span>취미/게임/음반</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
             <i class="bi bi-scissors" style="font-size: 2em;"></i>
             <span>뷰티</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
             <i class="bi bi-book" style="font-size: 2em;"></i>
             <span>도서/티켓</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
             <i class="bi bi-bicycle" style="font-size: 2em;"></i>
             <span>스포츠</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
             <i class="bi bi-piggy-bank" style="font-size: 2em;"></i>
             <span>반려동물용품</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50]" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
             <i class="bi bi-box-seam" style="font-size: 2em;"></i>
             <span>기타 중고물품</span>
          </a>
@@ -292,7 +295,8 @@
 <button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">
    <i class="bi bi-caret-up-fill"></i>
 </button>
-
+   </div>
+</div>
 <script>
    // category 스크롤
    window.onscroll = function() {
@@ -321,6 +325,7 @@
       });
    }
 </script>
+
 </body>
 </html>
 
