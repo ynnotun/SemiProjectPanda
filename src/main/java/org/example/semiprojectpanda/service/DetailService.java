@@ -10,6 +10,7 @@ import org.example.semiprojectpanda.mapperInter.ProductMapperInter;
 import org.example.semiprojectpanda.mapperInter.UserMapperInter;
 import org.example.semiprojectpanda.mapperInter.WishMapperInter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -46,16 +47,22 @@ public class DetailService {
 //    }
 
     //마이페이지 수정
-    public void updateUser(UserDto userdto) {
-        userMapperInter.updateUser(userdto);
+    @Transactional
+    public void updateAccount(UserDto userDto) throws Exception {
+        userMapperInter.updateUser(userDto);
     }
-
-    //비밀번호 변경
+    //email값 받아서 usernum값 얻기
     public int getUserNumByEmail(String email){
         return userMapperInter.getUserNumByEmail(email);
     }
+    //비밀번호 변경
     public boolean changePassword(int usernum, String newPassword) {
         return userMapperInter.changePassword(usernum, newPassword);
+    }
+    //회원탈되
+    @Transactional
+    public void deleteAccount(int usernum) throws Exception {
+        userMapperInter.deleteUserByUsernum(usernum);
     }
 
 

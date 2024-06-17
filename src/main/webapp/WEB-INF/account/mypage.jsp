@@ -549,20 +549,19 @@
 </div>
 
 <script>
-
-    //수정페이지이동
     $(document).ready(function() {
         $.ajax({
-            url: '/mypage/update',
+            url: '/mypage/update', // 이 URL이 유효한지 확인
             type: 'GET',
             success: function(response) {
-                const usernum = response.usernum;
+                console.log('AJAX success response:', response); // 응답 로그 추가
+                const usernum = response.usernum; // 응답에서 usernum 가져오기
                 $('#myupdate').click(function() {
-                    window.location.href = `/mypage/update?usernum=${usernum}`;
+                    window.location.href = `/mypage/update?usernum=` + usernum;
                 });
-
+            },
             error: function(error) {
-                console.log('Fail');
+                console.log('AJAX error:', error); // 에러 로그 추가
             }
         });
     });

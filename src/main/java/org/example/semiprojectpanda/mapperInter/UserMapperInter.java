@@ -1,9 +1,6 @@
 package org.example.semiprojectpanda.mapperInter;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.example.semiprojectpanda.dto.UserDto;
 
 @Mapper
@@ -19,12 +16,16 @@ public interface UserMapperInter {
     @Select("SELECT userpassword FROM USER WHERE useremail = #{useremail}")
     String getPasswordByEmail(@Param("useremail") String useremail);
 
-    //usernum
+    //usernum값 얻기
     @Select("SELECT usernum FROM USER WHERE useremail = #{useremail}")
     int getUserNumByEmail(@Param("useremail") String useremail);
 
-    // 비밀번호 변경 메소드 추가
+    // 비밀번호 변경
     @Update("UPDATE USER SET userpassword = #{newPassword} WHERE usernum = #{usernum}")
     boolean changePassword(int usernum, String newPassword);
+
+    //회원 탈퇴
+    @Delete("DELETE FROM USER WHERE usernum = #{usernum}")
+    void deleteUserByUsernum(@Param("usernum") int usernum);
 
 }
