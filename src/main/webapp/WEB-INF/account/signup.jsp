@@ -56,7 +56,21 @@
             padding: 2rem;
         }
     }
-    .propileimg{
+    #propileimg1{
+        border: 1px solid #ddd;
+        width: 150px;
+        height: 150px;
+        border-radius: 200px;
+        cursor: pointer;
+    }
+    #propileimg2{
+        border: 1px solid #ddd;
+        width: 150px;
+        height: 150px;
+        border-radius: 200px;
+        cursor: pointer;
+    }
+    #propileimg3{
         border: 1px solid #ddd;
         width: 150px;
         height: 150px;
@@ -69,6 +83,9 @@
     .hidden {
         display: none;
     }
+    #timer {
+        display: none; /* 초기에는 숨김 */
+    }
 </style>
 <body>
 <!--
@@ -78,7 +95,7 @@
 
 <div class="w-full mx-auto p-6 md:p-8 container">
     <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
-    <form class="space-y-4" action="">
+    <form class="space-y-4" action="./save" method="post" enctype="multipart/form-data">
         <div class="page" id="page1" style="width: 100%">
         <div style="padding-bottom: 15px; width: 40%; margin: auto;">
            <label
@@ -90,6 +107,7 @@
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     type="text"
                     id="name"
+                    name="username"
                     placeholder="Enter your full name"/>
         </div>
         <div style="padding-bottom: 15px; width: 40%; margin: auto;">
@@ -102,6 +120,7 @@
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     type="tel"
                     id="phone"
+                    name="userphonenumber"
                     placeholder="Enter your phone number"/>
         </div>
         <div style="padding-bottom: 15px; width: 40%; margin: auto;">
@@ -114,6 +133,7 @@
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     type="text"
                     id="address"
+                    name="useraddress"
                     placeholder="Enter your address"/>
         </div>
         <div class="flex items-center" style="padding-bottom: 15px; width: 40%; margin: auto;">
@@ -127,6 +147,7 @@
                         class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                         type="email"
                         id="email"
+                        name="useremail"
                         placeholder="Enter your email"/>
             </div>
             <button class="emailchecked" id="checkButton" type="button">
@@ -139,7 +160,7 @@
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             for="email">
                         Email Check
-                    </label>
+                    </label><div id="timer" style="color: red">남은시간 03:00</div>
                     <input
                             class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="emailcheck"
@@ -159,6 +180,7 @@
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     type="password"
                     id="password"
+                    name="userpassword"
                     placeholder="Enter your password"/>
         </div>
         <div style="padding-bottom: 15px; width: 40%; margin: auto;">
@@ -171,6 +193,7 @@
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     type="password"
                     id="confirm-password"
+                    name="userpassword"
                     placeholder="Confirm your password"/>
         </div>
         <div style="padding-bottom: 15px; width: 40%; margin: auto;">
@@ -182,6 +205,7 @@
             <input
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     type="date"
+                    name="userbirthday"
                     id="dob" style="margin-bottom: 15px;"/>
             <button
                     class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
@@ -210,6 +234,7 @@
                         <div class="mt-1 flex items-center">
                             <input
                                     id="nickname"
+                                    name="usernickname"
                                     type="text"
                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
                                     placeholder="Enter your nickname" style="height: 30px"/>
@@ -224,31 +249,38 @@
                         <label class="block text-sm font-medium text-gray-700 ">Default Profile Options</label>
                         <div class="mt-1 grid grid-cols-3 gap-3">
                             <div class="relative">
-                                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
-                                    <img src="https://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg"
-                                         alt="Profile 1" class="h-full w-full object-cover propileimg"
-                                    onclick=""/>
-                                </div>
-
-                            </div>
-                            <div class="relative">
-                                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
-                                    <img src="https://e7.pngegg.com/pngimages/170/523/png-clipart-kakaotalk-kakao-friends-sticker-kakaotalk-white-face-thumbnail.png"
-                                         alt="Profile 2" class="h-full w-full object-cover propileimg"
-                                    onclick=""/>
+                                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg1">
+                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%841.png"
+                                         alt="Profile 1" class="h-full w-full object-cover profilephoto"
+                                         id="photo"
+                                         style="width: 100px; height: 100px;position: relative; top: 25px;left: 25px;"
+                                         onclick=""/>
+                                    <input type="file" name="myfile" id="photoupload" style="display: none;">
+                                    <input type="radio"  name="userprofileimage" id="radio1" style="display: none;">
                                 </div>
                             </div>
                             <div class="relative">
-                                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWGkRSo6snU44wyzDqcXn9sjH3iynRMBcesw&s"
-                                         alt="Profile 3" class="h-full w-full object-cover propileimg"
-                                    onclick=""/>
+                                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg2">
+                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%842.jpeg"
+                                         alt="Profile 2" class="h-full w-full object-cover profilephoto"
+                                         style="width: 150px; height: 150px;"/>
+                                    <input type="radio"  name="userprofileimage" value="기본프로필2.jpeg" id="radio2" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg3">
+                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%843.jpeg"
+                                         alt="Profile 3" class="h-full w-full object-cover profilephoto"
+                                         style="width: 150px; height: 150px;"
+                                         />
+                                    <input type="radio"  name="userprofileimage" value="기본프로필3.jpeg" id="radio3" style="display: none;">
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-3"style="padding-top: 15px;">
+                        <div class="mt-3" style="padding-top: 15px;">
                             <button
                                     type="button"
+                                    onclick="$('#photoupload').trigger('click')"
                                     class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                                 <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -271,7 +303,7 @@
                     </div>
                     <div>
                         <button
-                                type="button"
+                                type="submit"
                                 class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                             Complete Registration
                         </button>
@@ -281,11 +313,32 @@
         </div>
     </form>
 </div>
-</div>
+
 
 
 
 <script>
+    $('#checkButton').click(function() {
+        var duration = 180; // 3분 = 180초
+        var display = document.getElementById('timer');
+        display.style.display = 'block'; // 타이머를 보이게 함
+        var timer = duration, minutes, seconds;
+
+        var interval = setInterval(function() {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent ="남은시간 "+ minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                clearInterval(interval);
+                alert('3분이 지났습니다!');
+            }
+        }, 1000);
+    });
     $("#next").click(function (){
         $("#page1").css("transform", "translateX(-100%)");
         $("#page2").css("transform", "translateX(0)");
@@ -294,11 +347,45 @@
         $("#page1").css("transform", "translateX(0)");
         $("#page2").css("transform", "translateX(100%)");
     })
+    $("#propileimg1").click(function (){
+        $("#propileimg1").css("border", "3px solid black");
+        $("#propileimg2").css("border", "1px solid #ddd");
+        $("#propileimg3").css("border", "1px solid #ddd");
+        $("#radio1").prop("checked",true);
+    })
+    $("#propileimg2").click(function (){
+            $("#propileimg1").css("border", "1px solid #ddd");
+            $("#propileimg2").css("border", "3px solid black");
+            $("#propileimg3").css("border", "1px solid #ddd");
+        $("#radio2").prop("checked",true);
+    })
+    $("#propileimg3").click(function (){
+        $("#propileimg1").css("border", "1px solid #ddd");
+        $("#propileimg2").css("border", "1px solid #ddd");
+        $("#propileimg3").css("border", "3px solid black");
+        $("#radio3").prop("checked",true);
+    })
     $(document).ready(function() {
         $("#checkButton").click(function() {
             $("#emailCheckSection").removeClass('hidden');
         });
     });
+    $("#photoupload").change(function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                $("#photo").attr("src", e.target.result);
+                $("#photo").css({
+                    "width": "150px",
+                    "height": "150px",
+                    "top":"0px",
+                    "left":"0px"
+                });
+            }
+            reader.readAsDataURL(file);
+        }
+    })
 </script>
 </body>
 </html>
