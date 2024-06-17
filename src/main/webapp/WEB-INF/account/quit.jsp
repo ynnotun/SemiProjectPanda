@@ -30,8 +30,8 @@
                 <p>We hope to serve you again in the future.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button id="can" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="subm" type="button" class="btn btn-primary">Understood</button>
             </div>
         </div>
     </div>
@@ -104,7 +104,7 @@
     </div>
     <div class="flex items-center p-6">
         <div class="flex justify-end gap-2 w-full">
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+            <button id="canc" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
                 Cancel
             </button>
             <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:bg-black/90 h-10 px-4 py-2"
@@ -119,5 +119,17 @@
 </div>
     </div>
 </div>
+<script>
+    $("#canc").click(function (){
+        window.location.href = "/"; //메인으로 이동
+    })
+    $("#can").click(function (){
+        window.location.href = "/quit"; ///메인으로 이동
+    })
+    $("#subm").click(function (){
+        window.location.href = "/"; ///메인으로 이동
+    })
+
+</script>
 </body>
 </html>
