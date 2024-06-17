@@ -14,8 +14,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-
     <title></title>
+
+    <style>
+        #preview {
+            width: 80%;
+            display: flex;
+            overflow-x: auto; /* 가로 스크롤 활성화 */
+            white-space: nowrap; /* 요소들이 한 줄로 표시되도록 설정 */
+            gap: 1rem; /* 이미지 간격 설정 */
+            scrollbar-width: none;
+        }
+        #preview img {
+            flex-shrink: 0; /* 이미지가 줄어들지 않도록 설정 */
+        }
+    </style>
 
 </head>
 <body>
@@ -234,6 +247,14 @@
                 };
                 reader.readAsDataURL(file);
             });
+        }
+    });
+
+    //미리보기 이미지 가로 스크롤링
+    document.getElementById('preview').addEventListener('wheel', function(event) {
+        if (event.deltaY !== 0) {
+            event.preventDefault();
+            this.scrollLeft += event.deltaY;
         }
     });
 </script>

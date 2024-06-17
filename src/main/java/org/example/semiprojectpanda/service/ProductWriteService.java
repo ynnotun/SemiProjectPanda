@@ -12,6 +12,7 @@ import org.example.semiprojectpanda.mapperInter.ProductImageMapperInter;
 import org.example.semiprojectpanda.mapperInter.ProductMapperInter;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -34,23 +35,18 @@ public class ProductWriteService {
     //product 추가
     public void insertProduct(ProductDto productDto)
     {
-
         productMapperInter.insertProduct(productDto);
     }
 
     //productImage 추가
     public void insertProductImage(ProductImageDto productImageDto)
     {
-
-
         productImageMapperInter.insertProductImage(productImageDto);
     }
 
     //Hashtag 추가
     public void insertHashtag(HashtagDto hashtagDto)
     {
-
-
         hashtagMapperInter.insertHashTag(hashtagDto);
     }
 
@@ -58,5 +54,4 @@ public class ProductWriteService {
     public List<CategoryDto> getAllCategories() {
         return categoryMapperInter.getAllCategories();
     }
-
 }

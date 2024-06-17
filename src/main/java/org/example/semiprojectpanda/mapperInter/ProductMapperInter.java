@@ -9,16 +9,24 @@ import org.example.semiprojectpanda.dto.ProductDto;
 @Mapper
 public interface ProductMapperInter {
 
-    //product 추가
+    //상품의 최초 등록
     @Insert("""
         insert into PRODUCT (usernum, producttitle, productcontent, productprice, productaddress, categorynum, productcreatedat, productopenchat, productlocationx, productlocationy)
           values (#{usernum}, #{producttitle}, #{productcontent}, #{productprice}, #{productaddress}, #{categorynum}, now(), #{productopenchat}, #{productlocationx}, #{productlocationy})
       """)
     void insertProduct(ProductDto productDto);
 
+    //상품의 내용 변경
+    @Update("""
+            
+            """)
+    void updateProductContent(ProductDto productDto);
+    
+    //상품번호로 상품 정보 불러오기
     @Select("SELECT * FROM PRODUCT WHERE productnum = #{productnum}")
     ProductDto getProductByProductnum(int productnum);
-
+    
+    //상품의 거래 상태 갱신
     @Update("""
             UPDATE PRODUCT
             SET customernum = #{customernum}, productstatus = #{productstatus}

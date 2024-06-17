@@ -16,5 +16,4 @@ public interface HashtagMapperInter {
     void insertHashTag(HashtagDto hashtagDto);
 
 
-
 }
