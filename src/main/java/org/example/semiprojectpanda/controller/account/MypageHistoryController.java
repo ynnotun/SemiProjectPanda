@@ -6,12 +6,14 @@ import org.example.semiprojectpanda.service.ProductService;
 import org.example.semiprojectpanda.service.WishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MypageHistoryController {
@@ -22,7 +24,11 @@ public class MypageHistoryController {
     private WishService wishService;
 
     @GetMapping("/mypage/history") //진짜 주소
-    public String mypageHistory() {
+    public String mypageHistory(@RequestParam int usernum,
+                                @RequestParam String listname,
+                                Model model) {
+        model.addAttribute("usernum", usernum);
+        model.addAttribute("listname", listname);
         return "account/mypage-history"; // JSP 파일 위치
     }
 

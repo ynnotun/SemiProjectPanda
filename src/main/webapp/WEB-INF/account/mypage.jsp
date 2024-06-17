@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: minseok
-  Date: 24. 6. 13.
-  Time: 오전 11:07
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -38,7 +31,7 @@
               <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JD</span>
             </span>
                         <div class="grid gap-1">
-                            <h1 class="text-2xl font-bold">John Doe</h1>
+                            <h1 class="text-2xl font-bold">${dto.username}</h1>
                             <div class="flex items-center gap-2 text-sm text-gray-500 ">
                                 <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +51,7 @@
                                     <line x1="12" x2="12" y1="19" y2="22"></line>
                                     <circle cx="12" cy="12" r="7"></circle>
                                 </svg>
-                                <span>San Francisco, CA</span>
+                                <span>${dto.useraddress}</span>
                             </div>
                         </div>
                     </div>
@@ -117,7 +110,7 @@
                             <span>주의회원</span>
                         </div>
                         <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-6"></div>
-                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                        <button id="myupdate" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
                             <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -140,12 +133,12 @@
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
                 <section class="">
                     <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold"><a href="">판매내역</a></h2>
+                        <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=sell">판매내역</a></h2>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -171,7 +164,7 @@
                         </div>
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -197,7 +190,7 @@
                         </div>
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -219,12 +212,12 @@
                 </section>
                 <section class="">
                     <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold"><a href="">구매내역</a></h2>
+                        <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=buy">구매내역</a></h2>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -250,7 +243,7 @@
                         </div>
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -276,7 +269,7 @@
                         </div>
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -298,14 +291,14 @@
                 </section>
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
                 <div class="grid gap-4">
-                    <h2 class="text-2xl font-bold">찜목록</h2>
+                    <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=wish">찜목록</a></h2>
                     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <div class="p-6">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <img
-                                                src="/placeholder.svg"
+                                                src=""
                                                 alt="Product Image"
                                                 width="48"
                                                 height="48"
@@ -328,7 +321,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <img
-                                                src="/placeholder.svg"
+                                                src=""
                                                 alt="Product Image"
                                                 width="48"
                                                 height="48"
@@ -351,7 +344,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <img
-                                                src="/placeholder.svg"
+                                                src=""
                                                 alt="Product Image"
                                                 width="48"
                                                 height="48"
@@ -444,12 +437,12 @@
                                                 width="24"
                                                 height="24"
                                                 viewBox="0 0 24 24"
-                                                fill="currentColor"
+                                                fill="none"
                                                 stroke="currentColor"
                                                 stroke-width="2"
                                                 stroke-linecap="round"
                                                 stroke-linejoin="round"
-                                                class="w-4 h-4"
+                                                class="w-4 h-4 fill-gray-300 stroke-gray-300"
                                         >
                                             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
@@ -554,5 +547,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '/mypage/update', // 이 URL이 유효한지 확인
+            type: 'GET',
+            success: function(response) {
+                console.log('AJAX success response:', response); // 응답 로그 추가
+                const usernum = response.usernum; // 응답에서 usernum 가져오기
+                $('#myupdate').click(function() {
+                    window.location.href = `/mypage/update?usernum=` + usernum;
+                });
+            },
+            error: function(error) {
+                console.log('AJAX error:', error); // 에러 로그 추가
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
