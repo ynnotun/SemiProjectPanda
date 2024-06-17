@@ -10,8 +10,8 @@ public interface HashtagMapperInter {
 
     //hashtag 추가
     @Insert("""
-        insert into HASHTAG (hashtagname, productnum)
-          values (#{hashtagname}, #{productnum})
+        INSERT INTO HASHTAG (hashtagname, productnum)
+          VALUES (#{hashtagname}, #{productnum})
       """)
     void insertHashTag(HashtagDto hashtagDto);
 

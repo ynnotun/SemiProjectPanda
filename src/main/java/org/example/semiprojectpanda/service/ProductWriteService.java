@@ -2,15 +2,10 @@ package org.example.semiprojectpanda.service;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.example.semiprojectpanda.dto.CategoryDto;
-import org.example.semiprojectpanda.dto.HashtagDto;
-import org.example.semiprojectpanda.dto.ProductDto;
-import org.example.semiprojectpanda.dto.ProductImageDto;
-import org.example.semiprojectpanda.mapperInter.CategoryMapperInter;
-import org.example.semiprojectpanda.mapperInter.HashtagMapperInter;
-import org.example.semiprojectpanda.mapperInter.ProductImageMapperInter;
-import org.example.semiprojectpanda.mapperInter.ProductMapperInter;
+import org.example.semiprojectpanda.dto.*;
+import org.example.semiprojectpanda.mapperInter.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;

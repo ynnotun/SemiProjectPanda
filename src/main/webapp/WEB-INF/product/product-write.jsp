@@ -49,7 +49,8 @@
             </div>
 
             <!-- 폼태그 시작 -->
-            <form class="grid gap-6">
+            <form class="grid gap-6" method="post" action="/product/write" enctype="multipart/form-data">
+                <input type="hidden" name="usernum" value="1"><!-- 임시 -->
                 <!-- 게시글 제목 입력란 -->
                 <div class="grid gap-2">
                     <label
@@ -60,6 +61,8 @@
                     <input
                             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="title"
+                            name="producttitle"
+                            required="required"
                             placeholder="Enter the title of your item"/>
                 </div>
 
@@ -89,7 +92,7 @@
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
                         </button>
-                        <input type="file" id="file-input" accept="image/*" multiple class="hidden">
+                        <input type="file" id="file-input" name="productImages" accept="image/*" multiple class="hidden">
 
                         <!-- 사진 미리보기 -->
                         <div id="preview" class="mt-0 flex items-start gap-2">
@@ -99,7 +102,6 @@
                 </div>
 
                 <!-- 중고제품 설명 입력 -->
-                <!-- description -->
                 <div class="grid gap-2">
                     <label
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -109,12 +111,14 @@
                     <textarea
                             class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="description"
+                            name="productcontent"
+                            required="required"
                             placeholder="Provide a detailed description of your item"
                             rows="4"></textarea>
                 </div>
 
+                <!-- 가격, 거래희망지역 -->
                 <div class="grid md:grid-cols-2 gap-6">
-
                     <!-- 가격 입력 -->
                     <div class="grid gap-2">
                         <label
@@ -127,6 +131,8 @@
                                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                     type="number"
                                     id="price"
+                                    name="productprice"
+                                    required="required"
                                     placeholder="Enter the price"/>
                         </div>
                     </div>
@@ -142,9 +148,14 @@
                         <input
                                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 id="location"
+                                name="productaddress"
+                                required="required"
                                 placeholder="Enter the location"
                                 onclick="openDaumPostcode()"/>
                     </div>
+
+                    <input type="hidden" id="latitude" name="productlocationx">
+                    <input type="hidden" id="longitude" name="productlocationy">
                 </div>
 
                 <!-- 카테고리 입력 -->
@@ -153,8 +164,10 @@
                         Category
                     </label>
                     <div class="flex items-center gap-2">
-                        <select class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="category">
-                            <option hidden="hidden">Select category</option>
+                        <select class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                id="category"
+                                name="categorynum">
+                            <option value="" selected disabled hidden>Select category</option>
                             <c:forEach var="category" items="${categories}">
                                 <option value="${category.categorynum}">${category.categoryname}</option>
                             </c:forEach>
@@ -169,10 +182,11 @@
                             for="openchat">
                         KakaoTalk OpenChat
                     </label>
-                    <!-- 클릭하면 도로명 주소 입력 API 팝업 출력 -->
                     <input
                             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="openchat"
+                            name="productopenchat"
+                            required="required"
                             placeholder="Enter the Kakaotalk openchat"/>
                 </div>
 
@@ -197,8 +211,9 @@
         focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed
         disabled:opacity-50 bg-green-50 text-green-500
         px-3 py-1 rounded-full"
+                                name="hashtags"
                                 placeholder="Add a hashtag"
-                                onkeyup="handleHashtagInput(event)"
+                                onkeydown="handleHashtagInput(event)"
                         />
                     </div>
                 </div>
@@ -214,14 +229,10 @@
                         Post Item
                     </button>
                 </div>
-            </form>
-            <!-- 폼태그 끝 -->
+            </form><!-- 폼태그 끝 -->
         </div>
     </div>
 </div>
-<!-- usernum, producttitle, productcontent, productprice, productaddress, categorynum,
-     productcreatedat, productopenchat, productlocationx, productlocationy -->
-<!-- 카테고리 입력필요, 오픈채팅방 입력필요 -->
 
 <!-- 이미지 업로드 이벤트 -->
 <script>
@@ -269,6 +280,7 @@
     //해시태그 입력중 enter가 입력되면 내용 잘라서 addHashtag함수 수행
     function handleHashtagInput(event) {
         if (event.key === 'Enter') {
+            event.preventDefault(); // 기본 동작 중지
             const inputValue = event.target.value.trim();
             if (inputValue && hashtags.length < maxHashtags) {
                 addHashtag(inputValue);
@@ -308,10 +320,20 @@
     function openDaumPostcode() {
         new daum.Postcode({
             oncomplete: function (data) {
-                document.getElementById('location').value = data.address;
+                // 도로명 주소 변수
+                var roadAddr = data.roadAddress;
+
+                // 도로명 주소를 input에 넣기
+                document.getElementById('location').value = roadAddr;
+                console.log(roadAddr);
+
+                // 임시 위도와 경도 설정
+                document.getElementById('latitude').value = 37.1234567; // 임시 위도 설정
+                document.getElementById('longitude').value = 127.9876543; // 임시 경도 설정
             }
         }).open();
     }
 </script>
+
 </body>
 </html>

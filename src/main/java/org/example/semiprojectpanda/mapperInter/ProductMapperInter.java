@@ -1,9 +1,6 @@
 package org.example.semiprojectpanda.mapperInter;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.example.semiprojectpanda.dto.ProductDto;
 
 import java.util.List;
@@ -13,9 +10,10 @@ public interface ProductMapperInter {
 
     //상품의 최초 등록
     @Insert("""
-        insert into PRODUCT (usernum, producttitle, productcontent, productprice, productaddress, categorynum, productcreatedat, productopenchat, productlocationx, productlocationy)
-          values (#{usernum}, #{producttitle}, #{productcontent}, #{productprice}, #{productaddress}, #{categorynum}, now(), #{productopenchat}, #{productlocationx}, #{productlocationy})
+        INSERT INTO PRODUCT (usernum, producttitle, productcontent, productprice, productaddress, categorynum, productcreatedat, productopenchat, productlocationx, productlocationy)
+          VALUES (#{usernum}, #{producttitle}, #{productcontent}, #{productprice}, #{productaddress}, #{categorynum}, now(), #{productopenchat}, #{productlocationx}, #{productlocationy})
       """)
+    @Options(useGeneratedKeys = true, keyProperty = "productnum")//지금 추가된 productnum
     void insertProduct(ProductDto productDto);
 
     //상품의 내용 변경
