@@ -1,7 +1,10 @@
 package org.example.semiprojectpanda.mapperInter;
 
 import org.apache.ibatis.annotations.*;
+import org.example.semiprojectpanda.dto.ProductDto;
 import org.example.semiprojectpanda.dto.WishDto;
+
+import java.util.List;
 
 @Mapper
 public interface WishMapperInter {
@@ -9,12 +12,19 @@ public interface WishMapperInter {
     @Insert("INSERT INTO WISH (usernum, productnum) VALUES (#{usernum}, #{productnum})")
     void insertWish(WishDto wish);
 
-
     @Select("SELECT COUNT(*) FROM WISH WHERE usernum = #{usernum} AND productnum = #{productnum}")
     int checkWishByUsernumAndProductnum(WishDto wish);
 
     // Delete
     @Delete("DELETE FROM WISH WHERE usernum = #{usernum} AND productnum = #{productnum}")
     void deleteWish(WishDto wish);
+
+    //찜목록
+    @Select("""
+        select * from PRODUCT where productnum 
+        in (SELECT productnum FROM WISH where usernum=#{usernum})
+    """) //이 사람의 찜목록을 불러와야 하니까!
+    public List<ProductDto> getWishList(int usernum);
+
 
 }

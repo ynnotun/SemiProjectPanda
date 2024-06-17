@@ -209,8 +209,8 @@
 // https://v0.dev/t/4WkJbGjVd8r
 -->
 <div class="bg-white  text-gray-900  min-h-screen">
-<%--    <button onclick="login()">login</button>--%>
-<%--    <button onclick="logout()">logout</button>--%>
+    <button onclick="login()">login</button>
+    <button onclick="logout()">logout</button>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             <div class="">
@@ -309,7 +309,7 @@
                         <c:if test="${(sessionScope.usernum eq productDto.usernum or sessionScope.usernum eq productDto.customernum) and productDto.productstatus eq '예약 중'}">
                         <button
                                 class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-0 text-gray-900 h-11 rounded-md px-8 border-1 border-black hover:bg-gray-200"
-                                onclick="alertReserveBtn()"
+                                onclick="alertReserveCancelBtn()"
                                 >
                             예약 취소
                         </button>
@@ -825,7 +825,7 @@
     }
 
 
-    function alertReserveBtn() {
+    function alertReserveCancelBtn() {
         document.getElementById("alertChatLogBG").style.display = "block";
         document.getElementById("alertChatLogContent").style.display = "block";
 
@@ -835,7 +835,32 @@
         $("#alertChatLogOkBtn").addClass("bg-red-500")
 
         document.getElementById("alertChatLogOkBtn").onclick = function () {
-
+            fetch('./cancel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    "productnum": "${productDto.productnum}",
+                    "productUserNum": "${productDto.usernum}",
+                    "customerNum": "${productDto.customernum}"
+                })
+            })
+                .then(response => {
+                    console.log(response);
+                    if (response.ok) {
+                        // 등록 성공 처리
+                        window.location.reload();
+                    } else {
+                        // 등록 실패 처리
+                        alert("fail");
+                    }
+                })
+                .catch(error => {
+                    // 네트워크 오류 처리
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again later.');
+                });
         }
     }
 
@@ -848,7 +873,32 @@
         document.getElementById("alertChatLogTitle").innerText = "거래완료"
 
         document.getElementById("alertChatLogOkBtn").onclick = function () {
-
+            fetch('./finish', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    "productnum": "${productDto.productnum}",
+                    "productUserNum": "${productDto.usernum}",
+                    "customerNum": "${productDto.customernum}"
+                })
+            })
+                .then(response => {
+                    console.log(response);
+                    if (response.ok) {
+                        // 등록 성공 처리
+                        window.location.reload();
+                    } else {
+                        // 등록 실패 처리
+                        alert("fail");
+                    }
+                })
+                .catch(error => {
+                    // 네트워크 오류 처리
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again later.');
+                });
         }
     }
 
@@ -951,59 +1001,59 @@
     }
 
 
-    // function logout() {
-    //     fetch('/product/logout', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded'
-    //         },
-    //         body: new URLSearchParams({})
-    //     })
-    //         .then(response => {
-    //             console.log(response);
-    //             if (response.ok) {
-    //                 // 등록 성공 처리
-    //                 window.location.reload();
-    //             } else {
-    //                 // 등록 실패 처리
-    //                 alert("fail");
-    //             }
-    //         })
-    //         .catch(error => {
-    //             // 네트워크 오류 처리
-    //             console.error('Error:', error);
-    //             alert('An error occurred. Please try again later.');
-    //         });
-    // }
-    //
-    // function login() {
-    //     let usernum = prompt();
-    //     fetch('/product/login', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded'
-    //         },
-    //         body: new URLSearchParams({
-    //             "usernum": usernum
-    //         })
-    //     })
-    //         .then(response => {
-    //             console.log(response);
-    //             if (response.ok) {
-    //                 // 등록 성공 처리
-    //                 alert(usernum);
-    //                 window.location.reload();
-    //             } else {
-    //                 // 등록 실패 처리
-    //                 alert("fail");
-    //             }
-    //         })
-    //         .catch(error => {
-    //             // 네트워크 오류 처리
-    //             console.error('Error:', error);
-    //             alert('An error occurred. Please try again later.');
-    //         });
-    // }
+    function logout() {
+        fetch('/product/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({})
+        })
+            .then(response => {
+                console.log(response);
+                if (response.ok) {
+                    // 등록 성공 처리
+                    window.location.reload();
+                } else {
+                    // 등록 실패 처리
+                    alert("fail");
+                }
+            })
+            .catch(error => {
+                // 네트워크 오류 처리
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            });
+    }
+
+    function login() {
+        let usernum = prompt();
+        fetch('/product/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                "usernum": usernum
+            })
+        })
+            .then(response => {
+                console.log(response);
+                if (response.ok) {
+                    // 등록 성공 처리
+                    alert(usernum);
+                    window.location.reload();
+                } else {
+                    // 등록 실패 처리
+                    alert("fail");
+                }
+            })
+            .catch(error => {
+                // 네트워크 오류 처리
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            });
+    }
 
 </script>
 
