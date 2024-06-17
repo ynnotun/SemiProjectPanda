@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: minseok
-  Date: 24. 6. 13.
-  Time: 오전 11:07
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -117,7 +110,7 @@
                             <span>주의회원</span>
                         </div>
                         <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-6"></div>
-                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                        <button id="myupdate" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
                             <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -444,12 +437,12 @@
                                                 width="24"
                                                 height="24"
                                                 viewBox="0 0 24 24"
-                                                fill="currentColor"
+                                                fill="none"
                                                 stroke="currentColor"
                                                 stroke-width="2"
                                                 stroke-linecap="round"
                                                 stroke-linejoin="round"
-                                                class="w-4 h-4"
+                                                class="w-4 h-4 fill-gray-300 stroke-gray-300"
                                         >
                                             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
@@ -554,5 +547,26 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    //수정페이지이동
+    $(document).ready(function() {
+        $.ajax({
+            url: '/mypage/update',
+            type: 'GET',
+            success: function(response) {
+                const usernum = response.usernum;
+                $('#myupdate').click(function() {
+                    window.location.href = `/mypage/update?usernum=${usernum}`;
+                });
+
+            error: function(error) {
+                console.log('Fail');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

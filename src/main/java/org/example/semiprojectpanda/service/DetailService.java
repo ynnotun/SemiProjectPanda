@@ -45,5 +45,23 @@ public class DetailService {
 //        wishMapperInter.deleteWish(wishDto);
 //    }
 
+    //마이페이지 수정
+    public void updateUser(UserDto userdto) {
+        userMapperInter.updateUser(userdto);
+    }
+
+    //비밀번호 변경
+    public int getUserNumByEmail(String email) throws Exception {
+        Integer usernum = userMapperInter.getUserNumByEmail(email);
+        if (usernum == null) {
+            throw new Exception("User not found");
+        }
+        return usernum;
+    }
+    public boolean changePassword(int usernum, String newPassword) {
+        return userMapperInter.changePassword(usernum, newPassword);
+    }
+
+
 
 }
