@@ -128,19 +128,23 @@
         }
 
         $.ajax({
-            url: '/findPassword',
-            type: 'POST',
+            url: '/findPassword', // URL 경로가 올바른지 확인
+            type: 'POST', // 요청 메서드가 POST인지 확인
             contentType: 'application/x-www-form-urlencoded',
-            data: {email: email},
+            data: $.param({email: email}),
             success: function (response) {
                 const usernum = response.usernum;
+                console.log('Response: ', response); // 응답 로그 추가
                 if (usernum) {
-                    window.location.href = `/password?usernum=${usernum}`;
+                    window.location.href = `/password?usernum=` + usernum;
                 } else {
                     alert('유저를 찾을 수 없습니다.');
                 }
             },
             error: function (xhr, status, error) {
+                console.error('XHR: ', xhr); // XHR 로그 추가
+                console.error('Status: ', status); // Status 로그 추가
+                console.error('Error: ', error); // Error 로그 추가
                 alert('유저 번호 찾기에 실패했습니다.');
             }
         });

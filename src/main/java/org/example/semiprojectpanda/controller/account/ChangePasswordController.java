@@ -34,13 +34,19 @@ public class ChangePasswordController {
 
 
     @PostMapping("/password/change")
-    @ResponseBody
-    public String changePassword(@RequestParam("usernum") int usernum, @RequestParam("newPassword") String newPassword) {
-        boolean isUpdated = detailService.changePassword(usernum, newPassword);
-        if (isUpdated) {
-            return "비밀번호가 성공적으로 변경되었습니다.";
-        } else {
-            return "비밀번호 변경에 실패했습니다.";
+    public ResponseEntity<String> changePassword(@RequestBody Map<String, Object> payload) {
+        System.out.println("Received request to change password: " + payload); // 로그 추가
+
+        // 비밀번호 변경 로직 추가
+        try {
+            int usernum = Integer.parseInt((String) payload.get("usernum"));
+            String newPassword = (String) payload.get("newPassword");
+
+            detailService.changePassword(usernum, newPassword);
+            System.out.println("Usernum: " + usernum + ", New Password: " + newPassword);
+            return ResponseEntity.ok("Password changed successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Failed to change password.");
         }
     }
 }

@@ -20,8 +20,8 @@ public interface UserMapperInter {
     String getPasswordByEmail(@Param("useremail") String useremail);
 
     //usernum
-    @Select("SELECT usernum FROM USER WHERE useremail = #{email}")
-    int getUserNumByEmail(String email);
+    @Select("SELECT usernum FROM USER WHERE useremail = #{useremail}")
+    int getUserNumByEmail(@Param("useremail") String useremail);
 
     // 비밀번호 변경 메소드 추가
     @Update("UPDATE USER SET userpassword = #{newPassword} WHERE usernum = #{usernum}")

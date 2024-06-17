@@ -1,5 +1,6 @@
 package org.example.semiprojectpanda.controller.account;
 
+import com.sun.mail.iap.Response;
 import lombok.RequiredArgsConstructor;
 import org.example.semiprojectpanda.service.DetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collections;
@@ -30,15 +32,19 @@ public class SeachPasswordController {
     }
 
     @PostMapping("/findPassword")
-    public Map<String, Object> findPassword(@RequestParam("email") String email) {
+    public ResponseEntity<Map<String, Object>> findPassword(@RequestParam("email") String email) {
         Map<String, Object> result = new HashMap<>();
         try {
             int usernum = detailService.getUserNumByEmail(email);
             result.put("usernum", usernum);
+
+            return ResponseEntity.ok(result);
         } catch (Exception e) {
             result.put("error", "유저를 찾을 수 없습니다.");
+            return ResponseEntity.ok(result);
+
         }
-        return result;
     }
+
 }
 
