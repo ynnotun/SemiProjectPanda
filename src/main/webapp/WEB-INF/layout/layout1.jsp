@@ -17,6 +17,7 @@
     <style>
     </style>
 </head>
+<c:set var="root" value="<%=request.getContextPath() %>" scope="application"/>
 <body>
 <div class="mainlayout">
     <div class="header-tile">

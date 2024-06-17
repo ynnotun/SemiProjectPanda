@@ -57,7 +57,7 @@
          cursor: pointer;
      }
      .search-container {
-
+         margin-right: -64px;
      }
  </style>
 <html>
@@ -66,16 +66,17 @@
 // v0 by Vercel.
 // https://v0.dev/t/dlq5R4mPoUj
 -->
-
+</body>
 <div class="flex flex-col">
     <header class="bg-black text-white py-1 px-6 md:px-8 flex items-center justify-between">
-        <a class="flex items-center gap-2" href="#">
-            <img src="../image/logo.png" alt="">
+        <%-- logo  --%>
+        <a class="flex items-center gap-2" href="${root}/">
+            <img src="${root}/image/logo.png" alt="PANDA">
         </a>
-
         <nav class="hidden md:flex items-center gap-6">
-            <form class="search-container" action="">
-                <input id="search-box" type="text" class="search-box" name="q" />
+            <%-- search input --%>
+            <form class="search-container" action="${root}/search">
+                <input id="search-box" type="text" class="search-box" name="keyword" />
                 <label for="search-box">
                     <span class="glyphicon glyphicon-search search-icon text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -85,7 +86,8 @@
                 </label>
                 <input type="submit" id="search-submit" />
             </form>
-            <a class="flex items-center gap-2 hover:text-gray-200" href="#">
+            <%-- sell 버튼 --%>
+            <a class="flex items-center gap-2 hover:text-gray-200" href="${root}/product/write">
                 <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -103,9 +105,22 @@
                 </svg>
                 <span>Sell</span>
             </a>
-            <a class="flex items-center gap-2 hover:text-gray-200" href="#">
+            <%-- logout 버튼 - 로그인시 보임 --%>
+            <a class="flex items-center gap-2 hover:text-gray-200" href="${root}/logout">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </a>
+            <%-- login 버튼 - 로그인 안하면 보임 --%>
+            <button
+                    class="inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-[#4CAF50] hover:bg-[#43a047] text-white"
+                    type="submit" onclick="location.href='${root}/login'">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Login</span>
+            </button>
+            <%-- profile - 로그인시 보임--%>
+            <a class="flex items-center gap-2 hover:text-gray-200" href="${root}/mypage">
                 <img
-                        src="/placeholder.svg"
+                        src="${root}/image/good-member.svg"
                         width="32"
                         height="32"
                         class="rounded-full"
@@ -115,26 +130,7 @@
                 <span>Profile</span>
             </a>
         </nav>
-        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 md:hidden">
-            <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="w-6 h-6"
-            >
-                <line x1="4" x2="20" y1="12" y2="12"></line>
-                <line x1="4" x2="20" y1="6" y2="6"></line>
-                <line x1="4" x2="20" y1="18" y2="18"></line>
-            </svg>
-            <span class="sr-only">Toggle menu</span>
-        </button>
     </header>
 </div>
-</body>
+
 </html>

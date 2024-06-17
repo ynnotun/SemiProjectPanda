@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.semiprojectpanda.mapperInter.ProductMapperInter">
+
+<!--    &lt;!&ndash; 상품 추가 productcreatedat 오타 일단 냅둠&ndash;&gt;-->
+<!--    <insert id="insertProduct" parameterType="ProductDto">-->
+<!--        insert into PRODUCT (usernum, producttitle, productcontent, productprice, productaddress, categorynum,-->
+<!--                             productcreatedat, productopenchat, productlocationx, productlocationy)-->
+<!--        values (#{usernum}, #{producttitle}, #{productcontent}, #{productprice}, #{productaddress}, #{categorynum},-->
+<!--                now(), #{productopenchat}, #{productlocationx}, #{productlocationy})-->
+<!--    </insert>-->
+
+
+</mapper>
