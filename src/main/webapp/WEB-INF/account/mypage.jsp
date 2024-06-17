@@ -31,7 +31,7 @@
               <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JD</span>
             </span>
                         <div class="grid gap-1">
-                            <h1 class="text-2xl font-bold">John Doe</h1>
+                            <h1 class="text-2xl font-bold">${dto.username}</h1>
                             <div class="flex items-center gap-2 text-sm text-gray-500 ">
                                 <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@
                                     <line x1="12" x2="12" y1="19" y2="22"></line>
                                     <circle cx="12" cy="12" r="7"></circle>
                                 </svg>
-                                <span>San Francisco, CA</span>
+                                <span>${dto.useraddress}</span>
                             </div>
                         </div>
                     </div>
@@ -133,12 +133,12 @@
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
                 <section class="">
                     <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold"><a href="">판매내역</a></h2>
+                        <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=sell">판매내역</a></h2>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -164,7 +164,7 @@
                         </div>
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -190,7 +190,7 @@
                         </div>
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -212,12 +212,12 @@
                 </section>
                 <section class="">
                     <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold"><a href="">구매내역</a></h2>
+                        <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=buy">구매내역</a></h2>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -243,7 +243,7 @@
                         </div>
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -269,7 +269,7 @@
                         </div>
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <img
-                                    src="/placeholder.svg"
+                                    src=""
                                     width="300"
                                     height="200"
                                     alt="Product"
@@ -291,14 +291,14 @@
                 </section>
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
                 <div class="grid gap-4">
-                    <h2 class="text-2xl font-bold">찜목록</h2>
+                    <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=wish">찜목록</a></h2>
                     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <div class="p-6">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <img
-                                                src="/placeholder.svg"
+                                                src=""
                                                 alt="Product Image"
                                                 width="48"
                                                 height="48"
@@ -321,7 +321,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <img
-                                                src="/placeholder.svg"
+                                                src=""
                                                 alt="Product Image"
                                                 width="48"
                                                 height="48"
@@ -344,7 +344,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <img
-                                                src="/placeholder.svg"
+                                                src=""
                                                 alt="Product Image"
                                                 width="48"
                                                 height="48"
