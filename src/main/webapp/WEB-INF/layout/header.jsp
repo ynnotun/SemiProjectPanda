@@ -75,7 +75,7 @@
         </a>
         <nav class="hidden md:flex items-center gap-6">
             <%-- search input --%>
-            <form class="search-container" action="./search">
+            <form class="search-container" action="${root}/search">
                 <input id="search-box" type="text" class="search-box" name="keyword" />
                 <label for="search-box">
                     <span class="glyphicon glyphicon-search search-icon text-white">
@@ -113,14 +113,14 @@
             <%-- login 버튼 - 로그인 안하면 보임 --%>
             <button
                     class="inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-[#4CAF50] hover:bg-[#43a047] text-white"
-                    type="submit" onclick="location.href='./login'">
+                    type="submit" onclick="location.href='${root}/login'">
                 <i class="bi bi-box-arrow-left"></i>
                 <span>Login</span>
             </button>
             <%-- profile - 로그인시 보임--%>
             <a class="flex items-center gap-2 hover:text-gray-200" href="${root}/mypage">
                 <img
-                        src="../image/good-member.svg"
+                        src="${root}/image/good-member.svg"
                         width="32"
                         height="32"
                         class="rounded-full"
