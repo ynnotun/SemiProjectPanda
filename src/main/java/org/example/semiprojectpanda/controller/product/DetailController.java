@@ -131,6 +131,9 @@ public class DetailController {
             case "finish":
                 chatService.chatComplete(usernum, productnum, customerNum);
                 break;
+            case "cancel":
+                chatService.chatReserveCancel(usernum, productnum, customerNum);
+                break;
             default:
                 result.put("status", "fail");
                 return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
@@ -167,26 +170,26 @@ public class DetailController {
 
 
 
-//    @Transactional
-//    @PostMapping("/product/login")
-//    public ResponseEntity<Map<String, String>> loginAction(
-//            @RequestParam("usernum") int usernum,
-//            HttpServletRequest request
-//    ) {
-//        HttpSession session = request.getSession();
-//        session.setAttribute("usernum", usernum);
-//        return ResponseEntity.ok(Map.of("message", "Success"));
-//    }
-//
-//    @Transactional
-//    @PostMapping("/product/logout")
-//    public ResponseEntity<Map<String, String>> logoutAction(
-//            HttpServletRequest request
-//    ) {
-//
-//        HttpSession session = request.getSession();
-//        session.removeAttribute("usernum");
-//        return ResponseEntity.ok(Map.of("message", "Success"));
-//    }
+    @Transactional
+    @PostMapping("/product/login")
+    public ResponseEntity<Map<String, String>> loginAction(
+            @RequestParam("usernum") int usernum,
+            HttpServletRequest request
+    ) {
+        HttpSession session = request.getSession();
+        session.setAttribute("usernum", usernum);
+        return ResponseEntity.ok(Map.of("message", "Success"));
+    }
+
+    @Transactional
+    @PostMapping("/product/logout")
+    public ResponseEntity<Map<String, String>> logoutAction(
+            HttpServletRequest request
+    ) {
+
+        HttpSession session = request.getSession();
+        session.removeAttribute("usernum");
+        return ResponseEntity.ok(Map.of("message", "Success"));
+    }
 
 }
