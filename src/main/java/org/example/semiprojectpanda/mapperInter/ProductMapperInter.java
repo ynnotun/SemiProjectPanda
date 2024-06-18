@@ -42,6 +42,10 @@ public interface ProductMapperInter {
     @Select("select * from PRODUCT where customernum=#{customernum} order by productnum desc")
     public List<ProductDto> getBuyList(int customernum);
 
+    //검색 결과 불러오기
+    @Select("SELECT * FROM PRODUCT  WHERE productaddress LIKE keyword=#{keyword} or producttitle LIKE keyword=#{keyword} or productcontent like keyword=#{keyword}")
+    List<ProductDto> getSearchList(String keyword);
+
     //판매내역 최신순으로 4개만 불러오기
     @Select("select * from PRODUCT where usernum=#{usernum} order by productnum desc LIMIT 0, 4")
     public List<ProductDto> getFourFromSellList(int usernum);
