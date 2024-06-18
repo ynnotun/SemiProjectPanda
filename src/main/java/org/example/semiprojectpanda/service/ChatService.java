@@ -73,6 +73,27 @@ public class ChatService {
         );
     }
 
+    @Transactional
+    public void chatReserveCancel(int usernum, int productnum, int customerNum) {
+        var customerDto = userMapperInter.findByUsernum(customerNum);
+        chatMapperInter.insertChat(
+                ChatDto.builder()
+                        .usernum(usernum)
+                        .productnum(productnum)
+                        .chatcontent(customerDto.getUsernickname() + "님과 예약이 취소되었습니다.")
+                        .build()
+        );
+        productMapperInter.updateProductStatusAndCustomer(
+                ProductDto.builder()
+                        .productnum(productnum)
+                        .productstatus("판매 중")
+                        .build()
+        );
+    }
+
+
+
+
 
 
     public List<ChatLogDto> getChatListByProductNum(int productnum) {
