@@ -35,10 +35,19 @@ public interface ProductMapperInter {
     void updateProductStatusAndCustomer(ProductDto productDto);
 
     //판매내역 불러오기
-    @Select("select * from PRODUCT where usernum=#{usernum} ") //url에 ?usernum=1 ->파라미터(매개변수)를 받아온다.
+    @Select("select * from PRODUCT where usernum=#{usernum} order by productnum desc") //url에 ?usernum=1 ->파라미터(매개변수)를 받아온다.
     public List<ProductDto> getSellList(int usernum); //자바에서 어떤 이름으로 불러올지 메소드 이름 선정
 
     //구매내역 불러오기
-    @Select("select * from PRODUCT where customernum=#{customernum}")
+    @Select("select * from PRODUCT where customernum=#{customernum} order by productnum desc")
     public List<ProductDto> getBuyList(int customernum);
+
+    //판매내역 최신순으로 4개만 불러오기
+    @Select("select * from PRODUCT where usernum=#{usernum} order by productnum desc LIMIT 0, 4")
+    public List<ProductDto> getFourFromSellList(int usernum);
+
+    //구매내역 최신순으로 4개만 불러오기
+    @Select("select * from PRODUCT where customernum=#{customernum} order by productnum desc LIMIT 0, 4")
+    public List<ProductDto> getFourFromBuyList(int usernum);
+
 }
