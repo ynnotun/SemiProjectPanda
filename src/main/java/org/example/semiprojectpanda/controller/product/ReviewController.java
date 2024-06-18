@@ -26,7 +26,7 @@ public class ReviewController {
     private String folderName = "panda";
 
     //리뷰 작성버튼을 누르면 해당 상품의 리뷰 페이지로 이동 //아직 매핑 안됨!!!!!!
-    // /product/review?reviewreceiveuser=123&reviewsenduser=123&productnum=123
+    // /product/review?reviewreceiveuser=123&reviewsenduser=123&productnum=123????????
     @GetMapping("/product/review")
     public String productReview(/*@RequestParam int productnum,*/ Model model) {
         //model.addAttribute("productnum", 50);

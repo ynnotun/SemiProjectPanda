@@ -36,7 +36,6 @@ public class WriteController {
     @GetMapping("/product/write")
     public String productWrite(Model model) {
         // login 상태가 아니라면 등록 글에 접근 못하고 로그인 페이지로 이동하도록
-        //여기 추가
 
         //CATEGORY 받아와서 나열하기
         List<CategoryDto> categories = productWriteService.getAllCategories();

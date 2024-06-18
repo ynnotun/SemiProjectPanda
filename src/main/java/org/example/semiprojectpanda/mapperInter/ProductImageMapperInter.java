@@ -20,9 +20,11 @@ public interface ProductImageMapperInter {
     void insertProductImage(ProductImageDto productImageDto);
 
     //productImage 수정
-    @Update("""
+    //수정 매커니즘?
+    /*@Update("""
+
         """)
-    void updateProductImage(ProductImageDto productImageDto);
+    void updateProductImage(ProductImageDto productImageDto);*/
 
     @Select("SELECT * FROM PRODUCT_IMAGE WHERE productnum = #{productnum}")
     List<ProductImageDto> findImageByProductnum(int productnum);

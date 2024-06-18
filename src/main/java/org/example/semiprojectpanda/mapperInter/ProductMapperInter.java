@@ -17,10 +17,10 @@ public interface ProductMapperInter {
     void insertProduct(ProductDto productDto);
 
     //상품의 내용 수정
-    @Update("""
+    /*@Update("""
             
             """)
-    void updateProduct(ProductDto productDto);
+    void updateProduct(ProductDto productDto);*/
     
     //상품번호로 상품 정보 불러오기
     @Select("SELECT * FROM PRODUCT WHERE productnum = #{productnum}")

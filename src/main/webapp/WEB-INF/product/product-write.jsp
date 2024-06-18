@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-    <title></title>
+    <title>Post Item</title>
 
     <style>
         #preview {
@@ -153,7 +153,6 @@
                                 placeholder="Enter the location"
                                 onclick="openDaumPostcode()"/>
                     </div>
-
                     <input type="hidden" id="latitude" name="productlocationx"/>
                     <input type="hidden" id="longitude" name="productlocationy"/>
                 </div>
@@ -325,24 +324,34 @@
 </script>
 
 <!-- 주소입력 팝업 api -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- kakao 주소찾기 -->
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d0988ea389a80dcfa4f93816fc3b6129&libraries=services"></script><!-- kakao JS appkey 콩비꺼 넣음 -->
+
 <script>
-    function openDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function (data) {
-                // 도로명 주소 변수
-                var roadAddr = data.roadAddress;
-
-                // 도로명 주소를 input에 넣기
-                document.getElementById('location').value = roadAddr;
-                console.log(roadAddr);
-
-                // 임시 위도와 경도 설정
-                document.getElementById('latitude').value = 37.1234567; // 임시 위도 설정
-                document.getElementById('longitude').value = 127.9876543; // 임시 경도 설정
-            }
-        }).open();
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        function openDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var geocoder = new kakao.maps.services.Geocoder();
+                    var roadAddr = data.roadAddress;
+                    var callback = function(result, status) {
+                        if (status === kakao.maps.services.Status.OK) {
+                            console.log(result);
+                            var lat = result[0].y;
+                            var lng = result[0].x;
+                            document.getElementById('latitude').value = lat;
+                            document.getElementById('longitude').value = lng;
+                            console.log('위도:', lat, '경도:', lng);
+                        }
+                    };
+                    document.getElementById('location').value = roadAddr;
+                    console.log(roadAddr);
+                    geocoder.addressSearch(roadAddr, callback);
+                }
+            }).open();
+        }
+        window.openDaumPostcode = openDaumPostcode;
+    });
 </script>
 
 </body>
