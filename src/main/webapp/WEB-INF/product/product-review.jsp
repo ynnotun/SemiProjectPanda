@@ -34,6 +34,10 @@
                     <p class="text-gray-500">Please provide your feedback on the recent transaction.</p>
                 </div>
                 <form action="/product/review" method="post">
+                    <input type="hidden" name="reviewsenduser" value="1"><!-- 임시값 -->
+                    <input type="hidden" name="reviewreceiveuser" value="2"><!-- 임시값 -->
+                    <input type="hidden" name="productnum" value="50"><!-- 임시값 -->
+
                     <div class="grid gap-4">
                         <!-- 별점 추가 기능 -->
                         <div class="flex items-center gap-2" id="star-container">
@@ -107,11 +111,14 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const stars = document.querySelectorAll('.star');
+        const reviewStarInput = document.getElementById('reviewstar');
+
 
         stars.forEach(star => {
             star.addEventListener('click', function () {
                 const value = this.getAttribute('data-value');
                 highlightStars(value);
+                reviewStarInput.value = value;
             });
         });
 
