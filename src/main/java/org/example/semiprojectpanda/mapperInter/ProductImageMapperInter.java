@@ -13,7 +13,7 @@ public interface ProductImageMapperInter {
 
     //productImage 추가
     @Insert("""
-        INSERT INTO PRODUCTIMAGE (productnum, imagefilename)
+        INSERT INTO PRODUCT_IMAGE (productnum, imagefilename)
           VALUES (#{productnum}, #{imagefilename})
       """)
     void insertProductImage(ProductImageDto productImageDto);

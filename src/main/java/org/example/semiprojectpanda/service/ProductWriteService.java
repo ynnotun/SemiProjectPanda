@@ -28,18 +28,21 @@ public class ProductWriteService {
     */
     
     //product 추가
+    @Transactional
     public void insertProduct(ProductDto productDto)
     {
         productMapperInter.insertProduct(productDto);
     }
 
     //productImage 추가
+    @Transactional
     public void insertProductImage(ProductImageDto productImageDto)
     {
         productImageMapperInter.insertProductImage(productImageDto);
     }
 
     //Hashtag 추가
+    @Transactional
     public void insertHashtag(HashtagDto hashtagDto)
     {
         hashtagMapperInter.insertHashTag(hashtagDto);

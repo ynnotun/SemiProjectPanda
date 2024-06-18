@@ -154,8 +154,8 @@
                                 onclick="openDaumPostcode()"/>
                     </div>
 
-                    <input type="hidden" id="latitude" name="productlocationx">
-                    <input type="hidden" id="longitude" name="productlocationy">
+                    <input type="hidden" id="latitude" name="productlocationx"/>
+                    <input type="hidden" id="longitude" name="productlocationy"/>
                 </div>
 
                 <!-- 카테고리 입력 -->
@@ -190,7 +190,7 @@
                             placeholder="Enter the Kakaotalk openchat"/>
                 </div>
 
-                <!-- 해시태그 이벤트 -->
+                <!-- 해시태그 입력 -->
                 <div class="grid gap-2">
                     <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                         Hashtags
@@ -201,7 +201,7 @@
                         <!-- 해시태그가 여기에 나열됩니다 -->
                     </div>
 
-                    <!-- 해시태그 입력 -->
+                    <!-- 해시태그 입력란 -->
                     <div>
                         <input
                                 id="hashtag-input"
@@ -216,6 +216,10 @@
                                 onkeydown="handleHashtagInput(event)"
                         />
                     </div>
+
+                    <!-- 입력된 해시태그들 전달 -->
+                    <input type="hidden" id="hashtaglist" name="hashtaglist"/>
+
                 </div>
 
                 <!-- 게시글 등록 버튼 -->
@@ -275,7 +279,8 @@
     const maxHashtags = 5;
     const hashtagContainer = document.getElementById('hashtag-container');
     const hashtagInput = document.getElementById('hashtag-input');
-    let hashtags = [];
+    const hashtagListInput = document.getElementById('hashtaglist');
+    const hashtags = [];
 
     //해시태그 입력중 enter가 입력되면 내용 잘라서 addHashtag함수 수행
     function handleHashtagInput(event) {
@@ -299,10 +304,11 @@
         if (!hashtags.includes(tag)) {
             hashtags.push(tag);
             renderHashtags();
+            updateHiddenInput();
         }
     }
 
-    //출력
+    //나열 출력
     function renderHashtags() {
         hashtagContainer.innerHTML = '';
         hashtags.forEach(tag => {
@@ -311,6 +317,10 @@
             tagElement.textContent = tag;
             hashtagContainer.appendChild(tagElement);
         });
+    }
+
+    function updateHiddenInput() {
+        hashtagListInput.value = hashtags.join(',');
     }
 </script>
 
