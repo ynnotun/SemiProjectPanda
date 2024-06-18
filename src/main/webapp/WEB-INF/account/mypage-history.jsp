@@ -17,7 +17,7 @@
     <title>나의 내역</title>
 
     <style>
-        .round-button, .round-button-secondary {
+        .round-button{
             border-radius: 20px;
         }
         .active {
