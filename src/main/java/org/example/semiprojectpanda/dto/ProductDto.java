@@ -23,7 +23,6 @@ public class ProductDto {
     private int productreadcount;
     private String productstatus;
     private Timestamp productcreatedat;
-    // productcreatedat 오타
     private String productopenchat;
     private double productlocationx;
     private double productlocationy;

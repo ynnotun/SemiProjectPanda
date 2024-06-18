@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -13,8 +14,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-
     <title></title>
+
+    <style>
+        #preview {
+            width: 80%;
+            display: flex;
+            overflow-x: auto; /* 가로 스크롤 활성화 */
+            white-space: nowrap; /* 요소들이 한 줄로 표시되도록 설정 */
+            gap: 1rem; /* 이미지 간격 설정 */
+            scrollbar-width: none;
+        }
+        #preview img {
+            flex-shrink: 0; /* 이미지가 줄어들지 않도록 설정 */
+        }
+    </style>
 
 </head>
 <body>
@@ -35,7 +49,8 @@
             </div>
 
             <!-- 폼태그 시작 -->
-            <form class="grid gap-6">
+            <form class="grid gap-6" method="post" action="/product/write" enctype="multipart/form-data">
+                <input type="hidden" name="usernum" value="1"><!-- 임시 -->
                 <!-- 게시글 제목 입력란 -->
                 <div class="grid gap-2">
                     <label
@@ -46,6 +61,8 @@
                     <input
                             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="title"
+                            name="producttitle"
+                            required="required"
                             placeholder="Enter the title of your item"/>
                 </div>
 
@@ -75,7 +92,7 @@
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
                         </button>
-                        <input type="file" id="file-input" accept="image/*" multiple class="hidden">
+                        <input type="file" id="file-input" name="productImages" accept="image/*" multiple class="hidden">
 
                         <!-- 사진 미리보기 -->
                         <div id="preview" class="mt-0 flex items-start gap-2">
@@ -85,7 +102,6 @@
                 </div>
 
                 <!-- 중고제품 설명 입력 -->
-                <!-- description -->
                 <div class="grid gap-2">
                     <label
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -95,12 +111,14 @@
                     <textarea
                             class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="description"
+                            name="productcontent"
+                            required="required"
                             placeholder="Provide a detailed description of your item"
                             rows="4"></textarea>
                 </div>
 
+                <!-- 가격, 거래희망지역 -->
                 <div class="grid md:grid-cols-2 gap-6">
-
                     <!-- 가격 입력 -->
                     <div class="grid gap-2">
                         <label
@@ -113,6 +131,8 @@
                                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                     type="number"
                                     id="price"
+                                    name="productprice"
+                                    required="required"
                                     placeholder="Enter the price"/>
                         </div>
                     </div>
@@ -128,12 +148,49 @@
                         <input
                                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 id="location"
+                                name="productaddress"
+                                required="required"
                                 placeholder="Enter the location"
                                 onclick="openDaumPostcode()"/>
                     </div>
+
+                    <input type="hidden" id="latitude" name="productlocationx"/>
+                    <input type="hidden" id="longitude" name="productlocationy"/>
                 </div>
 
-                <!-- 해시태그 이벤트 -->
+                <!-- 카테고리 입력 -->
+                <div class="grid gap-2">
+                    <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="category">
+                        Category
+                    </label>
+                    <div class="flex items-center gap-2">
+                        <select class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                id="category"
+                                name="categorynum">
+                            <option value="" selected disabled hidden>Select category</option>
+                            <c:forEach var="category" items="${categories}">
+                                <option value="${category.categorynum}">${category.categoryname}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 오픈 채팅 입력 -->
+                <div class="grid gap-2">
+                    <label
+                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            for="openchat">
+                        KakaoTalk OpenChat
+                    </label>
+                    <input
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            id="openchat"
+                            name="productopenchat"
+                            required="required"
+                            placeholder="Enter the Kakaotalk openchat"/>
+                </div>
+
+                <!-- 해시태그 입력 -->
                 <div class="grid gap-2">
                     <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                         Hashtags
@@ -144,7 +201,7 @@
                         <!-- 해시태그가 여기에 나열됩니다 -->
                     </div>
 
-                    <!-- 해시태그 입력 -->
+                    <!-- 해시태그 입력란 -->
                     <div>
                         <input
                                 id="hashtag-input"
@@ -154,10 +211,15 @@
         focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed
         disabled:opacity-50 bg-green-50 text-green-500
         px-3 py-1 rounded-full"
+                                name="hashtags"
                                 placeholder="Add a hashtag"
-                                onkeyup="handleHashtagInput(event)"
+                                onkeydown="handleHashtagInput(event)"
                         />
                     </div>
+
+                    <!-- 입력된 해시태그들 전달 -->
+                    <input type="hidden" id="hashtaglist" name="hashtaglist"/>
+
                 </div>
 
                 <!-- 게시글 등록 버튼 -->
@@ -171,14 +233,10 @@
                         Post Item
                     </button>
                 </div>
-            </form>
-            <!-- 폼태그 끝 -->
+            </form><!-- 폼태그 끝 -->
         </div>
     </div>
 </div>
-<!-- usernum, producttitle, productcontent, productprice, productaddress, categorynum,
-     productcreatedat, productopenchat, productlocationx, productlocationy -->
-<!-- 카테고리 입력필요, 오픈채팅방 입력필요 -->
 
 <!-- 이미지 업로드 이벤트 -->
 <script>
@@ -206,6 +264,14 @@
             });
         }
     });
+
+    //미리보기 이미지 가로 스크롤링
+    document.getElementById('preview').addEventListener('wheel', function(event) {
+        if (event.deltaY !== 0) {
+            event.preventDefault();
+            this.scrollLeft += event.deltaY;
+        }
+    });
 </script>
 
 <!-- 해시태그 이벤트 -->
@@ -213,11 +279,13 @@
     const maxHashtags = 5;
     const hashtagContainer = document.getElementById('hashtag-container');
     const hashtagInput = document.getElementById('hashtag-input');
-    let hashtags = [];
+    const hashtagListInput = document.getElementById('hashtaglist');
+    const hashtags = [];
 
     //해시태그 입력중 enter가 입력되면 내용 잘라서 addHashtag함수 수행
     function handleHashtagInput(event) {
         if (event.key === 'Enter') {
+            event.preventDefault(); // 기본 동작 중지
             const inputValue = event.target.value.trim();
             if (inputValue && hashtags.length < maxHashtags) {
                 addHashtag(inputValue);
@@ -236,10 +304,11 @@
         if (!hashtags.includes(tag)) {
             hashtags.push(tag);
             renderHashtags();
+            updateHiddenInput();
         }
     }
 
-    //출력
+    //나열 출력
     function renderHashtags() {
         hashtagContainer.innerHTML = '';
         hashtags.forEach(tag => {
@@ -249,6 +318,10 @@
             hashtagContainer.appendChild(tagElement);
         });
     }
+
+    function updateHiddenInput() {
+        hashtagListInput.value = hashtags.join(',');
+    }
 </script>
 
 <!-- 주소입력 팝업 api -->
@@ -257,10 +330,20 @@
     function openDaumPostcode() {
         new daum.Postcode({
             oncomplete: function (data) {
-                document.getElementById('location').value = data.address;
+                // 도로명 주소 변수
+                var roadAddr = data.roadAddress;
+
+                // 도로명 주소를 input에 넣기
+                document.getElementById('location').value = roadAddr;
+                console.log(roadAddr);
+
+                // 임시 위도와 경도 설정
+                document.getElementById('latitude').value = 37.1234567; // 임시 위도 설정
+                document.getElementById('longitude').value = 127.9876543; // 임시 경도 설정
             }
         }).open();
     }
 </script>
+
 </body>
 </html>
