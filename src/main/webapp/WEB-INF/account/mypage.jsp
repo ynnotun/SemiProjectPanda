@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: minseok
@@ -16,7 +17,7 @@
 
     <title></title>
     <style>
-        .button-primary:hover{
+        .button-primary:hover {
             background-color: rgb(30 41 59) !important;
         }
     </style>
@@ -31,14 +32,20 @@
     <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
         <div class="grid ">
             <div class="grid gap-8">
-
+                <%-- 내 정보 --%>
                 <div class="grid gap-4">
                     <div class="flex items-center gap-4">
             <span class="relative flex shrink-0 overflow-hidden rounded-full w-16 h-16 border-2 border-green-500">
-              <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JD</span>
+              <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
+                  <%--<img src="${root}/${dto.userprofileimage}" alt="">--%>
+                  <img src="${root}/image/good-member.svg" alt="" width="100%">
+              </span>
             </span>
                         <div class="grid gap-1">
                             <h1 class="text-2xl font-bold">${dto.username}</h1>
+
+                            <%-- 주소 --%>
+                            <c:if test="${'유저본인인가에 대한 조건'}">
                             <div class="flex items-center gap-2 text-sm text-gray-500 ">
                                 <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -60,6 +67,7 @@
                                 </svg>
                                 <span>${dto.useraddress}</span>
                             </div>
+                            </c:if>
                         </div>
                     </div>
                     <div class="flex items-center gap-4">
@@ -75,9 +83,9 @@
                                         stroke-width="2"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                        class="w-4 h-4"
-                                >
-                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        class="w-4 h-4">
+                                    <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                 </svg>
                             </span>
                             <span>4.8</span>
@@ -104,19 +112,26 @@
                             <span>125 reviews</span>
                         </div>
                         <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-6"></div>
-                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
-                            <img src="../image/good-member.svg" alt="">
-                            <span>우수회원</span>
-                        </div>
-                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
-                            <img src="../image/normal-member.svg" alt="">
-                            <span>일반회원</span>
-                        </div>
-                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
-                            <img src="../image/bad-member.svg" alt="">
-                            <span>주의회원</span>
-                        </div>
+                            <c:if test="${usergrade.equals('good')}">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 ">
+                                <img src="../image/good-member.svg" alt="">
+                                <span>우수회원</span>
+                            </div>
+                            </c:if>
+                            <c:if test="${usergrade.equals('normal')}">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 ">
+                                <img src="../image/normal-member.svg" alt="">
+                                <span>일반회원</span>
+                            </div>
+                            </c:if>
+                            <c:if test="${usergrade.equals('bad')}">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 ">
+                                <img src="../image/bad-member.svg" alt="">
+                                <span>주의회원</span>
+                            </div>
+                            </c:if>
                         <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-6"></div>
+                        <c:if test="${'유저본인인가에 대한 조건'}">
                         <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
                             <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -135,12 +150,17 @@
                             </svg>
                             <span class="sr-only">Settings</span>
                         </button>
+                        </c:if>
                     </div>
                 </div>
+
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
+
+                <%-- 판매내역 --%>
                 <section class="">
                     <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=sell">판매내역</a></h2>
+                        <h2 class="text-2xl font-bold"><a
+                                href="${root}/mypage/history?usernum=${usernum}&listname=sell">판매내역</a></h2>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
@@ -217,9 +237,12 @@
                         </div>
                     </div>
                 </section>
+                <c:if test="${'유저본인인가에 대한 조건'}">
+                <%-- 구매내역 --%>
                 <section class="">
                     <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=buy">구매내역</a></h2>
+                        <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=buy">구매내역</a>
+                        </h2>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
@@ -297,8 +320,11 @@
                     </div>
                 </section>
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
+
+                <%-- 찜목록 --%>
                 <div class="grid gap-4">
-                    <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=wish">찜목록</a></h2>
+                    <h2 class="text-2xl font-bold"><a
+                            href="${root}/mypage/history?usernum=${usernum}&listname=wish">찜목록</a></h2>
                     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <div class="p-6">
@@ -372,9 +398,12 @@
                     </div>
                 </div>
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
+                </c:if>
+                <%-- 리뷰 --%>
                 <div class="grid gap-4">
                     <h2 class="text-xl font-bold">Reviews</h2>
                     <div class="grid gap-6">
+                        <%-- 리뷰 글 --%>
                         <div class="flex items-start gap-4">
               <span class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border">
                 <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JD</span>
@@ -395,7 +424,8 @@
                                                 stroke-linejoin="round"
                                                 class="w-4 h-4"
                                         >
-                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
                                         <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -409,7 +439,8 @@
                                                 stroke-linejoin="round"
                                                 class="w-4 h-4"
                                         >
-                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
                                         <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -423,7 +454,8 @@
                                                 stroke-linejoin="round"
                                                 class="w-4 h-4"
                                         >
-                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
                                         <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -437,7 +469,8 @@
                                                 stroke-linejoin="round"
                                                 class="w-4 h-4"
                                         >
-                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
                                         <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -451,16 +484,19 @@
                                                 stroke-linejoin="round"
                                                 class="w-4 h-4"
                                         >
-                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
                                     </div>
                                 </div>
                                 <p class="text-sm text-gray-500 ">
-                                    John is a fantastic seller! He was very responsive and the item arrived in perfect condition. I
+                                    John is a fantastic seller! He was very responsive and the item arrived in perfect
+                                    condition. I
                                     would definitely buy from him again.
                                 </p>
                             </div>
                         </div>
+                        <%-- 리뷰 글 --%>
                         <div class="flex items-start gap-4">
               <span class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border">
                 <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JD</span>
@@ -481,7 +517,8 @@
                                                 stroke-linejoin="round"
                                                 class="w-4 h-4"
                                         >
-                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
                                         <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -495,7 +532,8 @@
                                                 stroke-linejoin="round"
                                                 class="w-4 h-4"
                                         >
-                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
                                         <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -509,7 +547,8 @@
                                                 stroke-linejoin="round"
                                                 class="w-4 h-4"
                                         >
-                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
                                         <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -523,7 +562,8 @@
                                                 stroke-linejoin="round"
                                                 class="w-4 h-4"
                                         >
-                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
 
                                         <svg
@@ -538,12 +578,14 @@
                                                 stroke-linejoin="round"
                                                 class="w-4 h-4 fill-gray-300 stroke-gray-300"
                                         >
-                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                            <polygon
+                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                         </svg>
                                     </div>
                                 </div>
                                 <p class="text-sm text-gray-500 ">
-                                    John was great to work with, but the item I received had a minor scratch that wasn't mentioned in
+                                    John was great to work with, but the item I received had a minor scratch that wasn't
+                                    mentioned in
                                     the listing. Still, I'm happy with the purchase.
                                 </p>
                             </div>
