@@ -30,23 +30,26 @@
 <script>
     $(function () {
         $("#btnlogin").click(function () {
-            //폼안의 입력값 읽기
-            let fdata=$("#loginform").serialize();
+            // 폼 안의 입력값 읽기
+            let fdata = $("#loginform").serialize();
+            console.log(fdata); // 디버깅용 로그 출력
             $.ajax({
-                type:"get",
-                dataType:"json",
-                url:'/member/login',
-                data:fdata,
-                success:function (data) {
-                    if (data.status==="success"){
-                        //페이지 새로고침
-                        location.href="/"
-                    }else {
-                        alert("아이디 또는 비밀번호가 맞지 않아용~");
+                type: "get",
+                dataType: "json",
+                url: "/member/login",
+                data: fdata,
+                success: function (data) {
+                    console.log(data); // 디버깅용 로그 출력
+                    if (data.status === "success") {
+                        // 페이지 새로고침
+                        location.href = "/";
+                    } else {
+                        alert("아이디 또는 비밀번호가 맞지 않습니다.");
                     }
                 },
-                error : function (){
-                    alert("전송오류")
+                error: function (xhr, status, error) {
+                    console.error("전송 오류 발생:", status, error); // 오류 로그 출력
+                    alert("전송 오류가 발생했습니다.");
                 }
             })
         })
@@ -60,7 +63,7 @@
 
 <div class="w-full max-w-md mx-auto p-6 md:p-8" style="height: 100%">
     <h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
-    <form class="space-y-4">
+    <form id="loginform" class="space-y-4">
         <div style="padding-top: 15px;">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -71,6 +74,7 @@
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     type="email"
                     id="email"
+                    name="useremail"
                     placeholder="Enter your email"/>
         </div>
         <div>
@@ -83,6 +87,7 @@
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     type="password"
                     id="password"
+                    name="userpassword"
                     placeholder="Enter your password"/>
         </div>
         <div class="flex items-center justify-between">
@@ -112,7 +117,7 @@
         </div>
         <button
                 class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
-                type="button" id="loginform">
+                type="button" id="btnlogin">
             Login
         </button>
         <div class="text-center text-sm text-gray-500">

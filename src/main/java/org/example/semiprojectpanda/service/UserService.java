@@ -16,7 +16,8 @@ public class UserService {
     public void insertMember(UserDto dto){
         UserMapperInter.insertUser(dto);
     }
-    public boolean isLoginCheck(String useremail,String userpassword){
-        return UserMapperInter.isLoginCheck(useremail,userpassword)==1?true:false;
+    public boolean isLoginCheck(String myid,String pass){
+        return UserMapperInter.memberLogin(myid,pass)==1?true:false;
     }
+
 }
