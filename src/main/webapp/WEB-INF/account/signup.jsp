@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: minseok
-  Date: 24. 6. 13.
-  Time: 오전 11:07
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -97,6 +90,7 @@
     <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
     <form class="space-y-4" action="./save" method="post" enctype="multipart/form-data">
         <div class="page" id="page1" style="width: 100%">
+            <div style="padding-bottom: 15px; width: 40%; margin: auto;">
         <div style="padding-bottom: 15px; width: 40%; margin: auto;">
            <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -140,34 +134,117 @@
             <div class="flex-1">
                 <label
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        for="email">
-                    Email
+                        for="name">
+                    Name
                 </label>
                 <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"/>
+            </div>
+            <div style="padding-bottom: 15px; width: 40%; margin: auto;">
+                <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="phone">
+                    Phone Number
+                </label>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="tel"
+                        id="phone"
+                        placeholder="Enter your phone number"/>
+            </div>
+            <div style="padding-bottom: 15px; width: 40%; margin: auto;">
+                <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="address">
+                    Address
+                </label>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="text"
+                        id="address"
+                        placeholder="Enter your address"/>
+            </div>
+            <div class="flex items-center" style="padding-bottom: 15px; width: 40%; margin: auto;">
+                <div class="flex-1">
+                    <label
+                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            for="email">
+                        Email
+                    </label>
+                    <input
+                            class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"/>
+                </div>
+                <button class="emailchecked" id="checkButton" type="button">
+                    인증코드 전송
+                </button>
                         class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                         type="email"
                         id="email"
                         name="useremail"
                         placeholder="Enter your email"/>
             </div>
-            <button class="emailchecked" id="checkButton" type="button">
-                Check Availability
-            </button>
-        </div>
             <div class="flex items-center hidden" id="emailCheckSection" style="padding-bottom: 15px; width: 40%; margin: auto;">
                 <div class="flex-1">
                     <label
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             for="email">
+                        인증코드 입력
+                    </label>
                         Email Check
                     </label><div id="timer" style="color: red">남은시간 03:00</div>
                     <input
                             class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="emailcheck"
-                            placeholder="email check"/>
+                            placeholder="Enter verification code"/>
                 </div>
-                <button class="emailchecked" type="button">
-                    Check
+                <button class="emailchecked" type="button" id="verifyButton">
+                    인증
+                </button>
+            </div>
+            <div style="padding-bottom: 15px; width: 40%; margin: auto;">
+                <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="password">
+                    Password
+                </label>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"/>
+            </div>
+            <div style="padding-bottom: 15px; width: 40%; margin: auto;">
+                <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="confirm-password">
+                    Confirm Password
+                </label>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="password"
+                        id="confirm-password"
+                        placeholder="Confirm your password"/>
+            </div>
+            <div style="padding-bottom: 15px; width: 40%; margin: auto;">
+                <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="dob">
+                    Date of Birth
+                </label>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="date"
+                        id="dob" style="margin-bottom: 15px;"/>
+                <button
+                        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
+                        type="button" id="next">
+                    Next
                 </button>
             </div>
         <div style="padding-bottom: 15px; width: 40%; margin: auto;">
@@ -248,6 +325,10 @@
                         <label class="block text-sm font-medium text-gray-700 ">Default Profile Options</label>
                         <div class="mt-1 grid grid-cols-3 gap-3">
                             <div class="relative">
+                                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
+                                    <img src="https://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg"
+                                         alt="Profile 1" class="h-full w-full object-cover propileimg"
+                                         onclick=""/>
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg1">
                                     <img src="https://kr.object.ncloudstorage.com/semi/panda/%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%841.png"
                                          alt="Profile 1" class="h-full w-full object-cover profilephoto"
@@ -258,6 +339,17 @@
                                 </div>
                             </div>
                             <div class="relative">
+                                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
+                                    <img src="https://e7.pngegg.com/pngimages/170/523/png-clipart-kakaotalk-kakao-friends-sticker-kakaotalk-white-face-thumbnail.png"
+                                         alt="Profile 2" class="h-full w-full object-cover propileimg"
+                                         onclick=""/>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWGkRSo6snU44wyzDqcXn9sjH3iynRMBcesw&s"
+                                         alt="Profile 3" class="h-full w-full object-cover propileimg"
+                                         onclick=""/>
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg2">
                                     <img src="https://kr.object.ncloudstorage.com/semi/panda/%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%842.jpeg"
                                          alt="Profile 2" class="h-full w-full object-cover profilephoto"
@@ -313,9 +405,8 @@
 </div>
 
 
-
-
 <script>
+    let isVerified = false;
     var timerInterval;
     $('#checkButton').click(function() {
         clearInterval(timerInterval);
@@ -343,7 +434,66 @@
         $("#page1").css("transform", "translateX(0)");
         $("#page2").css("transform", "translateX(100%)");
     })
-    $("#propileimg1").click(function (){
+
+    function sendCode() {
+        const email = $('#email').val();
+        const mailDto = {
+            email: email,
+            message: ''
+        };
+
+        $.ajax({
+            url: '/mail/send',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(mailDto),
+            success: function(response) {
+                alert('인증번호를 전송했습니다.');
+                $('#emailCheckSection').removeClass('hidden');
+            },
+            error: function(error) {
+                alert('Failed to send verification code.');
+            }
+        });
+    }
+
+    function verifyCode() {
+        const email = $('#email').val();
+        const code = $('#emailcheck').val();
+
+        $.ajax({
+            url: '/mail/verify',
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded',
+            data: $.param({ email: email, code: code }),
+            success: function(response) {
+                if (response === "인증 성공") {
+                    alert('인증 성공했습니다.');
+                    isVerified = true;
+                } else {
+                    alert('인증 실패했습니다.');
+                }
+            },
+            error: function(xhr, status, error) {
+                if (xhr.status === 400) {
+                    alert('인증 실패했습니다.');
+                } else {
+                    alert('Failed to verify code.');
+                }
+            }
+        });
+    }
+
+    $("#next").click(function (){
+        if (isVerified) {
+            $("#page1").css("transform", "translateX(-100%)");
+            $("#page2").css("transform", "translateX(0)");
+        } else {
+            alert('이메일 인증을 완료해주세요.');
+        }
+    })
+
+        $("#propileimg1").click(function (){
         $("#propileimg1").css("border", "3px solid black");
         $("#propileimg2").css("border", "1px solid #ddd");
         $("#propileimg3").css("border", "1px solid #ddd");
@@ -363,7 +513,11 @@
     })
     $(document).ready(function() {
         $("#checkButton").click(function() {
-            $("#emailCheckSection").removeClass('hidden');
+            sendCode();
+        });
+
+        $("#verifyButton").click(function() {
+            verifyCode();
         });
     });
     $("#photoupload").change(function () {
