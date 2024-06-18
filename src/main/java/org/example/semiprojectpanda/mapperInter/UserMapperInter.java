@@ -41,6 +41,6 @@ public interface UserMapperInter {
     @Select("""
             select count(*) from USER where useremail=#{useremail} and userpassword=#{userpassword}
             """)
-    public int isLoginCheck(String useremail,String userpassword);
+    public int memberLogin(String useremail, String userpassword);
 
 }
