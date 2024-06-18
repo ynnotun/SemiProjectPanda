@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -6,6 +7,7 @@
   Time: 오전 11:07
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -132,7 +134,8 @@
                             </c:if>
                         <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-6"></div>
                         <c:if test="${'유저본인인가에 대한 조건'}">
-                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                        <button id="myupdate" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+
                             <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
@@ -477,12 +480,12 @@
                                                 width="24"
                                                 height="24"
                                                 viewBox="0 0 24 24"
-                                                fill="currentColor"
+                                                fill="none"
                                                 stroke="currentColor"
                                                 stroke-width="2"
                                                 stroke-linecap="round"
                                                 stroke-linejoin="round"
-                                                class="w-4 h-4"
+                                                class="w-4 h-4 fill-gray-300 stroke-gray-300"
                                         >
                                             <polygon
                                                     points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
@@ -596,5 +599,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '/mypage/update', // 이 URL이 유효한지 확인
+            type: 'GET',
+            success: function(response) {
+                console.log('AJAX success response:', response); // 응답 로그 추가
+                const usernum = response.usernum; // 응답에서 usernum 가져오기
+                $('#myupdate').click(function() {
+                    window.location.href = `/mypage/update?usernum=` + usernum;
+                });
+            },
+            error: function(error) {
+                console.log('AJAX error:', error); // 에러 로그 추가
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

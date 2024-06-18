@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/mail")
 public class MailController {
 
     @Autowired
@@ -19,7 +20,7 @@ public class MailController {
         return "mail/test";
     }
 
-    @PostMapping("/mail/send")
+    @PostMapping("/send")
     public ResponseEntity<String> sendVerificationCode(@RequestBody MailDto mailDto) {
         mailService.sendVerificationCode(mailDto);
         return ResponseEntity.ok("인증코드를 보냈습니다.");
@@ -29,9 +30,9 @@ public class MailController {
     public ResponseEntity<String> verifyCode(@RequestParam String email, @RequestParam String code) {
         boolean isVerified = mailService.verifyCode(email, code);
         if (isVerified) {
-            return ResponseEntity.ok("인증 성공!");
+            return ResponseEntity.ok("인증 성공");
         } else {
-            return ResponseEntity.status(400).body("인증 실패!");
+            return ResponseEntity.status(400).body("인증 실패");
         }
     }
 
