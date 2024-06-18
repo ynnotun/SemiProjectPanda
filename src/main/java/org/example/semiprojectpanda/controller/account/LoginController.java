@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -37,7 +38,7 @@ public class LoginController {
     @PostMapping("/save")
     public String saveDate(
             @ModelAttribute UserDto dto,
-            @RequestParam MultipartFile myfile
+            @RequestParam(required = false, value = "myfile", defaultValue="userprofileimage")MultipartFile myfile
     ){
         System.out.println(dto);
         if (myfile != null){
@@ -49,5 +50,29 @@ public class LoginController {
         userService.insertMember(dto);
 
         return "account/login";
+    }
+    @ResponseBody
+    @GetMapping("/member/login")
+    public Map<String,String> isLogin(
+            @RequestParam(defaultValue = "no") String saveid,
+            @RequestParam String useremail,
+            @RequestParam String userpassword,
+            HttpSession session
+    ){
+        Map<String,String> map=new HashMap<>();
+        //로그인 상태
+        boolean loginStatus=userService.isLoginCheck(useremail, userpassword);
+        if (loginStatus){
+            //아이디와 비번이 맞은경우
+            map.put("status","success");
+            //로그인 성공시 세션에 저장
+            session.setAttribute("saveid",saveid.equals("no")?"no":"yes");
+            session.setAttribute("loginok","yes");
+            session.setAttribute("loginid",useremail);
+        }else {
+            //아이디와 비번이 틀린경우
+            map.put("status","fail");
+        }
+        return map;
     }
 }

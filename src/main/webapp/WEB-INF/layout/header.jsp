@@ -118,7 +118,7 @@
                 <span>Login</span>
             </button>
             <%-- profile - 로그인시 보임--%>
-            <a class="flex items-center gap-2 hover:text-gray-200" href="${root}/mypage">
+            <a class="flex items-center gap-2 hover:text-gray-200" href="${root}/mypage?usernum=1">
                 <img
                         src="${root}/image/good-member.svg"
                         width="32"
