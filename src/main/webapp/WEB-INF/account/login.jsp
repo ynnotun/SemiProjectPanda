@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: minseok
@@ -26,6 +27,31 @@
         }
     }
 </style>
+<script>
+    $(function () {
+        $("#btnlogin").click(function () {
+            //폼안의 입력값 읽기
+            let fdata=$("#loginform").serialize();
+            $.ajax({
+                type:"get",
+                dataType:"json",
+                url:'/member/login',
+                data:fdata,
+                success:function (data) {
+                    if (data.status==="success"){
+                        //페이지 새로고침
+                        location.href="/"
+                    }else {
+                        alert("아이디 또는 비밀번호가 맞지 않아용~");
+                    }
+                },
+                error : function (){
+                    alert("전송오류")
+                }
+            })
+        })
+    })
+</script>
 <body>
 <!--
 // v0 by Vercel.
@@ -86,12 +112,12 @@
         </div>
         <button
                 class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
-                type="submit">
+                type="button" id="loginform">
             Login
         </button>
         <div class="text-center text-sm text-gray-500">
             Don't have an account?
-            <a class="text-[#4CAF50] hover:underline" href="./singup">
+            <a class="text-[#4CAF50] hover:underline" href="./signup">
                 Register
             </a>
         </div>
