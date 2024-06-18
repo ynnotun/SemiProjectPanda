@@ -38,7 +38,7 @@ public class MypageController {
         List<ProductDto> buyList = productService.getFourFromBuyList(usernum);
         List<ProductDto> wishList = wishService.getThreeFromWishList(usernum);
 
-        /* 반환 값 없으면 오류나는데 이거 고쳐야 됨*/
+        /* 반환 값 없으면 오류나는데 이거 고쳐야 됨 */
         double star = productService.getStarByUsernum(usernum);
 
         model.addAttribute("usernum", usernum);
