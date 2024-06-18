@@ -17,7 +17,9 @@ public interface UserMapperInter {
             (#{useremail},#{userpassword},#{username},#{usernickname},#{userprofileimage},#{useraddress},#{userphonenumber},#{userbirthday},now())
             """)
     public void insertUser(UserDto dto);
-        @Update("update USER set userprofileimage=#{userprofileimage} where usernum=#{usernum}")
-    public void updatePhoto(Map<String, Object> map);
+    @Select("""
+            select count(*) from USER where useremail=#{useremail} and userpassword=#{userpassword}
+            """)
+    public int isLoginCheck(String useremail,String userpassword);
 
 }

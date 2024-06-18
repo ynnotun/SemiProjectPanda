@@ -193,7 +193,6 @@
                     class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     type="password"
                     id="confirm-password"
-                    name="userpassword"
                     placeholder="Confirm your password"/>
         </div>
         <div style="padding-bottom: 15px; width: 40%; margin: auto;">
@@ -253,8 +252,7 @@
                                     <img src="https://kr.object.ncloudstorage.com/semi/panda/%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%841.png"
                                          alt="Profile 1" class="h-full w-full object-cover profilephoto"
                                          id="photo"
-                                         style="width: 100px; height: 100px;position: relative; top: 25px;left: 25px;"
-                                         onclick=""/>
+                                         style="width: 100px; height: 100px;position: relative; top: 25px;left: 25px;"/>
                                     <input type="file" name="myfile" id="photoupload" style="display: none;">
                                     <input type="radio"  name="userprofileimage" id="radio1" style="display: none;">
                                 </div>
@@ -318,23 +316,21 @@
 
 
 <script>
+    var timerInterval;
     $('#checkButton').click(function() {
-        var duration = 180; // 3분 = 180초
+        clearInterval(timerInterval);
+        var duration = 180;
         var display = document.getElementById('timer');
-        display.style.display = 'block'; // 타이머를 보이게 함
+        display.style.display = 'block';
         var timer = duration, minutes, seconds;
-
-        var interval = setInterval(function() {
+        timerInterval = setInterval(function() {
             minutes = parseInt(timer / 60, 10);
             seconds = parseInt(timer % 60, 10);
-
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
-
-            display.textContent ="남은시간 "+ minutes + ":" + seconds;
-
+            display.textContent = "남은시간 " + minutes + ":" + seconds;
             if (--timer < 0) {
-                clearInterval(interval);
+                clearInterval(timerInterval);
                 alert('3분이 지났습니다!');
             }
         }, 1000);
