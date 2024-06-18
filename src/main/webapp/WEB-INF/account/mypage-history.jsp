@@ -17,7 +17,7 @@
     <title>검색 결과</title>
 
     <style>
-        .round-button, .round-button-secondary {
+        .round-button{
             border-radius: 20px;
         }
         .active {
@@ -79,10 +79,7 @@
                         <!-- Repeat Product Cards as needed -->
 <%--                    </div>--%>
                 </div>
-<%--                <div class="page grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="page2">--%>
-<%--                </div>--%>
-<%--                <div class="page grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="page3">--%>
-<%--                </div>--%>
+
             </section>
         </div>
     </div>

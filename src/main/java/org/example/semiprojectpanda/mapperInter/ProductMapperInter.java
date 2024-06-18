@@ -29,4 +29,8 @@ public interface ProductMapperInter {
     //구매내역 불러오기
     @Select("select * from PRODUCT where customernum=#{customernum}")
     public List<ProductDto> getBuyList(int customernum);
-}
+
+    //검색 결과 불러오기
+    @Select("SELECT * FROM PRODUCT  WHERE productaddress LIKE keyword=#{keyword} or producttitle LIKE keyword=#{keyword} or productcontent like keyword=#{keyword}")
+    List<ProductDto> getSearchList(String keyword);
+    }
