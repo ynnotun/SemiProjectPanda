@@ -31,8 +31,8 @@ public interface WishMapperInter {
     @Select("""
         select * from PRODUCT where productnum 
         in (SELECT productnum FROM WISH where usernum=#{usernum})
-        order by productnum desc LIMIT 0, 4
+        order by productnum desc LIMIT 0, 3
     """)
-    public List<ProductDto> getFourFromBuyList(int usernum);
+    public List<ProductDto> getThreeFromWishList(int usernum);
 
 }
