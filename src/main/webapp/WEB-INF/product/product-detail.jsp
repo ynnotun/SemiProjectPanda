@@ -165,6 +165,7 @@
         .dropdown {
             display: block;
         }
+
         </c:if>
 
         .chat-menu {
@@ -213,7 +214,7 @@
     <button onclick="logout()">logout</button>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            <div class="">
+            <div class="h-screen">
                 <!-- Swiper -->
 
                 <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
@@ -304,63 +305,62 @@
                     <div id="map" style="width:100%;height:250px;"></div>
 
 
-
                     <div class="flex gap-4">
                         <c:if test="${(sessionScope.usernum eq productDto.usernum or sessionScope.usernum eq productDto.customernum) and productDto.productstatus eq '예약 중'}">
-                        <button
-                                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-0 text-gray-900 h-11 rounded-md px-8 border-1 border-black hover:bg-gray-200"
-                                onclick="alertReserveCancelBtn()"
-                                >
-                            예약 취소
-                        </button>
-                        <button
-                                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white h-11 rounded-md px-8"
-                                onclick="alertCompleteBtn()"
-                                >
-                            거래 완료
-                        </button>
+                            <button
+                                    class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-0 text-gray-900 h-11 rounded-md px-8 border-1 border-black hover:bg-gray-200"
+                                    onclick="alertReserveCancelBtn()"
+                            >
+                                예약 취소
+                            </button>
+                            <button
+                                    class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white h-11 rounded-md px-8"
+                                    onclick="alertCompleteBtn()"
+                            >
+                                거래 완료
+                            </button>
                         </c:if>
 
                         <c:if test="${sessionScope.usernum != productDto.usernum and (productDto.productstatus eq '예약 중' or productDto.productstatus eq '판매 중')}">
-                        <button
-                                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#4CAF50] text-white h-11 rounded-md px-8 border-[#4CAF50]"
-                                onclick="alertOpenChatting()"
-                        >
-                            Chat Now
-                        </button>
-                        <div class="hidden fixed inset-0 z-50 bg-black/80" id="alertBg"
-                             style="pointer-events: auto;" data-aria-hidden="true" aria-hidden="true"></div>
-                        <div class="hidden fixed left-[50%] top-[40%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-white p-6 shadow-lg duration-200 sm:rounded-lg sm:max-w-[400px]"
-                             id="alertContent"
-                        >
-                            <div class="flex flex-col space-y-1.5 text-center sm:text-left">
-                                <h2
-                                        class="whitespace-nowrap text-lg font-semibold leading-none tracking-tight"
-                                >Alert</h2>
-                            </div>
-                            <p class="text-sm text-muted-foreground my-3">로그인을 하셔야 채팅 신청이 가능합니다.</p>
-                            <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-                                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
-                                        onclick="alertClose()"
-                                >Cancel
-                                </button>
-                                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-blue-500 bg-blue-500 text-white h-10 px-4 py-2"
-                                        onclick="location.href=`/login`"
-                                >Login
-                                </button>
-                            </div>
-                            <button type="button"
-                                    class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
-                                    onclick="alertClose()"
+                            <button
+                                    class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#4CAF50] text-white h-11 rounded-md px-8 border-[#4CAF50]"
+                                    onclick="alertOpenChatting()"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                     stroke-linejoin="round" class="lucide lucide-x h-4 w-4">
-                                    <path d="M18 6 6 18"></path>
-                                    <path d="m6 6 12 12"></path>
-                                </svg>
-                                <span class="sr-only">Close</span></button>
-                        </div>
+                                Chat Now
+                            </button>
+                            <div class="hidden fixed inset-0 z-50 bg-black/80" id="alertBg"
+                                 style="pointer-events: auto;" data-aria-hidden="true" aria-hidden="true"></div>
+                            <div class="hidden fixed left-[50%] top-[40%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-white p-6 shadow-lg duration-200 sm:rounded-lg sm:max-w-[400px]"
+                                 id="alertContent"
+                            >
+                                <div class="flex flex-col space-y-1.5 text-center sm:text-left">
+                                    <h2
+                                            class="whitespace-nowrap text-lg font-semibold leading-none tracking-tight"
+                                    >Alert</h2>
+                                </div>
+                                <p class="text-sm text-muted-foreground my-3">로그인을 하셔야 채팅 신청이 가능합니다.</p>
+                                <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+                                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+                                            onclick="alertClose()"
+                                    >Cancel
+                                    </button>
+                                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-blue-500 bg-blue-500 text-white h-10 px-4 py-2"
+                                            onclick="location.href=`/login`"
+                                    >Login
+                                    </button>
+                                </div>
+                                <button type="button"
+                                        class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+                                        onclick="alertClose()"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="lucide lucide-x h-4 w-4">
+                                        <path d="M18 6 6 18"></path>
+                                        <path d="m6 6 12 12"></path>
+                                    </svg>
+                                    <span class="sr-only">Close</span></button>
+                            </div>
                         </c:if>
 
                         <c:if test="${sessionScope.usernum eq productDto.usernum and productDto.productstatus eq '판매 중'}">
@@ -472,56 +472,56 @@
                 <div class="space-y-4" id="chatArea">
 
 
-<%--                    &lt;%&ndash;                    구매자 채팅 시작&ndash;%&gt;--%>
-<%--                    <div class="flex items-start gap-3">--%>
-<%--                        <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">--%>
-<%--                          <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">--%>
-<%--                              <img class="aspect-square h-full w-full" alt="Seller"--%>
-<%--                                   src="https://generated.vusercontent.net/placeholder-user.jpg"/>--%>
-<%--                          </span>--%>
-<%--                        </span>--%>
-<%--                        <div class="bg-[#4CAF50] text-white px-4 py-2 rounded-lg max-w-[75%] relative">--%>
-<%--                            <p class="font-medium">John Doe</p>--%>
-<%--                            <p>John Doe님이 채팅을 시작하였습니다.</p>--%>
+                    <%--                    &lt;%&ndash;                    구매자 채팅 시작&ndash;%&gt;--%>
+                    <%--                    <div class="flex items-start gap-3">--%>
+                    <%--                        <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">--%>
+                    <%--                          <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">--%>
+                    <%--                              <img class="aspect-square h-full w-full" alt="Seller"--%>
+                    <%--                                   src="https://generated.vusercontent.net/placeholder-user.jpg"/>--%>
+                    <%--                          </span>--%>
+                    <%--                        </span>--%>
+                    <%--                        <div class="bg-[#4CAF50] text-white px-4 py-2 rounded-lg max-w-[75%] relative">--%>
+                    <%--                            <p class="font-medium">John Doe</p>--%>
+                    <%--                            <p>John Doe님이 채팅을 시작하였습니다.</p>--%>
 
 
-<%--                            <div class="dropdown">--%>
-<%--                                <span class="material-symbols-outlined chat-menu"--%>
-<%--                                      onclick="">more_vert</span>--%>
-<%--                                <div style="display: none;" class="drop-content">--%>
-<%--                                    <a class="text-gray-900"--%>
-<%--                                       onclick="alertChatLogOpen()"--%>
-<%--                                    >거래예약</a>--%>
-<%--                                    <a href='#'>거래완료</a>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
+                    <%--                            <div class="dropdown">--%>
+                    <%--                                <span class="material-symbols-outlined chat-menu"--%>
+                    <%--                                      onclick="">more_vert</span>--%>
+                    <%--                                <div style="display: none;" class="drop-content">--%>
+                    <%--                                    <a class="text-gray-900"--%>
+                    <%--                                       onclick="alertChatLogOpen()"--%>
+                    <%--                                    >거래예약</a>--%>
+                    <%--                                    <a href='#'>거래완료</a>--%>
+                    <%--                                </div>--%>
+                    <%--                            </div>--%>
 
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-
-<%--                    &lt;%&ndash;                    판매자 채팅&ndash;%&gt;--%>
-<%--                    <div class="flex items-start gap-3 justify-end">--%>
-<%--                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">--%>
-<%--                            <p class="font-medium">Jane Smith</p>--%>
-<%--                            <p>John Doe님과 거래 예약되었습니다.</p>--%>
-<%--                        </div>--%>
-<%--                        <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center">--%>
-<%--                            <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JS</span>--%>
-<%--                        </span>--%>
-<%--                    </div>--%>
+                    <%--                        </div>--%>
+                    <%--                    </div>--%>
 
 
-<%--                    &lt;%&ndash;                    판매자 채팅&ndash;%&gt;--%>
-<%--                    <div class="flex items-start gap-3 justify-end">--%>
-<%--                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">--%>
-<%--                            <p class="font-medium">Jane Smith</p>--%>
-<%--                            <p>John Doe님과 거래 완료되었습니다.</p>--%>
-<%--                        </div>--%>
-<%--                        <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center">--%>
-<%--                            <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JS</span>--%>
-<%--                        </span>--%>
-<%--                    </div>--%>
+                    <%--                    &lt;%&ndash;                    판매자 채팅&ndash;%&gt;--%>
+                    <%--                    <div class="flex items-start gap-3 justify-end">--%>
+                    <%--                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">--%>
+                    <%--                            <p class="font-medium">Jane Smith</p>--%>
+                    <%--                            <p>John Doe님과 거래 예약되었습니다.</p>--%>
+                    <%--                        </div>--%>
+                    <%--                        <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center">--%>
+                    <%--                            <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JS</span>--%>
+                    <%--                        </span>--%>
+                    <%--                    </div>--%>
+
+
+                    <%--                    &lt;%&ndash;                    판매자 채팅&ndash;%&gt;--%>
+                    <%--                    <div class="flex items-start gap-3 justify-end">--%>
+                    <%--                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">--%>
+                    <%--                            <p class="font-medium">Jane Smith</p>--%>
+                    <%--                            <p>John Doe님과 거래 완료되었습니다.</p>--%>
+                    <%--                        </div>--%>
+                    <%--                        <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center">--%>
+                    <%--                            <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JS</span>--%>
+                    <%--                        </span>--%>
+                    <%--                    </div>--%>
 
 
                 </div>
@@ -684,7 +684,7 @@
             .then(response => {
                 console.log(response);
                 if (response.ok) {
-                    window.open("${productDto.productopenchat}");
+                    createChattingRoom(${productDto.productnum});
                 } else {
                     // 등록 실패 처리
                     alert("fail");
@@ -696,6 +696,32 @@
                 alert('An error occurred. Please try again later.');
             });
     }
+
+    async function createChattingRoom(productnum) {
+        try {
+            const response = await fetch('/chatting/room', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({productnum})
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                // 채팅방 생성 성공
+                // 채팅방 번호를 사용하여 채팅 페이지로 이동
+                window.location.href = "/chatting/" + data.chatRoomNum;
+            } else {
+                // 채팅방 생성 실패
+                console.error('Failed to create chatting room');
+            }
+        } catch (error) {
+            console.error('Error creating chatting room:', error);
+        }
+    }
+
 
     function alertClose() {
         document.getElementById("alertBg").style.display = "none";
@@ -717,9 +743,9 @@
         document.getElementById("alertChatLogBG").style.display = "block";
         document.getElementById("alertChatLogContent").style.display = "block";
 
-        document.getElementById("alertChatLogText").innerText = "카카오톡 오픈 채팅을 시작하시겠습니까?"
+        document.getElementById("alertChatLogText").innerText = "채팅을 시작하시겠습니까?"
         document.getElementById("alertChatLogOkBtn").innerText = "채팅시작"
-        document.getElementById("alertChatLogTitle").innerText = "카카오톡"
+        document.getElementById("alertChatLogTitle").innerText = "채팅"
         $("#alertChatLogOkBtn").addClass("bg-yellow-500")
 
         document.getElementById("alertChatLogOkBtn").onclick = function () {
@@ -864,7 +890,7 @@
         }
     }
 
-    function alertCompleteBtn(){
+    function alertCompleteBtn() {
         document.getElementById("alertChatLogBG").style.display = "block";
         document.getElementById("alertChatLogContent").style.display = "block";
 
