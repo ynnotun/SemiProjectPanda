@@ -7,9 +7,14 @@ import org.example.semiprojectpanda.dto.ReviewDto;
 
 @Mapper
 public interface ReviewMapperInter {
+
+    //리뷰 추가
     @Insert("""
         insert into REVIEW (reviewreceiveuser, reviewsenduser, productnum, reviewstar, reviewcontent)
           values (#{reviewreceiveuser}, #{reviewsenduser}, #{productnum}, #{reviewstar}, #{reviewcontent})
       """)
     public void insertReview(ReviewDto reviewDto);
+
+
+
 }

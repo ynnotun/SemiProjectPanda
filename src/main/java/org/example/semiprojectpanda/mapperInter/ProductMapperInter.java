@@ -16,11 +16,11 @@ public interface ProductMapperInter {
     @Options(useGeneratedKeys = true, keyProperty = "productnum")//지금 추가된 productnum
     void insertProduct(ProductDto productDto);
 
-    //상품의 내용 변경
-    @Update("""
+    //상품의 내용 수정
+    /*@Update("""
             
             """)
-    void updateProductContent(ProductDto productDto);
+    void updateProduct(ProductDto productDto);*/
     
     //상품번호로 상품 정보 불러오기
     @Select("SELECT * FROM PRODUCT WHERE productnum = #{productnum}")
