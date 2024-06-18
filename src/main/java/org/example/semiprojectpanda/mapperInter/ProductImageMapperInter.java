@@ -3,6 +3,7 @@ package org.example.semiprojectpanda.mapperInter;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.example.semiprojectpanda.dto.ProductDto;
 import org.example.semiprojectpanda.dto.ProductImageDto;
 
@@ -17,6 +18,11 @@ public interface ProductImageMapperInter {
           VALUES (#{productnum}, #{imagefilename})
       """)
     void insertProductImage(ProductImageDto productImageDto);
+
+    //productImage 수정
+    @Update("""
+        """)
+    void updateProductImage(ProductImageDto productImageDto);
 
     @Select("SELECT * FROM PRODUCT_IMAGE WHERE productnum = #{productnum}")
     List<ProductImageDto> findImageByProductnum(int productnum);

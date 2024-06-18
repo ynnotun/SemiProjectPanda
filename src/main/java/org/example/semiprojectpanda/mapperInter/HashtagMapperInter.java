@@ -2,6 +2,7 @@ package org.example.semiprojectpanda.mapperInter;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 import org.example.semiprojectpanda.dto.HashtagDto;
 import org.example.semiprojectpanda.dto.ProductDto;
 
@@ -15,5 +16,10 @@ public interface HashtagMapperInter {
       """)
     void insertHashTag(HashtagDto hashtagDto);
 
+    //hashtag 수정
+    @Update("""
+
+    """)
+    void updateHashTag(HashtagDto hashtagDto);
 
 }
