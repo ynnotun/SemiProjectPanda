@@ -2,7 +2,9 @@ package org.example.semiprojectpanda.controller.chatting;
 
 import lombok.RequiredArgsConstructor;
 import org.example.semiprojectpanda.dto.ChatroomDto;
+import org.example.semiprojectpanda.dto.ChatroomPrintDto;
 import org.example.semiprojectpanda.dto.ChattingPrintDto;
+import org.example.semiprojectpanda.mapperInter.ChatroomMapperInter;
 import org.example.semiprojectpanda.service.ChattingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ChattingController {
     private final ChattingService chattingService;
+    private final ChatroomMapperInter chatroomMapperInter;
 
     @GetMapping("/chatting/{chattingRoomNum}")
     public String chattingRoomMapping(
@@ -49,6 +52,17 @@ public class ChattingController {
         return chattingService.getChattingPrintByNum(chatroomnum);
     }
 
+    @GetMapping("/chat/room")
+    @ResponseBody
+    public List<ChatroomPrintDto> getChatroom(
+            HttpServletRequest request
+    ) {
+        int usernum = (int) request.getSession().getAttribute("usernum");
+        if (usernum == 0) {
+            return Collections.emptyList();
+        }
+        return chatroomMapperInter.getChatroomByUserNum(usernum);
+    }
 
 
     //    글 상세 Chat Now 시 사용할 것
