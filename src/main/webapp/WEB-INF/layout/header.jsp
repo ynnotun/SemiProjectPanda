@@ -105,32 +105,50 @@
                 </svg>
                 <span>Sell</span>
             </a>
+                <%-- login 버튼 - 로그인 안하면 보임 --%>
+<c:if test="${sessionScope.loginok==null}">
+                <button
+                        class="inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-[#4CAF50] hover:bg-[#43a047] text-white"
+                        type="submit" onclick="location.href='${root}/login'">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Login</span>
+                </button>
+</c:if>
+<c:if test="${sessionScope.loginok!=null}">
             <%-- logout 버튼 - 로그인시 보임 --%>
-            <a class="flex items-center gap-2 hover:text-gray-200" href="${root}/logout">
+            <a class="flex items-center gap-2 hover:text-gray-200" id="btnlogout">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Logout</span>
             </a>
-            <%-- login 버튼 - 로그인 안하면 보임 --%>
-            <button
-                    class="inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-[#4CAF50] hover:bg-[#43a047] text-white"
-                    type="submit" onclick="location.href='${root}/login'">
-                <i class="bi bi-box-arrow-left"></i>
-                <span>Login</span>
-            </button>
             <%-- profile - 로그인시 보임--%>
             <a class="flex items-center gap-2 hover:text-gray-200" href="${root}/mypage?usernum=1">
                 <img
-                        src="${root}/image/good-member.svg"
+                        src="https://kr.object.ncloudstorage.com/semi/panda/${sessionScope.userprofileimage}"
                         width="32"
                         height="32"
                         class="rounded-full"
                         alt="Profile"
                         style="aspect-ratio: 32 / 32; object-fit: cover;"
                 />
-                <span>Profile</span>
+                <span>${sessionScope.usernickname}</span>
             </a>
+</c:if>
         </nav>
     </header>
 </div>
-
+<script>
+    $(function () {
+        $("#btnlogout").click(function () {
+            $.ajax({
+                type: "get",
+                dataType: "text",
+                url: 'member/logout',
+                success: function () {
+                    //새로고침
+                    location.reload();
+                }
+            })
+        })
+    })
+</script>
 </html>
