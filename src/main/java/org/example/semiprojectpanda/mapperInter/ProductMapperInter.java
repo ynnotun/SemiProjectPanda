@@ -13,19 +13,20 @@ public interface ProductMapperInter {
         INSERT INTO PRODUCT (usernum, producttitle, productcontent, productprice, productaddress, categorynum, productcreatedat, productopenchat, productlocationx, productlocationy)
           VALUES (#{usernum}, #{producttitle}, #{productcontent}, #{productprice}, #{productaddress}, #{categorynum}, now(), #{productopenchat}, #{productlocationx}, #{productlocationy})
       """)
-    @Options(useGeneratedKeys = true, keyProperty = "productnum")//지금 추가된 productnum
+    @Options(useGeneratedKeys = true, keyProperty = "productnum")
+//지금 추가된 productnum
     void insertProduct(ProductDto productDto);
 
     //상품의 내용 변경
     @Update("""
-            
+                        
             """)
     void updateProductContent(ProductDto productDto);
-    
+
     //상품번호로 상품 정보 불러오기
     @Select("SELECT * FROM PRODUCT WHERE productnum = #{productnum}")
     ProductDto getProductByProductnum(int productnum);
-    
+
     //상품의 거래 상태 갱신
     @Update("""
             UPDATE PRODUCT
@@ -42,7 +43,25 @@ public interface ProductMapperInter {
     @Select("select * from PRODUCT where customernum=#{customernum}")
     public List<ProductDto> getBuyList(int customernum);
 
+
     //검색 결과 불러오기
-    @Select("SELECT * FROM PRODUCT  WHERE productaddress LIKE keyword=#{keyword} or producttitle LIKE keyword=#{keyword} or productcontent like keyword=#{keyword}")
-    List<ProductDto> getSearchList(String keyword);
-    }
+    @Select({
+            """
+                 <script>
+                SELECT * FROM PRODUCT
+                WHERE
+                <foreach collection='keywords' item='keyword' separator='AND'>
+                (
+                productaddress LIKE CONCAT('%', #{keyword}, '%')
+                OR producttitle LIKE CONCAT('%', #{keyword}, '%')
+                OR productcontent LIKE CONCAT('%', #{keyword}, '%')
+                )
+                </foreach>
+                </script>
+
+         """
+        })
+        public List<ProductDto> getSearchList(List<String> keywords);
+
+}
+
