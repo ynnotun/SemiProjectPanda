@@ -36,7 +36,4 @@ public class ProductService {
         return productMapperInter.getFourFromBuyList(customernum);
     }
 
-    public double getStarByUsernum(int usernum){
-        return reviewMapperInter.getStarByUsernum(usernum);
-    }
 }
