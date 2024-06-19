@@ -17,7 +17,12 @@ public interface ReviewMapperInter {
     public void insertReview(ReviewDto reviewDto);
 
     // 평점 반환
-    @Select("SELECT avg(reviewstar) result FROM REVIEW where reviewreceiveuser=#{usernum}")
-    public double getStarByUsernum(int usernum);
+    @Select("SELECT avg(reviewstar) FROM REVIEW where reviewreceiveuser=#{usernum}")
+    public String getStarByUsernum(int usernum);
+
+    // 리뷰 카운트
+    @Select("SELECT count(*) FROM REVIEW where reviewreceiveuser=#{usernum}")
+    public int getCountReviews(int usernum);
+
 
 }
