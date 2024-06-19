@@ -172,9 +172,12 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
                         <c:forEach var="ele" items="${sellList}">
-                            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                                <img src="" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
+                            <div class="cursor-pointer rounded-lg border bg-card text-card-foreground shadow-sm"
+                                 onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
+                                     width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
                                 <div class="p-4">
+
                                     <h3 class="text-lg font-medium mb-2">${ele.producttitle}</h3>
                                     <div class="mb-2">
                                         <span class="text-gray-500 mr-1">${ele.productprice}원</span>
@@ -214,8 +217,10 @@
                     </c:if>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <c:forEach var="ele" items="${buyList}">
-                            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                                <img src="" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
+                            <div class="cursor-pointer rounded-lg border bg-card text-card-foreground shadow-sm"
+                                 onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
+                                     width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
                                 <div class="p-4">
                                     <h3 class="text-lg font-medium mb-2">${ele.producttitle}</h3>
                                     <div class="mb-2">
@@ -256,7 +261,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <img
-                                                src=""
+                                                src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
                                                 alt="Product Image"
                                                 width="48"
                                                 height="48"
@@ -268,7 +273,8 @@
                                             <div class="text-sm text-gray-500 ">${ele.productprice}원</div>
                                         </div>
                                     </div>
-                                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+                                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
+                                            onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">
                                         View
                                     </button>
                                 </div>
