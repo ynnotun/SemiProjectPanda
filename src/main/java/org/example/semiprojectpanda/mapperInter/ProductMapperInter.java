@@ -13,12 +13,11 @@ public interface ProductMapperInter {
         INSERT INTO PRODUCT (usernum, producttitle, productcontent, productprice, productaddress, categorynum, productcreatedat, productopenchat, productlocationx, productlocationy)
           VALUES (#{usernum}, #{producttitle}, #{productcontent}, #{productprice}, #{productaddress}, #{categorynum}, now(), #{productopenchat}, #{productlocationx}, #{productlocationy})
       """)
-    @Options(useGeneratedKeys = true, keyProperty = "productnum")//지금 추가된 productnum
+    @Options(useGeneratedKeys = true, keyProperty = "productnum")//지금 추가된 productnum 구하기
     void insertProduct(ProductDto productDto);
 
     //상품의 내용 수정
     @Update("""
-            producttitle, productcontent, productprice, productaddress, categorynum, productopenchat, productlocationx, productlocationy
             UPDATE PRODUCT 
             set producttitle = #{producttitle}, productcontent = #{productcontent}, productprice = #{productprice}, productaddress = #{productaddress}, 
                    categorynum = #{categorynum}, productopenchat = #{productopenchat}, productlocationx = #{productlocationx}, productlocationy = #{productlocationy} 

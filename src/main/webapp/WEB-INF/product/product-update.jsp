@@ -50,7 +50,10 @@
 
             <!-- 폼태그 시작 -->
             <form class="grid gap-6" method="post" action="/product/update" enctype="multipart/form-data">
+
                 <input type="hidden" name="usernum" value="${productDto.usernum}">
+                <input type="hidden" name="productnum" value="${productDto.productnum}">
+
                 <!-- 게시글 제목 입력란 -->
                 <div class="grid gap-2">
                     <label
@@ -171,9 +174,6 @@
                             <option value="" selected disabled hidden>Select category</option>
                             <c:forEach var="category" items="${categories}">
                                 <option value="${category.categorynum}"
-                                    <%-- productDto의 categorynum과 현재 category의 categorynum이 일치할 경우 selected 추가 --%>
-                                    <%-- JSP에서는 ${}를 이용하여 변수를 사용할 수 있습니다. --%>
-                                    <%-- 조건이 맞을 때 selected를 추가하여 기본 선택값으로 설정합니다. --%>
                                         <c:if test="${category.categorynum == productDto.categorynum}">
                                             selected
                                         </c:if>
@@ -234,15 +234,14 @@
 
                 </div>
 
-                <!-- 게시글 등록 버튼 -->
-                <!-- 클릭시 마이페이지로 이동 -->
+                <!-- 게시글 수정 버튼 -->
                 <div class="flex justify-end">
                     <button class="inline-flex items-center justify-center whitespace-nowrap
        text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none
        focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
        disabled:pointer-events-none disabled:opacity-50 bg-black text-white
        hover:bg-primary/90 h-11 rounded-md px-8">
-                        Post Item
+                        Edit Item
                     </button>
                 </div>
             </form><!-- 폼태그 끝 -->
