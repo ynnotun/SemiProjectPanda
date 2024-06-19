@@ -32,6 +32,7 @@ public class WishService {
     }
 
     public List<ProductDto> getThreeFromWishList(int usernum){
+
         return wishMapperInter.getThreeFromWishList(usernum);
     }
 }
