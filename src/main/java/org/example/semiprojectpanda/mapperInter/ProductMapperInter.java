@@ -56,6 +56,7 @@ public interface ProductMapperInter {
 
     //구매내역 최신순으로 4개만 불러오기
     @Select("select * from PRODUCT where customernum=#{customernum} order by productnum desc LIMIT 0, 4")
-    public List<ProductDto> getFourFromBuyList(int usernum);
+    public List<ProductDto> getFourFromBuyList(int customernum);
+
 
 }
