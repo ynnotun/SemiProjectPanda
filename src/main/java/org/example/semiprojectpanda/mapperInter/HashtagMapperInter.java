@@ -1,11 +1,11 @@
 package org.example.semiprojectpanda.mapperInter;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.example.semiprojectpanda.dto.HashtagDto;
 import org.example.semiprojectpanda.dto.ProductDto;
+import org.example.semiprojectpanda.dto.ProductImageDto;
+
+import java.util.List;
 
 @Mapper
 public interface HashtagMapperInter {
@@ -17,15 +17,18 @@ public interface HashtagMapperInter {
       """)
     void insertHashTag(HashtagDto hashtagDto);
 
-    //hashtag 수정
-    /*@Update("""
-
+    //해시태그 추출
+    @Select("""
+            SELECT * FROM HASHTAG WHERE productnum = #{productnum}
     """)
-    void updateHashTag(HashtagDto hashtagDto);*/
+    List<HashtagDto> findHashtagByProductnum(int productnum);
 
-    //hashtag 전부 호출
-/*    @Select("""
+    //해시태그 삭제
+    @Delete("""
+        DELETE FROM HASHTAG WHERE productnum = #{productnum}
     """)
-    void getallHashtag();
-    */
+    void deleteHashtagByProductnum(int productnum);
+    
+    
+    
 }
