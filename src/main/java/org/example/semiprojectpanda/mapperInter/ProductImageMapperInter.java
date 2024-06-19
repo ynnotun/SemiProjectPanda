@@ -1,8 +1,6 @@
 package org.example.semiprojectpanda.mapperInter;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.example.semiprojectpanda.dto.ProductDto;
 import org.example.semiprojectpanda.dto.ProductImageDto;
 
@@ -18,6 +16,13 @@ public interface ProductImageMapperInter {
       """)
     void insertProductImage(ProductImageDto productImageDto);
 
+    //productImage 삭제
+    @Delete("""
+        DELETE FROM PRODUCT_IMAGE WHERE productnum = #{productnum}
+    """)
+    void deleteProductImageByProductnum(int productnum);
+
+    //productImage 테이블에서 productnum에 대한 이미지 추출
     @Select("SELECT * FROM PRODUCT_IMAGE WHERE productnum = #{productnum}")
     List<ProductImageDto> findImageByProductnum(int productnum);
 }

@@ -1,34 +1,29 @@
 package org.example.semiprojectpanda.controller.account;
 
-import com.sun.mail.iap.Response;
 import lombok.RequiredArgsConstructor;
 import org.example.semiprojectpanda.service.DetailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-public class SeachPasswordController {
+public class SearchPasswordController {
 
     @Autowired
     private DetailService detailService;
 
-    @GetMapping("/seachpassword")
+    @GetMapping("/searchpassword")
     public String searchPassword(@RequestParam(value = "email", required = false) String email, Model model) {
         model.addAttribute("email", email);
-        return "account/seachpassword";
+        return "account/searchpassword";
     }
 
     @PostMapping("/findPassword")

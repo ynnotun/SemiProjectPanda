@@ -2,8 +2,10 @@ package org.example.semiprojectpanda.controller.product;
 
 import lombok.RequiredArgsConstructor;
 import org.example.semiprojectpanda.dto.*;
+import org.example.semiprojectpanda.mapperInter.UserMapperInter;
 import org.example.semiprojectpanda.service.ChatService;
 import org.example.semiprojectpanda.service.DetailService;
+import org.example.semiprojectpanda.service.UserService;
 import org.example.semiprojectpanda.service.WishService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ public class DetailController {
     private final DetailService detailService;
     private final ChatService chatService;
     private final WishService wishService;
+    private final UserMapperInter userMapperInter;
 
 
     @Transactional
@@ -176,8 +179,11 @@ public class DetailController {
             @RequestParam("usernum") int usernum,
             HttpServletRequest request
     ) {
+        var userDto = userMapperInter.findByUsernum(usernum);
         HttpSession session = request.getSession();
         session.setAttribute("usernum", usernum);
+        session.setAttribute("usernickname", userDto.getUsernickname());
+        session.setAttribute("userprofile", userDto.getUserprofileimage());
         return ResponseEntity.ok(Map.of("message", "Success"));
     }
 
@@ -189,6 +195,8 @@ public class DetailController {
 
         HttpSession session = request.getSession();
         session.removeAttribute("usernum");
+        session.removeAttribute("usernickname");
+        session.removeAttribute("userprofile");
         return ResponseEntity.ok(Map.of("message", "Success"));
     }
 
