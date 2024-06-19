@@ -30,4 +30,8 @@ public class WishService {
     public void deleteWish(WishDto wishDto) {
         wishMapperInter.deleteWish(wishDto);
     }
+
+    public List<ProductDto> getThreeFromWishList(int usernum){
+        return wishMapperInter.getThreeFromWishList(usernum);
+    }
 }

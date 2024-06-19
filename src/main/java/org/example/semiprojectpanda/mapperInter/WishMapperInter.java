@@ -27,4 +27,12 @@ public interface WishMapperInter {
     public List<ProductDto> getWishList(int usernum);
 
 
+    // 찜목록 최신순으로 3개만 불러오기
+    @Select("""
+        select * from PRODUCT where productnum 
+        in (SELECT productnum FROM WISH where usernum=#{usernum})
+        order by productnum desc LIMIT 0, 3
+    """)
+    public List<ProductDto> getThreeFromWishList(int usernum);
+
 }
