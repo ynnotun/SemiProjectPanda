@@ -113,7 +113,6 @@
         const stars = document.querySelectorAll('.star');
         const reviewStarInput = document.getElementById('reviewstar');
 
-
         stars.forEach(star => {
             star.addEventListener('click', function () {
                 const value = this.getAttribute('data-value');
