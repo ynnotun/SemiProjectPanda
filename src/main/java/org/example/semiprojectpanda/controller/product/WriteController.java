@@ -27,7 +27,7 @@ public class WriteController {
 
     private final ProductWriteService productWriteService;
 
-    // navercloud
+    // navercloudplatform
     @Autowired
     private NcpObjectStorageService storageService;
     private String bucketName = "semi";
