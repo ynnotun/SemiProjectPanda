@@ -28,7 +28,7 @@ public interface ProductMapperInter {
     //상품번호로 상품 정보 불러오기
     @Select("SELECT * FROM PRODUCT WHERE productnum = #{productnum}")
     ProductDto getProductByProductnum(int productnum);
-    
+
     //상품의 거래 상태 갱신
     @Update("""
             UPDATE PRODUCT
@@ -45,7 +45,17 @@ public interface ProductMapperInter {
     @Select("select * from PRODUCT where customernum=#{customernum} order by productnum desc")
     public List<ProductDto> getBuyList(int customernum);
 
+
     //검색 결과 불러오기
+
+/*    @Select(
+            """
+
+
+         """
+        )
+        public List<ProductDto> getSearchList(List<String> keywords);*/
+
     @Select("SELECT * FROM PRODUCT  WHERE productaddress LIKE keyword=#{keyword} or producttitle LIKE keyword=#{keyword} or productcontent like keyword=#{keyword}")
     List<ProductDto> getSearchList(String keyword);
 
@@ -59,3 +69,4 @@ public interface ProductMapperInter {
 
 
 }
+

@@ -111,22 +111,22 @@
                                 <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                             </svg>
-                            <span>125 reviews</span>
+                            <span>${reviewCount} reviews</span>
                         </div>
                         <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-6"></div>
-                            <c:if test="${usergrade.equals('good')}">
+                            <c:if test="${userGrade.equals('good')}">
                             <div class="flex items-center gap-2 text-sm text-gray-500 ">
                                 <img src="../image/good-member.svg" alt="">
                                 <span>우수회원</span>
                             </div>
                             </c:if>
-                            <c:if test="${usergrade.equals('normal')}">
+                            <c:if test="${userGrade.equals('normal')}">
                             <div class="flex items-center gap-2 text-sm text-gray-500 ">
                                 <img src="../image/normal-member.svg" alt="">
                                 <span>일반회원</span>
                             </div>
                             </c:if>
-                            <c:if test="${usergrade.equals('bad')}">
+                            <c:if test="${userGrade.equals('bad')}">
                             <div class="flex items-center gap-2 text-sm text-gray-500 ">
                                 <img src="../image/bad-member.svg" alt="">
                                 <span>주의회원</span>
@@ -134,7 +134,8 @@
                             </c:if>
                         <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-6"></div>
                         <%--<c:if test="${'유저본인인가에 대한 조건'}">--%>
-                        <button id="myupdate" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                        <button id="myupdate" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+                        onclick="location.href='${root}/mypage/update?usernum=${usernum}'">
 
                             <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +166,11 @@
                         <h2 class="text-2xl font-bold"><a
                                 href="${root}/mypage/history?usernum=${usernum}&listname=sell">판매내역</a></h2>
                     </div>
+                    <c:if test="${sellList.size()==0}">
+                        <div class="w-full text-base text-gray-500">아직 판매한 이력이 없어요.</div>
+                    </c:if>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
                         <c:forEach var="ele" items="${sellList}">
                             <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                                 <img src="" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
@@ -195,15 +200,18 @@
                             </div>
                         </c:forEach>
                     </div>
-                    </div>
                 </section>
+                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
                 <%--<c:if test="${'유저본인인가에 대한 조건'}">--%>
                 <%-- 구매내역 --%>
-                <section class="mt-8">
+                <section class="">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=buy">구매내역</a>
                         </h2>
                     </div>
+                    <c:if test="${buyList.size()==0}">
+                        <div class="w-full text-base text-gray-500">아직 구매한 이력이 없어요.</div>
+                    </c:if>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <c:forEach var="ele" items="${buyList}">
                             <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
@@ -235,11 +243,14 @@
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
 
                 <%-- 찜목록 --%>
-                <div class="grid gap-4 mt-8">
+                <div class="grid gap-4">
                     <h2 class="text-2xl font-bold"><a
                             href="${root}/mypage/history?usernum=${usernum}&listname=wish">찜목록</a></h2>
+                    <c:if test="${wishList.size()==0}">
+                        <div class="w-full text-base text-gray-500">아직 찜 한 이력이 없어요.</div>
+                    </c:if>
                     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        <c:forEach var="ele" items="${buyList}">
+                        <c:forEach var="ele" items="${wishList}">
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                             <div class="p-6">
                                 <div class="flex items-center justify-between">
@@ -271,194 +282,67 @@
                 <%-- 리뷰 --%>
                 <div class="grid gap-4 mt-8">
                     <h2 class="text-xl font-bold">Reviews</h2>
-                    <div class="grid gap-6">
-                        <%-- 리뷰 글 --%>
-                        <div class="flex items-start gap-4">
-              <span class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border">
-                <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JD</span>
-              </span>
-                            <div class="grid gap-2">
-                                <div class="flex items-center gap-2 text-sm">
-                                    <div class="font-medium">Sarah Johnson</div>
-                                    <div class="flex items-center gap-1 text-green-500">
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="w-4 h-4"
-                                        >
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="w-4 h-4"
-                                        >
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="w-4 h-4"
-                                        >
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="w-4 h-4"
-                                        >
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="w-4 h-4 fill-gray-300 stroke-gray-300"
-                                        >
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p class="text-sm text-gray-500 ">
-                                    John is a fantastic seller! He was very responsive and the item arrived in perfect
-                                    condition. I
-                                    would definitely buy from him again.
-                                </p>
-                            </div>
-                        </div>
-                        <%-- 리뷰 글 --%>
-                        <div class="flex items-start gap-4">
-              <span class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border">
-                <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">JD</span>
-              </span>
-                            <div class="grid gap-2">
-                                <div class="flex items-center gap-2 text-sm">
-                                    <div class="font-medium">Michael Brown</div>
-                                    <div class="flex items-center gap-1 text-green-500">
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="w-4 h-4"
-                                        >
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="w-4 h-4"
-                                        >
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="w-4 h-4"
-                                        >
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="w-4 h-4"
-                                        >
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
 
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="w-4 h-4 fill-gray-300 stroke-gray-300"
-                                        >
-                                            <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                        </svg>
+                    <c:if test="${reviews.size()==0}">
+                        <div class="w-full text-base text-gray-500">아직 리뷰가 없어요.</div>
+                    </c:if>
+                    <div class="grid gap-6">
+                        <c:forEach var="ele" items="${reviews}">
+                            <%-- 리뷰 글 --%>
+                            <div class="flex items-start gap-4">
+                          <span class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border">
+                            <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
+                                <img src="${root}/image/good-member.svg" alt="" width="100%">
+                            </span>
+                          </span>
+                                <div class="grid gap-2">
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <div class="font-medium">${ele.username}</div>
+                                        <div class="flex items-center gap-1 text-green-500">
+                                            <%-- 채워진 별점 출력 --%>
+                                            <c:forEach var="i" begin="1" end="${ele.reviewstar}">
+                                                <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="24"
+                                                        height="24"
+                                                        viewBox="0 0 24 24"
+                                                        fill="currentColor"
+                                                        stroke="currentColor"
+                                                        stroke-width="2"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="w-4 h-4"
+                                                >
+                                                    <polygon
+                                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                                </svg>
+                                            </c:forEach>
+                                            <%-- 빈 별점 출력 --%>
+                                            <c:forEach var="i" begin="1" end="${5-ele.reviewstar}">
+                                                <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="24"
+                                                        height="24"
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        stroke-width="2"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="w-4 h-4 fill-gray-300 stroke-gray-300"
+                                                >
+                                                    <polygon
+                                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                                </svg>
+                                            </c:forEach>
+                                        </div>
                                     </div>
+                                    <p class="text-sm text-gray-500 ">
+                                      ${ele.reviewcontent}
+                                    </p>
                                 </div>
-                                <p class="text-sm text-gray-500 ">
-                                    John was great to work with, but the item I received had a minor scratch that wasn't
-                                    mentioned in
-                                    the listing. Still, I'm happy with the purchase.
-                                </p>
                             </div>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>

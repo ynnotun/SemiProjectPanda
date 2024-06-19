@@ -469,7 +469,6 @@
                             success: function(response) {
                                 alert('인증번호를 전송했습니다.');
                                 $('#emailCheckSection').removeClass('hidden');
-                                $('#checkButton').click(function() {
                                     clearInterval(timerInterval);
                                     var duration = 180;
                                     var display = document.getElementById('timer');
@@ -486,7 +485,6 @@
                                             alert('3분이 지났습니다!');
                                         }
                                     }, 1000);
-                                });
                             },
                             error: function(error) {
                                 alert('전송실패');
