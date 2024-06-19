@@ -24,9 +24,9 @@ public class ProductService {
         return productMapperInter.getBuyList(customernum);
     }
 
-    public List<ProductDto> getSearchList(List<String> keyword) {
+/*    public List<ProductDto> getSearchList(List<String> keyword) {
         return productMapperInter.getSearchList(keyword);
-    }
+    }*/
 
     public List<ProductDto> getFourFromSellList(int usernum) {
         return productMapperInter.getFourFromSellList(usernum);

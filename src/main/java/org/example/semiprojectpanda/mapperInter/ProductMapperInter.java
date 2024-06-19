@@ -46,13 +46,13 @@ public interface ProductMapperInter {
 
     //검색 결과 불러오기
 
-    @Select(
+/*    @Select(
             """
 
 
          """
         )
-        public List<ProductDto> getSearchList(List<String> keywords);
+        public List<ProductDto> getSearchList(List<String> keywords);*/
 
     @Select("SELECT * FROM PRODUCT  WHERE productaddress LIKE keyword=#{keyword} or producttitle LIKE keyword=#{keyword} or productcontent like keyword=#{keyword}")
     List<ProductDto> getSearchList(String keyword);
