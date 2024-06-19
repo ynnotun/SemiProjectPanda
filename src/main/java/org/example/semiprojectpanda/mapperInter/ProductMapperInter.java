@@ -13,19 +13,22 @@ public interface ProductMapperInter {
         INSERT INTO PRODUCT (usernum, producttitle, productcontent, productprice, productaddress, categorynum, productcreatedat, productopenchat, productlocationx, productlocationy)
           VALUES (#{usernum}, #{producttitle}, #{productcontent}, #{productprice}, #{productaddress}, #{categorynum}, now(), #{productopenchat}, #{productlocationx}, #{productlocationy})
       """)
-    @Options(useGeneratedKeys = true, keyProperty = "productnum")//지금 추가된 productnum
+    @Options(useGeneratedKeys = true, keyProperty = "productnum")//지금 추가된 productnum 구하기
     void insertProduct(ProductDto productDto);
 
-    //상품의 내용 변경
+    //상품의 내용 수정
     @Update("""
-            
+            UPDATE PRODUCT 
+            set producttitle = #{producttitle}, productcontent = #{productcontent}, productprice = #{productprice}, productaddress = #{productaddress}, 
+                   categorynum = #{categorynum}, productopenchat = #{productopenchat}, productlocationx = #{productlocationx}, productlocationy = #{productlocationy} 
+            where productnum = #{productnum}
             """)
-    void updateProductContent(ProductDto productDto);
+    void updateProduct(ProductDto productDto);
     
     //상품번호로 상품 정보 불러오기
     @Select("SELECT * FROM PRODUCT WHERE productnum = #{productnum}")
     ProductDto getProductByProductnum(int productnum);
-    
+
     //상품의 거래 상태 갱신
     @Update("""
             UPDATE PRODUCT
@@ -42,7 +45,17 @@ public interface ProductMapperInter {
     @Select("select * from PRODUCT where customernum=#{customernum} order by productnum desc")
     public List<ProductDto> getBuyList(int customernum);
 
+
     //검색 결과 불러오기
+
+/*    @Select(
+            """
+
+
+         """
+        )
+        public List<ProductDto> getSearchList(List<String> keywords);*/
+
     @Select("SELECT * FROM PRODUCT  WHERE productaddress LIKE keyword=#{keyword} or producttitle LIKE keyword=#{keyword} or productcontent like keyword=#{keyword}")
     List<ProductDto> getSearchList(String keyword);
 
@@ -52,6 +65,8 @@ public interface ProductMapperInter {
 
     //구매내역 최신순으로 4개만 불러오기
     @Select("select * from PRODUCT where customernum=#{customernum} order by productnum desc LIMIT 0, 4")
-    public List<ProductDto> getFourFromBuyList(int usernum);
+    public List<ProductDto> getFourFromBuyList(int customernum);
+
 
 }
+

@@ -139,7 +139,7 @@
                             class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             type="email"
                             id="email"
-                            name="email"
+                            name="useremail"
                             placeholder="Enter your email"/>
                 </div>
                 <button class="emailchecked" id="checkButton" type="button">
@@ -233,6 +233,7 @@
                                     placeholder="Enter your nickname" style="height: 30px"/>
                             <button
                                     type="button"
+                                    id="nicknamebtn"
                                     class="ml-3 inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                                 Check Availability
                             </button>
@@ -248,24 +249,24 @@
                                          id="photo"
                                          style="width: 100px; height: 100px;position: relative; top: 25px;left: 25px;"/>
                                     <input type="file" name="myfile" id="photoupload" style="display: none;">
-                                    <input type="radio"  name="userprofileimage" id="radio1" style="display: none;">
+                                    <input type="radio" name="userprofileimage" id="radio1" style="display: none;">
                                 </div>
                             </div>
                             <div class="relative">
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg2">
-                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%842.jpeg"
+                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/기본프로필2.jpeg"
                                          alt="Profile 2" class="h-full w-full object-cover profilephoto"
                                          style="width: 150px; height: 150px;"/>
-                                    <input type="radio"  name="userprofileimage" value="기본프로필2.jpeg" id="radio2" style="display: none;">
+                                    <input type="radio" name="userprofileimage" value="기본프로필2.jpeg" id="radio2" style="display: none;">
                                 </div>
                             </div>
                             <div class="relative">
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg3">
-                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%843.jpeg"
+                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/기본프로필3.jpeg"
                                          alt="Profile 3" class="h-full w-full object-cover profilephoto"
                                          style="width: 150px; height: 150px;"
                                          />
-                                    <input type="radio"  name="userprofileimage" value="기본프로필3.jpeg" id="radio3" style="display: none;">
+                                    <input type="radio" name="userprofileimage" value="기본프로필3.jpeg" id="radio3" style="display: none;">
                                 </div>
                             </div>
                         </div>
@@ -308,26 +309,10 @@
 
 
 <script>
+    let jungbok=false;
     let isVerified = false;
     var timerInterval;
-    $('#checkButton').click(function() {
-        clearInterval(timerInterval);
-        var duration = 180;
-        var display = document.getElementById('timer');
-        display.style.display = 'block';
-        var timer = duration, minutes, seconds;
-        timerInterval = setInterval(function() {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-            display.textContent = "남은시간 " + minutes + ":" + seconds;
-            if (--timer < 0) {
-                clearInterval(timerInterval);
-                alert('3분이 지났습니다!');
-            }
-        }, 1000);
-    });
+
     $("#next").click(function (){
         $("#page1").css("transform", "translateX(-100%)");
         $("#page2").css("transform", "translateX(0)");
@@ -337,27 +322,9 @@
         $("#page2").css("transform", "translateX(100%)");
     })
 
-    function sendCode() {
-        const email = $('#email').val();
-        const mailDto = {
-            email: email,
-            message: ''
-        };
-
-        $.ajax({
-            url: '/mail/send',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(mailDto),
-            success: function(response) {
-                alert('인증번호를 전송했습니다.');
-                $('#emailCheckSection').removeClass('hidden');
-            },
-            error: function(error) {
-                alert('전송실패');
-            }
-        });
-    }
+    // function sendCode() {
+    //
+    // }
 
     function verifyCode() {
         const email = $('#email').val();
@@ -414,9 +381,9 @@
         $("#radio3").prop("checked",true);
     })
     $(document).ready(function() {
-        $("#checkButton").click(function() {
-            sendCode();
-        });
+        // $("#checkButton").click(function() {
+        //     sendCode();
+        // });
 
         $("#verifyButton").click(function() {
             verifyCode();
@@ -437,6 +404,101 @@
             }
             reader.readAsDataURL(file);
         }
+    })
+    $(function (){
+        $("#nicknamebtn").click(function () {
+            if ($("#nickname").val()==''){
+                alert("가입할 닉네임를 입력해주세여");
+                return;
+            }
+            $.ajax({
+                type:"get",
+                dataType:"json",
+                url:"./nicknamecheck",
+                data:{"searchnickname":$("#nickname").val()},
+                success:function (data) {
+                    if (data.count==0){
+                        alert("가입이 가능한 닉네임입니다");
+                        jungbok=true;
+                    }else {
+                        alert("이미 가입되어있는 닉네임입니다");
+                        jungbok=false;
+                        $("#nickname").val("");
+                    }
+                }
+            })
+            //아이디를 입력시 다시 중복확인을 누르도록 중복변수를 초기화
+            $("#nickname").keyup(function () {
+                jungbok=false;
+            })
+        })//
+
+        function check(){
+            if (!jungbok){
+                alert("닉네임 중복확인을 해주세요");
+                return false;//false반환시 action 실행을 안함
+            }
+        }
+    })
+    $(function (){
+        $("#checkButton").click(function () {
+            if ($("#email").val() == '') {
+                alert("가입할 이메일를 입력해주세여");
+                return;
+            }
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "./emailcheck",
+                data: {"searchemail": $("#email").val()},
+                success: function (data) {
+                    if (data.count === 0) {
+                        alert("가입이 가능한 이메일입니다");
+                        jungbok = true;
+                        const email = $('#email').val();
+                        const mailDto = {
+                            email: email,
+                            message: ''
+                        };
+
+                        $.ajax({
+                            url: '/mail/send',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify(mailDto),
+                            success: function(response) {
+                                alert('인증번호를 전송했습니다.');
+                                $('#emailCheckSection').removeClass('hidden');
+                                    clearInterval(timerInterval);
+                                    var duration = 180;
+                                    var display = document.getElementById('timer');
+                                    display.style.display = 'block';
+                                    var timer = duration, minutes, seconds;
+                                    timerInterval = setInterval(function() {
+                                        minutes = parseInt(timer / 60, 10);
+                                        seconds = parseInt(timer % 60, 10);
+                                        minutes = minutes < 10 ? "0" + minutes : minutes;
+                                        seconds = seconds < 10 ? "0" + seconds : seconds;
+                                        display.textContent = "남은시간 " + minutes + ":" + seconds;
+                                        if (--timer < 0) {
+                                            clearInterval(timerInterval);
+                                            alert('3분이 지났습니다!');
+                                        }
+                                    }, 1000);
+                            },
+                            error: function(error) {
+                                alert('전송실패');
+                            }
+                        });
+
+                    } else {
+                        alert("이미 가입되어있는 이메일입니다");
+                        jungbok = false;
+                        $("#email").val("");
+                    }
+                }
+            })
+        })
     })
 </script>
 </body>

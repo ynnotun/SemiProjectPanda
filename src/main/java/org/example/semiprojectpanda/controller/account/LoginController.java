@@ -40,12 +40,13 @@ public class LoginController {
             @ModelAttribute UserDto dto,
             @RequestParam(required = false, value = "myfile", defaultValue="userprofileimage")MultipartFile myfile
     ){
-        System.out.println(dto);
-        if (myfile != null){
+        if (!myfile.isEmpty()){
             //스토리지에 업로드
             String photo=storageService.uploadFile(buckname, folderName, myfile);
             dto.setUserprofileimage(photo);//업로드된 UUID 파일명을 dto 에 저장
+            System.out.println(photo);
         }
+        System.out.println(dto);
         //db 에 저장
         userService.insertMember(dto);
 
@@ -69,10 +70,45 @@ public class LoginController {
             session.setAttribute("saveid",saveid.equals("no")?"no":"yes");
             session.setAttribute("loginok","yes");
             session.setAttribute("loginid",useremail);
+
+            // 추가 사용자 정보 가져오기
+            int usernum = userService.getUserNumByEmail(useremail);
+            UserDto userDto = userService.findByUsernum(usernum);
+
+            // 추가 속성을 세션에 저장
+            session.setAttribute("usernum", usernum);
+            session.setAttribute("usernickname", userDto.getUsernickname());
+            session.setAttribute("userprofileimage", userDto.getUserprofileimage());
+
         }else {
             //아이디와 비번이 틀린경우
             map.put("status","fail");
         }
+        return map;
+    }
+    @ResponseBody
+    @GetMapping("/member/logout")
+    public void memberLogout(HttpSession session){
+        session.removeAttribute("loginok");
+    }
+    @ResponseBody
+    @GetMapping("/nicknamecheck")
+    public Map<String,Integer> nicknameCheckCount(
+            @RequestParam String searchnickname
+    ){
+        Map<String,Integer> map=new HashMap<>();
+        int count=userService.nicknameCheckCount(searchnickname);
+        map.put("count",count);
+        return map;
+    }
+    @ResponseBody
+    @GetMapping("/emailcheck")
+    public Map<String,Integer> emailCheckCount(
+            @RequestParam String searchemail
+    ){
+        Map<String,Integer> map=new HashMap<>();
+        int count=userService.emailCheckCount(searchemail);
+        map.put("count",count);
         return map;
     }
 }

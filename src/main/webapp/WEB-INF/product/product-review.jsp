@@ -18,6 +18,7 @@
             stroke: black; /* 검은색 테두리 추가 */
             stroke-width: 2; /* 테두리 두께 설정 */
         }
+
         .star-filled {
             fill: #fdd835; /* 채워진 별 색상 */
         }
@@ -32,80 +33,91 @@
                     <h1 class="text-2xl font-bold">Rate Your Experience</h1>
                     <p class="text-gray-500">Please provide your feedback on the recent transaction.</p>
                 </div>
+                <form action="/product/review" method="post">
+                    <input type="hidden" name="reviewsenduser" value="1"><!-- 임시값 -->
+                    <input type="hidden" name="reviewreceiveuser" value="2"><!-- 임시값 -->
+                    <input type="hidden" name="productnum" value="50"><!-- 임시값 -->
 
-                <div class="grid gap-4">
-                    <!-- 별점 추가 기능 -->
-                    <div class="flex items-center gap-2" id="star-container">
-                        <!-- SVG 폴리곤 별 아이콘들 -->
-                        <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                class="star"
-                                data-value="1"
-                        >
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                class="star"
-                                data-value="2"
-                        >
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                class="star"
-                                data-value="3"
-                        >
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                class="star"
-                                data-value="4"
-                        >
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                class="star"
-                                data-value="5"
-                        >
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
+                    <div class="grid gap-4">
+                        <!-- 별점 추가 기능 -->
+                        <div class="flex items-center gap-2" id="star-container">
+                            <!-- SVG 폴리곤 별 아이콘들 -->
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    class="star"
+                                    data-value="1">
+                                <polygon
+                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    class="star"
+                                    data-value="2">
+                                <polygon
+                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    class="star"
+                                    data-value="3">
+                                <polygon
+                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    class="star"
+                                    data-value="4">
+                                <polygon
+                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    class="star"
+                                    data-value="5">
+                                <polygon
+                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </div>
+
+                        <!-- 별점 값 -->
+                        <input type="hidden" name="reviewstar" id="reviewstar" value="0">
+
+                        <!-- 리뷰 입력 텍스트필드 -->
+                        <textarea
+                                class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
+                                placeholder="Write your review and feedback here..."
+                                rows="4"
+                                name="reviewcontent"
+                        ></textarea>
+
+                        <!-- 제출 버튼 -->
+                        <button
+                                class="inline-flex items-center justify-center whitespace-nowrap text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white font-medium py-2 px-4 rounded"
+                                type="submit">
+                            Submit
+                        </button>
                     </div>
-
-                    <!-- 리뷰 입력 텍스트필드 -->
-                    <textarea
-                            class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
-                            placeholder="Write your review and feedback here..."
-                            rows="4"
-                    ></textarea>
-
-                    <!-- 제출 버튼 -->
-                    <button
-                            class="inline-flex items-center justify-center whitespace-nowrap text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white font-medium py-2 px-4 rounded"
-                            type="submit">
-                        Submit
-                    </button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const stars = document.querySelectorAll('.star');
+        const reviewStarInput = document.getElementById('reviewstar');
 
         stars.forEach(star => {
-            star.addEventListener('click', function() {
+            star.addEventListener('click', function () {
                 const value = this.getAttribute('data-value');
                 highlightStars(value);
+                reviewStarInput.value = value;
             });
         });
 
