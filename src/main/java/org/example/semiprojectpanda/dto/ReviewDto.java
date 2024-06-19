@@ -16,4 +16,5 @@ public class ReviewDto {
     private int productnum;
     private double reviewstar;
     private String reviewcontent;
+    private String username;
 }
