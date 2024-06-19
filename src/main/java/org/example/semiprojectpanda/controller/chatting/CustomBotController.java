@@ -29,8 +29,8 @@ public class CustomBotController {
         ChatGptResponse chatGptResponse = template.postForObject(apiURL, request, ChatGptResponse.class);
         return chatGptResponse.getChoices().get(0).getMessage().getContent();
     }
-/*    @GetMapping("/index")
+    @GetMapping("/index")
     public String index() {
         return "websocket/index"; // index.jsp로 포워딩
-    }*/
+    }
 }

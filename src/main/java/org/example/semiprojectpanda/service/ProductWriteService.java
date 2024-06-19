@@ -7,7 +7,6 @@ import org.example.semiprojectpanda.mapperInter.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -26,7 +25,12 @@ public class ProductWriteService {
     *  업로드한 여러장의 상품 이미지를 productImage 테이블에 저장
     *  입력한 해시태그를 hashtag 테이블에 저장
     */
-    
+
+    //category의 모든 내용을 select박스를 통해 나열하기
+    public List<CategoryDto> getAllCategories() {
+        return categoryMapperInter.getAllCategories();
+    }
+
     //product 추가
     @Transactional
     public void insertProduct(ProductDto productDto)
@@ -46,10 +50,5 @@ public class ProductWriteService {
     public void insertHashtag(HashtagDto hashtagDto)
     {
         hashtagMapperInter.insertHashTag(hashtagDto);
-    }
-
-    //category의 모든 내용을 select박스를 통해 나열하기
-    public List<CategoryDto> getAllCategories() {
-        return categoryMapperInter.getAllCategories();
     }
 }
