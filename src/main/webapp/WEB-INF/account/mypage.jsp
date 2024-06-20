@@ -135,9 +135,8 @@
                         <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-6"></div>
                         <%-- 유저 본인만 확인 가능--%>
                         <c:if test="${sessionScope.loginok!=null && sessionScope.usernum == usernum}">
-                            <button id="myupdate"
-                                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
-                                    onclick="location.href='${root}/mypage/update?usernum=${usernum}'">
+                            <button id="myupdate" data-usernum="${dto.usernum}"
+                                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"">
 
                                 <svg
                                         xmlns="http://www.w3.org/2000/svg"

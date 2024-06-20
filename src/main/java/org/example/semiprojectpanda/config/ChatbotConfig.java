@@ -12,12 +12,12 @@ public class ChatbotConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").withSockJS(); // 웹 소켓을 사용하기 위해 설정하는 부분
+        registry.addEndpoint("/ws").withSockJS(); //웹 소캣을 사용하기 위해 설정하는 부분
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/app"); // prefix 설정
-        registry.enableSimpleBroker("/topic"); // topic이라는 주제에 브로커를 설정
+        registry.setApplicationDestinationPrefixes("/app"); //prefix 설정
+        registry.enableSimpleBroker("/topic"); //topic 이라는 주제에 브로커를 설정
     }
 }
