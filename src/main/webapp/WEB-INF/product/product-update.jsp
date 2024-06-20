@@ -31,6 +31,7 @@
     </style>
 
 </head>
+
 <body>
 <!-- 경고 모달 -->
 <div id="modal" class="hidden fixed z-10 inset-0 overflow-y-auto">
@@ -80,7 +81,10 @@
             </div>
 
             <!-- 폼태그 시작 -->
-            <form class="grid gap-6" method="post" action="/product/write" enctype="multipart/form-data">
+            <form class="grid gap-6" method="post" action="/product/update" enctype="multipart/form-data">
+
+                <input type="hidden" name="usernum" value="${productDto.usernum}">
+                <input type="hidden" name="productnum" value="${productDto.productnum}">
 
                 <!-- 게시글 제목 입력란 -->
                 <div class="grid gap-2">
@@ -123,12 +127,14 @@
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
                         </button>
-                        <!-- 사진 업로드 전달 -->
-                        <input type="file" required="required" id="file-input" name="productImages" accept="image/*" multiple class="hidden">
+                        <input type="file" id="file-input" name="productImages" accept="image/*" multiple class="hidden">
 
                         <!-- 사진 미리보기 -->
                         <div id="preview" class="mt-0 flex items-start gap-2">
-                            <!-- 여기에 사진 미리보기 출력 -->
+                            <c:forEach var="image" items="${productImages}">
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${image.imagefilename}"
+                                     class="h-48 w-48 object-cover rounded-md border">
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -145,8 +151,7 @@
                             id="description"
                             name="productcontent"
                             required="required"
-                            placeholder="Provide a detailed description of your item (판매할 중고물품의 설명을 적어주세요.)"
-                            rows="4"></textarea>
+                            rows="4">${productDto.productcontent}</textarea>
                 </div>
 
                 <!-- 가격, 거래희망지역 -->
@@ -165,7 +170,7 @@
                                     id="price"
                                     name="productprice"
                                     required="required"
-                                    placeholder="Enter the price (가격을 입력해주세요.)"/>
+                                    value="${productDto.productprice}"/>
                         </div>
                     </div>
 
@@ -182,11 +187,11 @@
                                 id="location"
                                 name="productaddress"
                                 required="required"
-                                placeholder="Enter the location (판매장소를 등록해주세요.)"
+                                value="${productDto.productaddress}"
                                 onclick="openDaumPostcode()"/>
                     </div>
-                    <input type="hidden" id="latitude" name="productlocationx"/>
-                    <input type="hidden" id="longitude" name="productlocationy"/>
+                    <input type="hidden" id="latitude" name="productlocationx" value="${productDto.productlocationx}"/>
+                    <input type="hidden" id="longitude" name="productlocationy" value="${productDto.productlocationy}"/>
                 </div>
 
                 <!-- 카테고리 입력 -->
@@ -200,13 +205,16 @@
                                 name="categorynum">
                             <option value="" selected disabled hidden>Select category</option>
                             <c:forEach var="category" items="${categories}">
-                                <option value="${category.categorynum}">${category.categoryname}</option>
+                                <option value="${category.categorynum}"
+                                        <c:if test="${category.categorynum == productDto.categorynum}">
+                                            selected
+                                        </c:if>
+                                >${category.categoryname}</option>
                             </c:forEach>
                         </select>
                     </div>
                 </div>
 
-                <%--
                 <!-- 오픈 채팅 입력 -->
                 <div class="grid gap-2">
                     <label
@@ -219,21 +227,22 @@
                             id="openchat"
                             name="productopenchat"
                             required="required"
-                            placeholder="Enter the Kakaotalk openchat"/>
+                            value="${productDto.productopenchat}"/>
                 </div>
-                --%>
-                <input type="hidden" name="productopenchat" value=""/><!-- 일단 냅두기 -->
 
                 <!-- 해시태그 입력 -->
                 <div class="grid gap-2">
                     <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                         Hashtags
-                        <span style="font-size: x-small"> 최대 5개까지 입력 가능합니다.</span>
                     </label>
 
                     <!-- 입력받은 해시태그들 나열 -->
                     <div class="flex flex-wrap gap-2" id="hashtag-container">
-                        <!-- 해시태그가 여기에 나열됩니다 -->
+                        <c:forEach var="hashtag" items="${hashtags}">
+                            <div class="bg-green-50 text-green-500 px-3 py-1 rounded-full">
+                                    ${hashtag.hashtagname}
+                            </div>
+                        </c:forEach>
                     </div>
 
                     <!-- 해시태그 입력란 -->
@@ -247,7 +256,7 @@
         disabled:opacity-50 bg-green-50 text-green-500
         px-3 py-1 rounded-full"
                                 name="hashtags"
-                                placeholder="Add a hashtag (#해시태그)"
+                                placeholder="Add a hashtag"
                                 onkeydown="handleHashtagInput(event)"
                         />
                     </div>
@@ -257,15 +266,14 @@
 
                 </div>
 
-                <!-- 게시글 등록 버튼 -->
-                <!-- 클릭시 마이페이지로 이동 -->
+                <!-- 게시글 수정 버튼 -->
                 <div class="flex justify-end">
                     <button class="inline-flex items-center justify-center whitespace-nowrap
        text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none
        focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
        disabled:pointer-events-none disabled:opacity-50 bg-black text-white
        hover:bg-primary/90 h-11 rounded-md px-8">
-                        Post Item
+                        Edit Item
                     </button>
                 </div>
             </form><!-- 폼태그 끝 -->
@@ -274,77 +282,34 @@
 </div>
 
 <!-- 이미지 업로드 이벤트 -->
-<!-- 이미지 업로드 이벤트 -->
 <script>
-    const fileInput = document.getElementById('file-input');
-    const previewContainer = document.getElementById('preview');
-    const modal = document.getElementById('modal');
-    const closeModalButton = document.getElementById('close-modal');
-
-    let uploadedFiles = []; // 업로드된 파일을 관리할 배열
-
-    // 이미지 여러장 업로드 이벤트
+    //이미지 여러장 업로드 이벤트
     document.getElementById('upload-button').addEventListener('click', function () {
-        fileInput.click();
+        document.getElementById('file-input').click();
     });
 
-    // 업로드된 여러 사진 출력
-    fileInput.addEventListener('change', function (event) {
-        const files = Array.from(event.target.files);
+    //업로드된 여러 사진 출력
+    document.getElementById('file-input').addEventListener('change', function (event) {
+        const files = event.target.files;
+        const previewContainer = document.getElementById('preview');
+        previewContainer.innerHTML = ''; // 미리 보기 영역을 비웁니다.
 
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.className = 'h-48 w-48 object-cover rounded-md border cursor-pointer';
-                img.dataset.filename = file.name; // 파일 이름을 데이터 속성으로 저장
-
-                // 클릭 시 미리보기에서 이미지 제거
-                img.addEventListener('click', function () {
-                    previewContainer.removeChild(img);
-
-                    // 업로드된 파일 목록에서 해당 파일 제거
-                    uploadedFiles = uploadedFiles.filter(uploadedFile => uploadedFile.name !== file.name);
-
-                    // 파일 입력 요소 값 재설정
-                    const dataTransfer = new DataTransfer();
-                    uploadedFiles.forEach(file => dataTransfer.items.add(file));
-                    fileInput.files = dataTransfer.files;
-                });
-
-                previewContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-
-            // 업로드된 파일 목록에 추가
-            uploadedFiles.push(file);
-        });
-
-        // 파일 입력 요소 값 재설정
-        const dataTransfer = new DataTransfer();
-        uploadedFiles.forEach(file => dataTransfer.items.add(file));
-        fileInput.files = dataTransfer.files;
-    });
-
-    // 폼 제출 이벤트에서 파일 입력 확인
-    document.querySelector('form').addEventListener('submit', function (event) {
-        console.log('Form submitted'); // 디버깅 로그
-        if (fileInput.files.length === 0) {
-            event.preventDefault();
-            console.log('No files uploaded'); // 디버깅 로그
-            // 모달 표시
-            modal.classList.remove('hidden');
+        if (files.length > 0) {
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'h-48 w-48 object-cover rounded-md border';
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
         }
     });
 
-    // 모달 닫기 이벤트
-    closeModalButton.addEventListener('click', function () {
-        modal.classList.add('hidden');
-    });
-
-    // 미리보기 이미지 가로 스크롤링
-    previewContainer.addEventListener('wheel', function (event) {
+    //미리보기 이미지 가로 스크롤링
+    document.getElementById('preview').addEventListener('wheel', function(event) {
         if (event.deltaY !== 0) {
             event.preventDefault();
             this.scrollLeft += event.deltaY;
@@ -358,7 +323,7 @@
     const hashtagContainer = document.getElementById('hashtag-container');
     const hashtagInput = document.getElementById('hashtag-input');
     const hashtagListInput = document.getElementById('hashtaglist');
-    let hashtags = [];
+    const hashtags = [];
 
     //해시태그 입력중 enter가 입력되면 내용 잘라서 addHashtag함수 수행
     function handleHashtagInput(event) {
@@ -372,7 +337,7 @@
         }
     }
 
-    //전달 받는 내용 추가
+    //전달 받는 내용 조작
     function addHashtag(tag) {
         // # 안붙어 있으면 추가
         if (!tag.startsWith('#')) {
@@ -386,34 +351,13 @@
         }
     }
 
-    // 해시태그 삭제 함수
-    function removeHashtag(tag) {
-        hashtags = hashtags.filter(item => item !== tag); // 선택된 해시태그 제외하고 필터링
-        renderHashtags(); // 해시태그 UI 업데이트
-        updateHiddenInput(); // 숨겨진 input 업데이트
-    }
-
-    // 해시태그 UI 업데이트 함수
+    //나열 출력
     function renderHashtags() {
         hashtagContainer.innerHTML = '';
         hashtags.forEach(tag => {
             const tagElement = document.createElement('div');
-            tagElement.className = 'bg-green-50 text-green-500 px-3 py-1 rounded-full flex items-center gap-1';
-
-            // 해시태그 텍스트
-            const tagText = document.createElement('span');
-            tagText.textContent = tag;
-
-            // 삭제 버튼
-            const deleteButton = document.createElement('button');
-            deleteButton.type = 'button';
-            deleteButton.innerHTML = '&times;'; // X 표시
-            deleteButton.className = 'text-green-500';
-            deleteButton.addEventListener('click', () => removeHashtag(tag)); // 삭제 버튼 클릭 시 해당 해시태그 삭제
-
-            tagElement.appendChild(tagText);
-            tagElement.appendChild(deleteButton);
-
+            tagElement.className = 'bg-green-50 text-green-500 px-3 py-1 rounded-full';
+            tagElement.textContent = tag;
             hashtagContainer.appendChild(tagElement);
         });
     }
@@ -426,6 +370,7 @@
 <!-- 주소입력 팝업 api -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- kakao 주소찾기 -->
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d0988ea389a80dcfa4f93816fc3b6129&libraries=services"></script><!-- kakao JS appkey 콩비꺼 넣음 -->
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         function openDaumPostcode() {

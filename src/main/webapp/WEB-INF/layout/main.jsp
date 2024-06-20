@@ -101,50 +101,18 @@
       <button class="slider-button prev" onclick="slide(-1)">&#10094;</button>
       <button class="slider-button next" onclick="slide(1)">&#10095;</button>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6" id="scroll">
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap"
+            href="#">
             <i class="bi bi-justify" style="font-size: 2em;"></i>
             <span>ALL</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-incognito" style="font-size: 2em;"></i>
-            <span>패션/잡화</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-pc-display-horizontal" style="font-size: 2em;"></i>
-            <span>디지털기기</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-house" style="font-size: 2em;"></i>
-            <span>생활가전</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-lamp" style="font-size: 2em;"></i>
-            <span>가구/인테리어</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-controller" style="font-size: 2em;"></i>
-            <span>취미/게임/음반</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-scissors" style="font-size: 2em;"></i>
-            <span>뷰티</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-book" style="font-size: 2em;"></i>
-            <span>도서/티켓</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-bicycle" style="font-size: 2em;"></i>
-            <span>스포츠</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-piggy-bank" style="font-size: 2em;"></i>
-            <span>반려동물용품</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-box-seam" style="font-size: 2em;"></i>
-            <span>기타 중고물품</span>
-         </a>
+         <c:forEach var="ele" items="${categories}">
+            <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap"
+               href="${root}/">
+               <i class="${ele.categoryicon}" style="font-size: 2em;"></i>
+               <span>${ele.categoryname}</span>
+            </a>
+         </c:forEach>
       </div>
    </section>
    <br>
@@ -163,7 +131,7 @@
          <c:forEach var="product" items="${products}">
             <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
                <img
-                       src="/placeholder.svg"
+                       src="https://kr.object.ncloudstorage.com/semi/panda/${product.imagefilename}"
                        width="300"
                        height="200"
                        alt="Product"
@@ -171,124 +139,14 @@
                        style="aspect-ratio:300/200;object-fit:cover"
                />
                <div class="p-4">
-                  <h3 class="text-lg font-medium mb-2"><c:out value="${product.title}"/></h3>
-                  <p><c:out value="${product.price}"/></p>
-                  <p class="text-gray-500 mb-4"><c:out value="${product.location}"/></p>
+                  <h3 class="text-lg font-medium mb-2">${product.producttitle}</h3>
+                  <p>${product.productprice}</p>
+                  <p class="text-gray-500 mb-4">${product.productaddress}</p>
                </div>
             </div>
          </c:forEach>
       </div>
    </section>
-
-   <section class="py-8 px-6 md:px-8">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-      </div>
-   </section>
-
 </div>
 
 <!-- 위로 가는 버튼 -->
