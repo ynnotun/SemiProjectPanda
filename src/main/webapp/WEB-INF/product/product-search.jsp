@@ -11,8 +11,6 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
     <title></title>
@@ -26,43 +24,33 @@
                     <h2 class="text-2xl font-bold"><a href="">"${keyword}" 검색 결과</a></h2>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="result">
+                    <c:forEach items="${searchResults}" var="ele">
+                        <a href="<c:url value="/product/detail?productnum=${ele.productnum}"/>">
+                            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.coverimage}" width="300"
+                                     height="200" alt="Product"
+                                     class="rounded-t-lg object-cover w-full h-48"
+                                     style="aspect-ratio:300/200;object-fit:cover"/>
+                                <div class="p-4">
+                                    <h3 class="text-lg font-medium mb-2 truncate">${ele.producttitle}</h3>
+                                    <div class="mb-2">
+                                        <span class="text-gray-500 mr-1">${ele.productprice}원</span>
+                                        <span class="text-gray-500">${ele.productstatus}</span>
+                                    </div>
+                                        <span class="text-gray-500 truncate">${ele.productaddress}</span>
+                                </div>
+                            </div>
+                        </a>
+
+                    </c:forEach>
+
                 </div>
             </section>
         </div>
     </div>
 </div>
 <script>
-    // 페이지 로드 시 기본 키워드로 검색
-    // searchResult();
-    function searchResult(keyword){
-        $.ajax({
-            type: "get",
-            url: "${root}/search?keyword=${keyword}",
-            data: {
-                keyword: keyword
-            },
-            dataType:"json",
-            success:function (data){
-                let s="";
-                $.each(data,function (ele,idx){
-                    s+=
-                        `
-                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                            <img src="" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
-                                <div class="mb-2">
-                                    <span class="text-gray-500 mr-1">\${ele.productprice}원</span>
-                                    <span class="text-gray-500">\${ele.productstatus}</span>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-                $("#result").html(s);
-            }
-        })
-    }
+
 </script>
 
 </body>

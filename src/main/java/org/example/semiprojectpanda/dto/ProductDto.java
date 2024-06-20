@@ -26,4 +26,6 @@ public class ProductDto {
     private String productopenchat;
     private double productlocationx;
     private double productlocationy;
+
+    private String coverimage;
 }
