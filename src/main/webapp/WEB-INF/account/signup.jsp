@@ -79,6 +79,18 @@
     #timer {
         display: none; /* 초기에는 숨김 */
     }
+    #loading {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 10px 20px;
+        background-color: #000;
+        color: #fff;
+        border-radius: 5px;
+        display: none; /* 처음엔 숨김 */
+    }
+
 </style>
 <body>
 <!--
@@ -126,13 +138,16 @@
                     type="text"
                     id="address"
                     name="useraddress"
-                    placeholder="Enter your address"/>
+                    placeholder="Enter your address"
+                    onclick="openDaumPostcode()"/>
         </div>
+            <input type="hidden" id="latitude" name="productlocationx"/>
+            <input type="hidden" id="longitude" name="productlocationy"/>
             <div class="flex items-center" style="padding-bottom: 15px; width: 40%; margin: auto;">
                 <div class="flex-1">
                     <label
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            for="email">eel
+                            for="email">
                         Email
                     </label>
                     <input
@@ -155,6 +170,8 @@
                     </label>
                         Email Check
                     <div id="timer" style="color: red">남은시간 03:00</div>
+                    <!-- 로딩바 -->
+                    <div id="loading" class="hidden">전송 중...</div>
                     <input
                             class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="emailcheck"
@@ -251,6 +268,8 @@
                                     <input type="file" name="myfile" id="photoupload" style="display: none;">
                                     <input type="radio" name="userprofileimage" id="radio1" style="display: none;">
                                 </div>
+                                <span style="display: flex;flex-direction: column;align-items: center;">버튼을 눌러서</span>
+                                <span style="display: flex;flex-direction: column;align-items: center;">사진 업로드</span>
                             </div>
                             <div class="relative">
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg2">
@@ -270,7 +289,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-3" style="padding-top: 15px;">
+                        <div class="mt-3">
                             <button
                                     type="button"
                                     onclick="$('#photoupload').trigger('click')"
@@ -313,10 +332,6 @@
     let isVerified = false;
     var timerInterval;
 
-    $("#next").click(function (){
-        $("#page1").css("transform", "translateX(-100%)");
-        $("#page2").css("transform", "translateX(0)");
-    })
     $("#back").click(function (){
         $("#page1").css("transform", "translateX(0)");
         $("#page2").css("transform", "translateX(100%)");
@@ -339,6 +354,9 @@
                 if (response === "인증 성공") {
                     alert('인증 성공했습니다.');
                     isVerified = true;
+                    clearInterval(timer); // 타이머 정지
+                    document.getElementById('timer').style.display = 'none'; // 타이머 숨기기
+                    document.getElementById('emailCheckSection').classList.add('hidden'); // 인증 섹션 숨기기
                 } else {
                     alert('인증 실패했습니다.');
                 }
@@ -455,18 +473,20 @@
                     if (data.count === 0) {
                         alert("가입이 가능한 이메일입니다");
                         jungbok = true;
+                        $("#loading").show();
                         const email = $('#email').val();
                         const mailDto = {
                             email: email,
                             message: ''
-                        };
 
+                        };
                         $.ajax({
                             url: '/mail/send',
                             type: 'POST',
                             contentType: 'application/json',
                             data: JSON.stringify(mailDto),
                             success: function(response) {
+                                $("#loading").hide();
                                 alert('인증번호를 전송했습니다.');
                                 $('#emailCheckSection').removeClass('hidden');
                                     clearInterval(timerInterval);
@@ -487,7 +507,9 @@
                                     }, 1000);
                             },
                             error: function(error) {
+                                $("#loading").hide();
                                 alert('전송실패');
+
                             }
                         });
 
@@ -500,6 +522,36 @@
             })
         })
     })
+</script>
+<!-- 주소입력 팝업 api -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- kakao 주소찾기 -->
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d0988ea389a80dcfa4f93816fc3b6129&libraries=services"></script><!-- kakao JS appkey 콩비꺼 넣음 -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function openDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var geocoder = new kakao.maps.services.Geocoder();
+                    var roadAddr = data.roadAddress;
+                    var callback = function(result, status) {
+                        if (status === kakao.maps.services.Status.OK) {
+                            console.log(result);
+                            var lat = result[0].y;
+                            var lng = result[0].x;
+                            document.getElementById('latitude').value = lat;
+                            document.getElementById('longitude').value = lng;
+                            console.log('위도:', lat, '경도:', lng);
+                        }
+                    };
+                    document.getElementById('address').value = roadAddr;  // 여기서 location 대신 address 사용
+                    console.log(roadAddr);
+                    geocoder.addressSearch(roadAddr, callback);
+                }
+            }).open();
+        }
+        window.openDaumPostcode = openDaumPostcode;
+    });
 </script>
 </body>
 </html>
