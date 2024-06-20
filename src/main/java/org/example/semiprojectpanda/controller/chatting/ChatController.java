@@ -24,7 +24,7 @@ import java.util.Date;
 public class ChatController {
 
     private static String secretKey = "aVREZXBvWHZRQ3N0blpSQ0lqbE1Sa3laUnFobGxiUkQ=";
-    private static String apiUrl = "https://bgtp3dpg76.apigw.ntruss.com/custom/v1/14847/a7cdf5d0586b392473dd0cd08c9ba833240006a8a7310bf9bc8bf1aefdfaeadb";
+    private static String apiUrl = "https://s40egjh0rw.apigw.ntruss.com/custom/v1/14847/a7cdf5d0586b392473dd0cd08c9ba833240006a8a7310bf9bc8bf1aefdfaeadb";
 
     @MessageMapping("/sendMessage")
     @SendTo("/topic/public")
