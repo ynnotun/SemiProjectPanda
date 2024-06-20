@@ -206,7 +206,7 @@
                 type: "message",
                 roomNumber: ${roomDto.chatroomnum},
                 usernum: ${sessionScope.usernum},
-                userProfile: "${sessionScope.userprofile}",
+                userProfile: "${sessionScope.userprofileimage}",
                 userNickName: "${sessionScope.usernickname}",
                 msg: $("#chatting").val()
             }

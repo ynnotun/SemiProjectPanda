@@ -60,18 +60,29 @@ public interface ProductMapperInter {
 
     //판매내역 최신순으로 4개만 불러오기
     @Select("""
-            SELECT p.*, pi.imagefilename
+            SELECT p.* , i.imagefilename
             FROM PRODUCT p
-            LEFT JOIN PRODUCT_IMAGE pi ON p.productnum = pi.productnum
-            WHERE p.usernum = #{usernum} order by productnum desc LIMIT 0, 4""")
+            JOIN (
+                SELECT productnum, MIN(imagefilename) as imagefilename
+                FROM PRODUCT_IMAGE
+                GROUP BY productnum
+            ) i ON i.productnum = p.productnum
+            WHERE p.usernum = #{usernum}
+            order by productnum desc LIMIT 0, 4;
+            """)
     public List<ProductDto> getFourFromSellList(int usernum);
 
     //구매내역 최신순으로 4개만 불러오기
     @Select("""
-            SELECT p.*, pi.imagefilename
+            SELECT p.* , i.imagefilename
             FROM PRODUCT p
-            LEFT JOIN PRODUCT_IMAGE pi ON p.productnum = pi.productnum
-            WHERE p.customernum = #{customernum} order by productnum desc LIMIT 0, 4""")
+            JOIN (
+                SELECT productnum, MIN(imagefilename) as imagefilename
+                FROM PRODUCT_IMAGE
+                GROUP BY productnum
+            ) i ON i.productnum = p.productnum
+            WHERE p.customernum = #{customernum}
+            order by productnum desc LIMIT 0, 4""")
     public List<ProductDto> getFourFromBuyList(int customernum);
 
 
