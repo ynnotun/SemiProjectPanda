@@ -6,7 +6,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-
     <title></title>
 </head>
 <body>
@@ -84,11 +83,12 @@
         </div>
 
     </div>
-    <div>
+        <hr style="margin-bottom: 10px; margin-top: 30px;">
+    <div style="margin-bottom: 10px;">
         <button type="button" id="completeRegister" class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">Complete Registration</button>
     </div>
     <!-- Button trigger modal -->
-    <button id="deleteAccount" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #ff4141; border: 0px; float: right;">Delete Account</button>
+    <button id="deleteAccount" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #ff4141; border: 0px; float: right; font-size: 13px;">Delete Account</button>
     <div style="clear: both"></div>
 </div>
 <script>
@@ -163,7 +163,18 @@
                 data: JSON.stringify({ usernum: usernum, usernickname: usernickname, userpassword: userpassword, userprofileimage: userprofileimage }),
                 success: function(response) {
                     alert(response);
-                    window.location.href = '/';
+                    // 로그아웃 요청
+                    $.ajax({
+                        type: "get",
+                        dataType: "text",
+                        url: '/member/logout',
+                        success: function(logoutResponse) {
+                            window.location.href = '${root}/login'; // 로그인 페이지로 리디렉션
+                        },
+                        error: function(xhr, status, error) {
+                            console.log('Logout Error:', error);
+                        }
+                    });
                 },
                 error: function(xhr, status, error) {
                     console.log('Error:', error);

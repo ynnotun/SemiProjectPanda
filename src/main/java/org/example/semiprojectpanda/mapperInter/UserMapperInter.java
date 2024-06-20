@@ -19,6 +19,8 @@ public interface UserMapperInter {
     @Update("UPDATE USER SET usernickname = #{usernickname}, userpassword = #{userpassword} WHERE usernum = #{usernum}")
     void updateUser(UserDto userdto);
 
+    @Select("SELECT userpassword FROM USER WHERE usernum = #{usernum}")
+    String getPasswordByUsernum(int usernum);
 
     @Update("UPDATE USER SET userprofileimage = #{photo} WHERE usernum = #{num}")
     void updatePhoto(@Param("num") int num, @Param("photo") String photo);

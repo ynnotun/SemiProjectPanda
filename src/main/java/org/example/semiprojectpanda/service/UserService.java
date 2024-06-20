@@ -37,4 +37,7 @@
         public void updatePhoto(int num, String photo) {
             UserMapperInter.updatePhoto(num, photo);
         }
+        public String getUserPassword(int usernum) {
+            return UserMapperInter.getPasswordByUsernum(usernum);
+        }
     }
