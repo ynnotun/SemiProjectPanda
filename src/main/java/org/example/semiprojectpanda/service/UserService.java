@@ -33,4 +33,8 @@
         public int emailCheckCount(String searchemail){
             return UserMapperInter.emailCheckCount(searchemail);
         }
+
+        public void updatePhoto(int num, String photo) {
+            UserMapperInter.updatePhoto(num, photo);
+        }
     }
