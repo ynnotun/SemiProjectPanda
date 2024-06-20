@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-
+    <script src="${root}/js/modal.js"></script>
     <title></title>
 </head>
 <style>
@@ -157,7 +157,9 @@
                             name="useremail"
                             placeholder="Enter your email"/>
                 </div>
-                <button class="emailchecked" id="checkButton" type="button">
+                <button class="emailchecked" id="checkButton" type="button"
+                onclick="openModal('하이', '모달뜨냐?',`closeModal()`)"
+                >
                     인증코드 전송
                 </button>
             </div>
