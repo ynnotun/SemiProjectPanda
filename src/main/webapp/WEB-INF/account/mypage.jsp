@@ -39,8 +39,7 @@
                     <div class="flex items-center gap-4">
             <span class="relative flex shrink-0 overflow-hidden rounded-full w-16 h-16 border-2 border-green-500">
               <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
-                  <%--<img src="${root}/${dto.userprofileimage}" alt="">--%>
-                  <img src="${root}/image/good-member.svg" alt="" width="100%">
+                  <img src="https://kr.object.ncloudstorage.com/semi/panda/${dto.userprofileimage}" alt="" width="100%">
               </span>
             </span>
                         <div class="grid gap-1">
@@ -172,17 +171,20 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
                         <c:forEach var="ele" items="${sellList}">
-                            <div class="cursor-pointer rounded-lg border bg-card text-card-foreground shadow-sm"
-                                 onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">
+                            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                                 <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
-                                     width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
+                                         width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"
+                                     onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'"/>
                                 <div class="p-4">
 
-                                    <h3 class="text-lg font-medium mb-2">${ele.producttitle}</h3>
+                                    <h3 class="cursor-pointer text-lg font-medium mb-2"
+                                        onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">
+                                            ${ele.producttitle}</h3>
                                     <div class="mb-2">
                                         <span class="text-gray-500 mr-1">${ele.productprice}원</span>
                                         <span class="text-gray-500">${ele.productstatus}</span>
                                     </div>
+                                    <c:if test="${sessionScope.loginok!=null && sessionScope.usernum == usernum}">
                                     <div class="flex">
                                         <c:if test="${ele.productstatus.equals('예약 중')}">
                                             <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-9 rounded-md px-3 border-1 border-black mr-2 hover:bg-gray-200">
@@ -199,13 +201,15 @@
                                             </button>
                                         </c:if>
                                     </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </c:forEach>
                     </div>
                 </section>
                  <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
-                <%--<c:if test="${'유저본인인가에 대한 조건'}">--%>
+                <%-- 유저 본인만 구매내역 및 찜목록 확인 가능--%>
+                <c:if test="${sessionScope.loginok!=null && sessionScope.usernum == usernum}">
                 <%-- 구매내역 --%>
                 <section class="">
                     <div class="flex items-center justify-between mb-6">
@@ -217,12 +221,13 @@
                     </c:if>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <c:forEach var="ele" items="${buyList}">
-                            <div class="cursor-pointer rounded-lg border bg-card text-card-foreground shadow-sm"
-                                 onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">
+                            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                                 <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
-                                     width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
+                                     width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"
+                                     onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'"/>
                                 <div class="p-4">
-                                    <h3 class="text-lg font-medium mb-2">${ele.producttitle}</h3>
+                                    <h3 class="cursor-pointer text-lg font-medium mb-2"
+                                        onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">${ele.producttitle}</h3>
                                     <div class="mb-2">
                                         <span class="text-gray-500 mr-1">${ele.productprice}원</span>
                                         <span class="text-gray-500">${ele.productstatus}</span>
@@ -284,7 +289,7 @@
                     </div>
                 </div>
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
-                <%--</c:if>--%>
+                </c:if>
                 <%-- 리뷰 --%>
                 <div class="grid gap-4 mt-8">
                     <h2 class="text-xl font-bold">Reviews</h2>
@@ -298,12 +303,15 @@
                             <div class="flex items-start gap-4">
                           <span class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border">
                             <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
-                                <img src="${root}/image/good-member.svg" alt="" width="100%">
+                                <img src="${root}/image/good-member.svg" alt="" width="100%" class="cursor-pointer"
+                                     onclick="location.href='${root}/mypage?usernum=${ele.reviewsenduser}'">
                             </span>
                           </span>
                                 <div class="grid gap-2">
                                     <div class="flex items-center gap-2 text-sm">
-                                        <div class="font-medium">${ele.username}</div>
+                                        <div class="cursor-pointer font-medium"
+                                             onclick="location.href='${root}/mypage?usernum=${ele.reviewsenduser}'">
+                                                ${ele.username}</div>
                                         <div class="flex items-center gap-1 text-green-500">
                                             <%-- 채워진 별점 출력 --%>
                                             <c:forEach var="i" begin="1" end="${ele.reviewstar}">

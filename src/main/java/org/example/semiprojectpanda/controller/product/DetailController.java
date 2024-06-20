@@ -3,10 +3,7 @@ package org.example.semiprojectpanda.controller.product;
 import lombok.RequiredArgsConstructor;
 import org.example.semiprojectpanda.dto.*;
 import org.example.semiprojectpanda.mapperInter.UserMapperInter;
-import org.example.semiprojectpanda.service.ChatService;
-import org.example.semiprojectpanda.service.DetailService;
-import org.example.semiprojectpanda.service.UserService;
-import org.example.semiprojectpanda.service.WishService;
+import org.example.semiprojectpanda.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,6 +24,7 @@ public class DetailController {
     private final ChatService chatService;
     private final WishService wishService;
     private final UserMapperInter userMapperInter;
+    private final ReviewService reviewService;
 
 
     @Transactional
@@ -52,6 +50,8 @@ public class DetailController {
         }
 
         UserDto userDto = detailService.getUserByUsernum(productDto.getUsernum());
+        String userGrade = reviewService.getGradeByUsernum((Integer) usernum);
+        model.addAttribute("userGrade", userGrade);
 
         model.addAttribute("imageDtoList", detailService.getAllProductImages(productnum));
         model.addAttribute("productUserDto", userDto);
