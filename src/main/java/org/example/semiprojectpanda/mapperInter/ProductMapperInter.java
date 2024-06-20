@@ -63,7 +63,7 @@ public interface ProductMapperInter {
             SELECT p.*, pi.imagefilename
             FROM PRODUCT p
             LEFT JOIN PRODUCT_IMAGE pi ON p.productnum = pi.productnum
-            WHERE p.customernum = 35 order by productnum desc LIMIT 0, 4""")
+            WHERE p.usernum = #{usernum} order by productnum desc LIMIT 0, 4""")
     public List<ProductDto> getFourFromSellList(int usernum);
 
     //구매내역 최신순으로 4개만 불러오기
