@@ -32,6 +32,42 @@
 
 </head>
 <body>
+<!-- 경고 모달 -->
+<div id="modal" class="hidden fixed z-10 inset-0 overflow-y-auto">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                        <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h1m0-4h-1m-1 12h4v-2H9v2H6V4h12v12h-5z"/>
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                            이미지 업로드 필요
+                        </h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">
+                                최소 한 장의 이미지를 업로드해야 합니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button id="close-modal" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    닫기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="bg-white  text-gray-950  min-h-screen">
     <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
 
@@ -87,6 +123,7 @@
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
                         </button>
+                        <!-- 사진 업로드 전달 -->
                         <input type="file" required="required" id="file-input" name="productImages" accept="image/*" multiple class="hidden">
 
                         <!-- 사진 미리보기 -->
@@ -237,88 +274,83 @@
 </div>
 
 <!-- 이미지 업로드 이벤트 -->
+<!-- 이미지 업로드 이벤트 -->
 <script>
+    const fileInput = document.getElementById('file-input');
+    const previewContainer = document.getElementById('preview');
+    const modal = document.getElementById('modal');
+    const closeModalButton = document.getElementById('close-modal');
+
+    let uploadedFiles = []; // 업로드된 파일을 관리할 배열
+
     // 이미지 여러장 업로드 이벤트
     document.getElementById('upload-button').addEventListener('click', function () {
-        document.getElementById('file-input').click();
+        fileInput.click();
     });
 
     // 업로드된 여러 사진 출력
-    document.getElementById('file-input').addEventListener('change', function (event) {
-        const files = event.target.files;
-        const previewContainer = document.getElementById('preview');
+    fileInput.addEventListener('change', function (event) {
+        const files = Array.from(event.target.files);
 
-        if (files.length > 0) {
-            Array.from(files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'h-48 w-48 object-cover rounded-md border cursor-pointer';
-                    img.addEventListener('click', function () {
-                        previewContainer.removeChild(img);
-                    });
-                    previewContainer.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            });
-        }
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'h-48 w-48 object-cover rounded-md border cursor-pointer';
+                img.dataset.filename = file.name; // 파일 이름을 데이터 속성으로 저장
+
+                // 클릭 시 미리보기에서 이미지 제거
+                img.addEventListener('click', function () {
+                    previewContainer.removeChild(img);
+
+                    // 업로드된 파일 목록에서 해당 파일 제거
+                    uploadedFiles = uploadedFiles.filter(uploadedFile => uploadedFile.name !== file.name);
+
+                    // 파일 입력 요소 값 재설정
+                    const dataTransfer = new DataTransfer();
+                    uploadedFiles.forEach(file => dataTransfer.items.add(file));
+                    fileInput.files = dataTransfer.files;
+                });
+
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+
+            // 업로드된 파일 목록에 추가
+            uploadedFiles.push(file);
+        });
+
+        // 파일 입력 요소 값 재설정
+        const dataTransfer = new DataTransfer();
+        uploadedFiles.forEach(file => dataTransfer.items.add(file));
+        fileInput.files = dataTransfer.files;
     });
 
-    /*// 폼 제출 이벤트에서 파일 입력 확인
+    // 폼 제출 이벤트에서 파일 입력 확인
     document.querySelector('form').addEventListener('submit', function (event) {
-        const fileInput = document.getElementById('file-input');
+        console.log('Form submitted'); // 디버깅 로그
         if (fileInput.files.length === 0) {
             event.preventDefault();
-            //alert('Please upload at least one image.');
+            console.log('No files uploaded'); // 디버깅 로그
+            // 모달 표시
+            modal.classList.remove('hidden');
         }
-    });*/
+    });
+
+    // 모달 닫기 이벤트
+    closeModalButton.addEventListener('click', function () {
+        modal.classList.add('hidden');
+    });
 
     // 미리보기 이미지 가로 스크롤링
-    document.getElementById('preview').addEventListener('wheel', function (event) {
+    previewContainer.addEventListener('wheel', function (event) {
         if (event.deltaY !== 0) {
             event.preventDefault();
             this.scrollLeft += event.deltaY;
         }
     });
 </script>
-
-<%--
-<script>
-    //이미지 여러장 업로드 이벤트
-    document.getElementById('upload-button').addEventListener('click', function () {
-        document.getElementById('file-input').click();
-    });
-
-    //업로드된 여러 사진 출력
-    document.getElementById('file-input').addEventListener('change', function (event) {
-        const files = event.target.files;
-        const previewContainer = document.getElementById('preview');
-        previewContainer.innerHTML = ''; // 미리 보기 영역을 비웁니다.
-
-        if (files.length > 0) {
-            Array.from(files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'h-48 w-48 object-cover rounded-md border';
-                    previewContainer.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-    });
-
-    //미리보기 이미지 가로 스크롤링
-    document.getElementById('preview').addEventListener('wheel', function(event) {
-        if (event.deltaY !== 0) {
-            event.preventDefault();
-            this.scrollLeft += event.deltaY;
-        }
-    });
-</script>
---%>
 
 <!-- 해시태그 이벤트 -->
 <script>
@@ -361,21 +393,6 @@
         updateHiddenInput(); // 숨겨진 input 업데이트
     }
 
-    /*// 해시태그 UI 업데이트 함수
-    function renderHashtags() {
-        hashtagContainer.innerHTML = '';
-        hashtags.forEach(tag => {
-            const tagElement = document.createElement('div');
-            tagElement.className = 'bg-green-50 text-green-500 px-3 py-1 rounded-full cursor-pointer flex items-center gap-1';
-            tagElement.textContent = tag;
-
-            // 해시태그 클릭 시 삭제 이벤트 추가
-            tagElement.addEventListener('click', () => removeHashtag(tag));
-
-            hashtagContainer.appendChild(tagElement);
-        });
-    }*/
-
     // 해시태그 UI 업데이트 함수
     function renderHashtags() {
         hashtagContainer.innerHTML = '';
@@ -409,7 +426,6 @@
 <!-- 주소입력 팝업 api -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- kakao 주소찾기 -->
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d0988ea389a80dcfa4f93816fc3b6129&libraries=services"></script><!-- kakao JS appkey 콩비꺼 넣음 -->
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         function openDaumPostcode() {

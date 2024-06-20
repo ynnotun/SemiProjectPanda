@@ -62,8 +62,7 @@ public class ReviewController {
         model.addAttribute("receiveUserDto", receiveUserDto);
         model.addAttribute("productDto", productDto);
 
-        //return "product/product-review/?productnum=" + productnum;
-        return "product/product-review";
+        return "product/review?productnum=" + productnum;
     }
 
     @PostMapping("/product/review")
