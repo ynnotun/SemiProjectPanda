@@ -183,7 +183,8 @@ public class DetailController {
         HttpSession session = request.getSession();
         session.setAttribute("usernum", usernum);
         session.setAttribute("usernickname", userDto.getUsernickname());
-        session.setAttribute("userprofile", userDto.getUserprofileimage());
+        session.setAttribute("userprofileimage", userDto.getUserprofileimage());
+        session.setAttribute("loginok","yes");
         return ResponseEntity.ok(Map.of("message", "Success"));
     }
 
@@ -196,7 +197,8 @@ public class DetailController {
         HttpSession session = request.getSession();
         session.removeAttribute("usernum");
         session.removeAttribute("usernickname");
-        session.removeAttribute("userprofile");
+        session.removeAttribute("userprofileimage");
+        session.removeAttribute("loginok");
         return ResponseEntity.ok(Map.of("message", "Success"));
     }
 

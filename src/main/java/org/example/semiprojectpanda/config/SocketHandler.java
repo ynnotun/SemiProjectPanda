@@ -37,7 +37,7 @@ public class SocketHandler extends TextWebSocketHandler {
         try {
             chattingMapperInter.insertChatting(
                     ChattingDto.builder()
-                            .sendusernum(Integer.parseInt(jsonObject.get("usernum").toString()) )
+                            .sendusernum(Integer.parseInt(jsonObject.get("usernum").toString()))
                             .chatroomnum(Integer.parseInt(jsonObject.get("roomNumber").toString()))
                             .chattingmessage((String) jsonObject.get("msg"))
                             .build()
@@ -47,11 +47,8 @@ public class SocketHandler extends TextWebSocketHandler {
             System.out.println(e.getMessage());
             // 필요한 경우 추가적인 예외 처리 로직 작성
             e.printStackTrace();
-                return;
+            return;
         }
-
-
-
 
 
         String roomNumber = jsonObject.get("roomNumber").toString();
@@ -91,7 +88,7 @@ public class SocketHandler extends TextWebSocketHandler {
         super.afterConnectionEstablished(session);
         boolean isExistingRoom = false;
         String url = session.getUri().toString();
-        System.out.println(url);
+        System.out.println("in : " + session);
         String roomNumber = url.split("/chatroom/")[1];
         int roomIndex = roomSessionList.size(); // 방 리스트의 크기
         if (!roomSessionList.isEmpty()) {
@@ -126,6 +123,8 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         // 클라이언트와의 웹소켓 연결 종료
+        String url = session.getUri().toString();
+        System.out.println("out : " + session);
         if (roomSessionList.size() > 0) {
             // 해당 세션 정보 제거
             for (int i = 0; i < roomSessionList.size(); i++) {
