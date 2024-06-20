@@ -27,7 +27,7 @@
                     <c:forEach items="${searchResults}" var="ele">
                         <a href="<c:url value="/product/detail?productnum=${ele.productnum}"/>">
                             <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.coverimage}" width="300"
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}" width="300"
                                      height="200" alt="Product"
                                      class="rounded-t-lg object-cover w-full h-48"
                                      style="aspect-ratio:300/200;object-fit:cover"/>

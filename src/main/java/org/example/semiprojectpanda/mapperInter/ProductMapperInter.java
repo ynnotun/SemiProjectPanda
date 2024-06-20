@@ -48,7 +48,7 @@ public interface ProductMapperInter {
 
     //검색 결과 불러오기
     @Select("""
-            SELECT p.* , i.imagefilename as coverimage
+            SELECT p.* , i.imagefilename as imagefilename
             FROM PRODUCT p
             JOIN (
                 SELECT productnum, MIN(imagefilename) as imagefilename
