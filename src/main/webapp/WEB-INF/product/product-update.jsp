@@ -1,8 +1,9 @@
 <%--
   Created by IntelliJ IDEA.
-  User: kongbh
-  Date: 24. 6. 18.
-  Time: 오전 11:49
+  User: minseok
+  Date: 24. 6. 13.
+  Time: 오전 10:33
+  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -13,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-    <title></title>
+    <title>Post Item</title>
 
     <style>
         #preview {
@@ -42,14 +43,17 @@
 
             <!-- Post Your Item -->
             <div class="grid gap-2">
-                <h1 class="text-2xl font-bold">Update Your Item</h1>
-                <p class="text-gray-500 ">Update your item for sale on our second-hand trading
+                <h1 class="text-2xl font-bold">Post Your Item</h1>
+                <p class="text-gray-500 ">Edit your previously created for sale on our second-hand trading
                     platform.</p>
             </div>
 
             <!-- 폼태그 시작 -->
-            <form class="grid gap-6" method="post" action="/product/write" enctype="multipart/form-data">
-                <input type="hidden" name="usernum" value="1"><!-- 임시 -->
+            <form class="grid gap-6" method="post" action="/product/update" enctype="multipart/form-data">
+
+                <input type="hidden" name="usernum" value="${productDto.usernum}">
+                <input type="hidden" name="productnum" value="${productDto.productnum}">
+
                 <!-- 게시글 제목 입력란 -->
                 <div class="grid gap-2">
                     <label
@@ -62,7 +66,7 @@
                             id="title"
                             name="producttitle"
                             required="required"
-                            placeholder="Enter the title of your item"/>
+                            value="${productDto.producttitle}"/>
                 </div>
 
                 <!-- 사진 여러장 업로드 + 미리보기 -->
@@ -95,7 +99,10 @@
 
                         <!-- 사진 미리보기 -->
                         <div id="preview" class="mt-0 flex items-start gap-2">
-                            <!-- 여기에 사진 미리보기 출력 -->
+                            <c:forEach var="image" items="${productImages}">
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${image.imagefilename}"
+                                     class="h-48 w-48 object-cover rounded-md border">
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -112,8 +119,7 @@
                             id="description"
                             name="productcontent"
                             required="required"
-                            placeholder="Provide a detailed description of your item"
-                            rows="4"></textarea>
+                            rows="4">${productDto.productcontent}</textarea>
                 </div>
 
                 <!-- 가격, 거래희망지역 -->
@@ -132,7 +138,7 @@
                                     id="price"
                                     name="productprice"
                                     required="required"
-                                    placeholder="Enter the price"/>
+                                    value="${productDto.productprice}"/>
                         </div>
                     </div>
 
@@ -149,12 +155,11 @@
                                 id="location"
                                 name="productaddress"
                                 required="required"
-                                placeholder="Enter the location"
+                                value="${productDto.productaddress}"
                                 onclick="openDaumPostcode()"/>
                     </div>
-
-                    <input type="hidden" id="latitude" name="productlocationx"/>
-                    <input type="hidden" id="longitude" name="productlocationy"/>
+                    <input type="hidden" id="latitude" name="productlocationx" value="${productDto.productlocationx}"/>
+                    <input type="hidden" id="longitude" name="productlocationy" value="${productDto.productlocationy}"/>
                 </div>
 
                 <!-- 카테고리 입력 -->
@@ -168,7 +173,11 @@
                                 name="categorynum">
                             <option value="" selected disabled hidden>Select category</option>
                             <c:forEach var="category" items="${categories}">
-                                <option value="${category.categorynum}">${category.categoryname}</option>
+                                <option value="${category.categorynum}"
+                                        <c:if test="${category.categorynum == productDto.categorynum}">
+                                            selected
+                                        </c:if>
+                                >${category.categoryname}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -186,7 +195,7 @@
                             id="openchat"
                             name="productopenchat"
                             required="required"
-                            placeholder="Enter the Kakaotalk openchat"/>
+                            value="${productDto.productopenchat}"/>
                 </div>
 
                 <!-- 해시태그 입력 -->
@@ -197,7 +206,11 @@
 
                     <!-- 입력받은 해시태그들 나열 -->
                     <div class="flex flex-wrap gap-2" id="hashtag-container">
-                        <!-- 해시태그가 여기에 나열됩니다 -->
+                        <c:forEach var="hashtag" items="${hashtags}">
+                            <div class="bg-green-50 text-green-500 px-3 py-1 rounded-full">
+                                    ${hashtag.hashtagname}
+                            </div>
+                        </c:forEach>
                     </div>
 
                     <!-- 해시태그 입력란 -->
@@ -221,15 +234,14 @@
 
                 </div>
 
-                <!-- 게시글 등록 버튼 -->
-                <!-- 클릭시 마이페이지로 이동 -->
+                <!-- 게시글 수정 버튼 -->
                 <div class="flex justify-end">
                     <button class="inline-flex items-center justify-center whitespace-nowrap
        text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none
        focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
        disabled:pointer-events-none disabled:opacity-50 bg-black text-white
        hover:bg-primary/90 h-11 rounded-md px-8">
-                        Post Item
+                        Edit Item
                     </button>
                 </div>
             </form><!-- 폼태그 끝 -->
@@ -324,24 +336,34 @@
 </script>
 
 <!-- 주소입력 팝업 api -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- kakao 주소찾기 -->
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d0988ea389a80dcfa4f93816fc3b6129&libraries=services"></script><!-- kakao JS appkey 콩비꺼 넣음 -->
+
 <script>
-    function openDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function (data) {
-                // 도로명 주소 변수
-                var roadAddr = data.roadAddress;
-
-                // 도로명 주소를 input에 넣기
-                document.getElementById('location').value = roadAddr;
-                console.log(roadAddr);
-
-                // 임시 위도와 경도 설정
-                document.getElementById('latitude').value = 37.1234567; // 임시 위도 설정
-                document.getElementById('longitude').value = 127.9876543; // 임시 경도 설정
-            }
-        }).open();
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        function openDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var geocoder = new kakao.maps.services.Geocoder();
+                    var roadAddr = data.roadAddress;
+                    var callback = function(result, status) {
+                        if (status === kakao.maps.services.Status.OK) {
+                            console.log(result);
+                            var lat = result[0].y;
+                            var lng = result[0].x;
+                            document.getElementById('latitude').value = lat;
+                            document.getElementById('longitude').value = lng;
+                            console.log('위도:', lat, '경도:', lng);
+                        }
+                    };
+                    document.getElementById('location').value = roadAddr;
+                    console.log(roadAddr);
+                    geocoder.addressSearch(roadAddr, callback);
+                }
+            }).open();
+        }
+        window.openDaumPostcode = openDaumPostcode;
+    });
 </script>
 
 </body>

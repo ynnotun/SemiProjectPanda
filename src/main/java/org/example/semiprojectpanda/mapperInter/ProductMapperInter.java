@@ -13,15 +13,17 @@ public interface ProductMapperInter {
         INSERT INTO PRODUCT (usernum, producttitle, productcontent, productprice, productaddress, categorynum, productcreatedat, productopenchat, productlocationx, productlocationy)
           VALUES (#{usernum}, #{producttitle}, #{productcontent}, #{productprice}, #{productaddress}, #{categorynum}, now(), #{productopenchat}, #{productlocationx}, #{productlocationy})
       """)
-    @Options(useGeneratedKeys = true, keyProperty = "productnum")
-//지금 추가된 productnum
+    @Options(useGeneratedKeys = true, keyProperty = "productnum")//지금 추가된 productnum 구하기
     void insertProduct(ProductDto productDto);
 
     //상품의 내용 수정
-    /*@Update("""
-            
+    @Update("""
+            UPDATE PRODUCT 
+            set producttitle = #{producttitle}, productcontent = #{productcontent}, productprice = #{productprice}, productaddress = #{productaddress}, 
+                   categorynum = #{categorynum}, productopenchat = #{productopenchat}, productlocationx = #{productlocationx}, productlocationy = #{productlocationy} 
+            where productnum = #{productnum}
             """)
-    void updateProduct(ProductDto productDto);*/
+    void updateProduct(ProductDto productDto);
     
     //상품번호로 상품 정보 불러오기
     @Select("SELECT * FROM PRODUCT WHERE productnum = #{productnum}")
@@ -45,24 +47,31 @@ public interface ProductMapperInter {
 
 
     //검색 결과 불러오기
-
-/*    @Select(
-            """
-
-
-         """
-        )
-        public List<ProductDto> getSearchList(List<String> keywords);*/
-
-    @Select("SELECT * FROM PRODUCT  WHERE productaddress LIKE keyword=#{keyword} or producttitle LIKE keyword=#{keyword} or productcontent like keyword=#{keyword}")
-    List<ProductDto> getSearchList(String keyword);
+    @Select("""
+            SELECT p.* , i.imagefilename as imagefilename
+            FROM PRODUCT p
+            JOIN (
+                SELECT productnum, MIN(imagefilename) as imagefilename
+                FROM PRODUCT_IMAGE
+                GROUP BY productnum
+            ) i ON i.productnum = p.productnum
+            WHERE producttitle LIKE CONCAT('%',#{keyword},'%') OR productaddress LIKE CONCAT('%',#{keyword},'%') ORDER BY productcreatedat desc""")
+    List<ProductDto> getSearchList(@Param("keyword") String keyword);
 
     //판매내역 최신순으로 4개만 불러오기
-    @Select("select * from PRODUCT where usernum=#{usernum} order by productnum desc LIMIT 0, 4")
+    @Select("""
+            SELECT p.*, pi.imagefilename
+            FROM PRODUCT p
+            LEFT JOIN PRODUCT_IMAGE pi ON p.productnum = pi.productnum
+            WHERE p.customernum = 35 order by productnum desc LIMIT 0, 4""")
     public List<ProductDto> getFourFromSellList(int usernum);
 
     //구매내역 최신순으로 4개만 불러오기
-    @Select("select * from PRODUCT where customernum=#{customernum} order by productnum desc LIMIT 0, 4")
+    @Select("""
+            SELECT p.*, pi.imagefilename
+            FROM PRODUCT p
+            LEFT JOIN PRODUCT_IMAGE pi ON p.productnum = pi.productnum
+            WHERE p.customernum = #{customernum} order by productnum desc LIMIT 0, 4""")
     public List<ProductDto> getFourFromBuyList(int customernum);
 
 
