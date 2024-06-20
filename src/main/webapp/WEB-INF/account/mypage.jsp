@@ -55,18 +55,31 @@
             </span>
                         <div class="grid gap-1">
                             <h1 class="text-2xl font-bold">${dto.username}</h1>
-                            <!-- 주소 -->
-                            <c:if test="${'유저본인인가에 대한 조건'}">
-                                <div class="flex items-center gap-2 text-sm text-gray-500 ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                                        <line x1="2" x2="5" y1="12" y2="12"></line>
-                                        <line x1="19" x2="22" y1="12" y2="12"></line>
-                                        <line x1="12" x2="12" y1="2" y2="5"></line>
-                                        <line x1="12" x2="12" y1="19" y2="22"></line>
-                                        <circle cx="12" cy="12" r="7"></circle>
-                                    </svg>
-                                    <span>${dto.useraddress}</span>
-                                </div>
+
+                            <%-- 주소 --%>
+                            <%-- 유저 본인만 확인 가능--%>
+                            <c:if test="${sessionScope.loginok!=null && sessionScope.usernum == usernum}">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 ">
+                                <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="w-4 h-4"
+                                >
+                                    <line x1="2" x2="5" y1="12" y2="12"></line>
+                                    <line x1="19" x2="22" y1="12" y2="12"></line>
+                                    <line x1="12" x2="12" y1="2" y2="5"></line>
+                                    <line x1="12" x2="12" y1="19" y2="22"></line>
+                                    <circle cx="12" cy="12" r="7"></circle>
+                                </svg>
+                                <span>${dto.useraddress}</span>
+                            </div>
                             </c:if>
                         </div>
                     </div>
@@ -109,15 +122,31 @@
                             </div>
                         </c:if>
                         <div data-orientation="vertical" role="none" class="shrink-0 bg-gray-100 w-[1px] h-6"></div>
-                        <!-- 유저 본인 확인 -->
-                    <c:if test="${sessionScope.usernum == usernum}">
-                        <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="myupdate" data-usernum="${usernum}" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                        <%-- 유저 본인만 확인 가능--%>
+                        <c:if test="${sessionScope.loginok!=null && sessionScope.usernum == usernum}">
+                        <button id="myupdate" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+                        onclick="location.href='${root}/mypage/update?usernum=${usernum}'">
+
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="w-4 h-4"
+                            >
                                 <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
                                 <circle cx="12" cy="12" r="3"></circle>
                             </svg>
                             <span class="sr-only">Settings</span>
                         </button>
+
+                        </c:if>
+
                     </div>
                     </c:if>
 
@@ -148,6 +177,7 @@
                                         <span class="text-gray-500 mr-1">${ele.productprice}원</span>
                                         <span class="text-gray-500">${ele.productstatus}</span>
                                     </div>
+                                    <%-- 유저 본인만 확인 가능--%>
                                     <c:if test="${sessionScope.loginok!=null && sessionScope.usernum == usernum}">
                                     <div class="flex">
                                         <c:if test="${ele.productstatus.equals('예약 중')}">
@@ -171,7 +201,7 @@
                     </div>
                 </section>
                  <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
-                <%-- 유저 본인만 구매내역 및 찜목록 확인 가능--%>
+                <%-- 유저 본인만 확인 가능--%>
                 <c:if test="${sessionScope.loginok!=null && sessionScope.usernum == usernum}">
                 <%-- 구매내역 --%>
                 <section class="">
