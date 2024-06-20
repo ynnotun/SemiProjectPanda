@@ -157,9 +157,7 @@
                             name="useremail"
                             placeholder="Enter your email"/>
                 </div>
-                <button class="emailchecked" id="checkButton" type="button"
-                onclick="openModal('하이', '모달뜨냐?',`closeModal()`)"
-                >
+                <button class="emailchecked" id="checkButton" type="button">
                     인증코드 전송
                 </button>
             </div>
@@ -173,7 +171,7 @@
                         Email Check
                     <div id="timer" style="color: red">남은시간 03:00</div>
                     <!-- 로딩바 -->
-                    <div id="loading" class="hidden">전송 중...</div>
+                    <div id="loading">전송 중...</div>
                     <input
                             class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="emailcheck"
@@ -354,13 +352,13 @@
             data: $.param({ email: email, code: code }),
             success: function(response) {
                 if (response === "인증 성공") {
-                    alert('인증 성공했습니다.');
+                    openModal('PANDA', '이메일 인증이 성공하였습니다.',`closeModal()`)
                     isVerified = true;
                     clearInterval(timer); // 타이머 정지
                     document.getElementById('timer').style.display = 'none'; // 타이머 숨기기
                     document.getElementById('emailCheckSection').classList.add('hidden'); // 인증 섹션 숨기기
                 } else {
-                    alert('인증 실패했습니다.');
+                    openModal('PANDA', '이메일 인증이 실패하였습니다.',`closeModal()`)
                 }
             },
             error: function(xhr, status, error) {
@@ -378,7 +376,7 @@
             $("#page1").css("transform", "translateX(-100%)");
             $("#page2").css("transform", "translateX(0)");
         } else {
-            alert('이메일 인증을 완료해주세요.');
+            openModal('PANDA', '이메일 인증이 완료해주세요.',`closeModal()`)
         }
     })
 
@@ -401,9 +399,6 @@
         $("#radio3").prop("checked",true);
     })
     $(document).ready(function() {
-        // $("#checkButton").click(function() {
-        //     sendCode();
-        // });
 
         $("#verifyButton").click(function() {
             verifyCode();
@@ -428,7 +423,7 @@
     $(function (){
         $("#nicknamebtn").click(function () {
             if ($("#nickname").val()==''){
-                alert("가입할 닉네임를 입력해주세여");
+                openModal('PANDA', '가입할 닉네임을 작성해주세요.',`closeModal()`)
                 return;
             }
             $.ajax({
@@ -438,10 +433,10 @@
                 data:{"searchnickname":$("#nickname").val()},
                 success:function (data) {
                     if (data.count==0){
-                        alert("가입이 가능한 닉네임입니다");
+                        openModal('PANDA', '가입이 가능한 닉네임입니다.',`closeModal()`)
                         jungbok=true;
                     }else {
-                        alert("이미 가입되어있는 닉네임입니다");
+                        openModal('PANDA', '이미 사용중인 닉네임입니다.',`closeModal()`)
                         jungbok=false;
                         $("#nickname").val("");
                     }
@@ -455,7 +450,7 @@
 
         function check(){
             if (!jungbok){
-                alert("닉네임 중복확인을 해주세요");
+                openModal('PANDA', '닉네임 중복확인을 해주세요.',`closeModal()`)
                 return false;//false반환시 action 실행을 안함
             }
         }
@@ -463,7 +458,7 @@
     $(function (){
         $("#checkButton").click(function () {
             if ($("#email").val() == '') {
-                alert("가입할 이메일를 입력해주세여");
+                openModal('PANDA', '가입할 이메일을 입력해주세요.',`closeModal()`)
                 return;
             }
             $.ajax({
@@ -471,9 +466,10 @@
                 dataType: "json",
                 url: "./emailcheck",
                 data: {"searchemail": $("#email").val()},
+                async:false,
                 success: function (data) {
                     if (data.count === 0) {
-                        alert("가입이 가능한 이메일입니다");
+                        openModal('PANDA', '가능한 이메일입니다.',`closeModal()`)
                         jungbok = true;
                         $("#loading").show();
                         const email = $('#email').val();
@@ -489,7 +485,7 @@
                             data: JSON.stringify(mailDto),
                             success: function(response) {
                                 $("#loading").hide();
-                                alert('인증번호를 전송했습니다.');
+                                openModal('PANDA', '이메일전송이 되었습니다.',`closeModal()`)
                                 $('#emailCheckSection').removeClass('hidden');
                                     clearInterval(timerInterval);
                                     var duration = 180;
@@ -504,21 +500,24 @@
                                         display.textContent = "남은시간 " + minutes + ":" + seconds;
                                         if (--timer < 0) {
                                             clearInterval(timerInterval);
-                                            alert('3분이 지났습니다!');
+                                            openModal('PANDA', '시간이 초과되었습니다.',`closeModal()`)
                                         }
                                     }, 1000);
                             },
                             error: function(error) {
                                 $("#loading").hide();
-                                alert('전송실패');
+                                openModal('PANDA', '전송이 실패하였습니다.',`closeModal()`)
 
                             }
                         });
 
                     } else {
-                        alert("이미 가입되어있는 이메일입니다");
+                        openModal('PANDA', '이미 생성된 이메일입니다.',`closeModal()`)
                         jungbok = false;
                         $("#email").val("");
+                        clearInterval(timer); // 타이머 정지
+                        document.getElementById('timer').style.display = 'none'; // 타이머 숨기기
+                        document.getElementById('emailCheckSection').classList.add('hidden'); // 인증 섹션 숨기기
                     }
                 }
             })
