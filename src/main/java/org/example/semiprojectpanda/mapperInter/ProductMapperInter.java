@@ -47,17 +47,16 @@ public interface ProductMapperInter {
 
 
     //검색 결과 불러오기
-
-/*    @Select(
-            """
-
-
-         """
-        )
-        public List<ProductDto> getSearchList(List<String> keywords);*/
-
-    @Select("SELECT * FROM PRODUCT  WHERE productaddress LIKE keyword=#{keyword} or producttitle LIKE keyword=#{keyword} or productcontent like keyword=#{keyword}")
-    List<ProductDto> getSearchList(String keyword);
+    @Select("""
+            SELECT p.* , i.imagefilename as imagefilename
+            FROM PRODUCT p
+            JOIN (
+                SELECT productnum, MIN(imagefilename) as imagefilename
+                FROM PRODUCT_IMAGE
+                GROUP BY productnum
+            ) i ON i.productnum = p.productnum
+            WHERE producttitle LIKE CONCAT('%',#{keyword},'%') OR productaddress LIKE CONCAT('%',#{keyword},'%') ORDER BY productcreatedat desc""")
+    List<ProductDto> getSearchList(@Param("keyword") String keyword);
 
     //판매내역 최신순으로 4개만 불러오기
     @Select("""
