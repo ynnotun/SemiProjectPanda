@@ -1,8 +1,10 @@
 package org.example.semiprojectpanda.controller.account;
 
 import org.example.semiprojectpanda.dto.ProductDto;
+import org.example.semiprojectpanda.dto.ProductImageDto;
 import org.example.semiprojectpanda.dto.ReviewDto;
 import org.example.semiprojectpanda.dto.UserDto;
+import org.example.semiprojectpanda.mapperInter.ProductImageMapperInter;
 import org.example.semiprojectpanda.mapperInter.ProductMapperInter;
 import org.example.semiprojectpanda.mapperInter.UserMapperInter;
 import org.example.semiprojectpanda.mapperInter.WishMapperInter;
@@ -29,6 +31,12 @@ public class MypageController {
     @Autowired
     private ReviewService reviewService;
 
+    @Autowired
+    private DetailService detailService;
+
+    @Autowired
+    private ProductImageMapperInter productImageMapperInter;
+
 
     @GetMapping("/mypage")
     public String mypage(@RequestParam int usernum, Model model) {
@@ -38,7 +46,7 @@ public class MypageController {
         /* 판매, 구매, 찜목록 출력*/
         List<ProductDto> sellList = productService.getFourFromSellList(usernum);
         List<ProductDto> buyList = productService.getFourFromBuyList(usernum);
-        List<ProductDto> wishList = wishService.getThreeFromWishList(usernum);
+        /*List<ProductDto> wishList = wishService.getThreeFromWishList(usernum);*/
         List<ReviewDto> reviews = reviewService.getReviewsByUsernum(usernum);
         String userGrade = reviewService.getGradeByUsernum(usernum);
 
@@ -55,6 +63,12 @@ public class MypageController {
             }
         } catch (NullPointerException e) {
 
+        }
+        // 찜목록 사진 출력
+        List<ProductDto> wishList = wishService.getThreeFromWishList(usernum);
+        for(ProductDto productDto : wishList){
+            List<ProductImageDto> list = productImageMapperInter.findImageByProductnum(productDto.getProductnum());
+            productDto.setImagefilename(list.get(0).getImagefilename());
         }
 
         model.addAttribute("usernum", usernum);

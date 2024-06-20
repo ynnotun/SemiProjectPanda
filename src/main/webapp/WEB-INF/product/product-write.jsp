@@ -50,7 +50,9 @@
 
             <!-- 폼태그 시작 -->
             <form class="grid gap-6" method="post" action="/product/write" enctype="multipart/form-data">
+
                 <input type="hidden" name="usernum" value="1"><!-- 임시 -->
+
                 <!-- 게시글 제목 입력란 -->
                 <div class="grid gap-2">
                     <label
