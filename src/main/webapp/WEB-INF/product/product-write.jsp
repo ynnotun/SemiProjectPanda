@@ -32,10 +32,6 @@
 
 </head>
 <body>
-<!--
-// v0 by Vercel.
-// https://v0.dev/t/wV48KM6fZ1E
--->
 <div class="bg-white  text-gray-950  min-h-screen">
     <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
 
@@ -43,15 +39,12 @@
 
             <!-- Post Your Item -->
             <div class="grid gap-2">
-                <h1 class="text-2xl font-bold">Post Your Item</h1>
-                <p class="text-gray-500 ">List your item for sale on our second-hand trading
-                    platform.</p>
+                <h1 class="text-2xl font-bold">Post Your Item (내 중고상품 등록하기)</h1>
+                <p class="text-gray-500 ">List your item for sale on our second-hand trading platform. (판다에서 중고상품을 팔아보세요!)</p>
             </div>
 
             <!-- 폼태그 시작 -->
             <form class="grid gap-6" method="post" action="/product/write" enctype="multipart/form-data">
-
-                <input type="hidden" name="usernum" value="1"><!-- 임시 -->
 
                 <!-- 게시글 제목 입력란 -->
                 <div class="grid gap-2">
@@ -65,7 +58,7 @@
                             id="title"
                             name="producttitle"
                             required="required"
-                            placeholder="Enter the title of your item"/>
+                            placeholder="Enter the title of your item (제목을 입력하세요.)"/>
                 </div>
 
                 <!-- 사진 여러장 업로드 + 미리보기 -->
@@ -115,7 +108,7 @@
                             id="description"
                             name="productcontent"
                             required="required"
-                            placeholder="Provide a detailed description of your item"
+                            placeholder="Provide a detailed description of your item (판매할 중고물품의 설명을 적어주세요.)"
                             rows="4"></textarea>
                 </div>
 
@@ -135,7 +128,7 @@
                                     id="price"
                                     name="productprice"
                                     required="required"
-                                    placeholder="Enter the price"/>
+                                    placeholder="Enter the price (가격을 입력해주세요.)"/>
                         </div>
                     </div>
 
@@ -152,7 +145,7 @@
                                 id="location"
                                 name="productaddress"
                                 required="required"
-                                placeholder="Enter the location"
+                                placeholder="Enter the location (판매장소를 등록해주세요.)"
                                 onclick="openDaumPostcode()"/>
                     </div>
                     <input type="hidden" id="latitude" name="productlocationx"/>
@@ -176,6 +169,7 @@
                     </div>
                 </div>
 
+                <%--
                 <!-- 오픈 채팅 입력 -->
                 <div class="grid gap-2">
                     <label
@@ -190,11 +184,14 @@
                             required="required"
                             placeholder="Enter the Kakaotalk openchat"/>
                 </div>
+                --%>
+                <input type="hidden" name="productopenchat" value=""/>
 
                 <!-- 해시태그 입력 -->
                 <div class="grid gap-2">
                     <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                         Hashtags
+                        <span style="font-size: x-small"> 최대 5개까지 입력 가능합니다.</span>
                     </label>
 
                     <!-- 입력받은 해시태그들 나열 -->
@@ -213,7 +210,7 @@
         disabled:opacity-50 bg-green-50 text-green-500
         px-3 py-1 rounded-full"
                                 name="hashtags"
-                                placeholder="Add a hashtag"
+                                placeholder="Add a hashtag (#해시태그)"
                                 onkeydown="handleHashtagInput(event)"
                         />
                     </div>
@@ -241,6 +238,42 @@
 
 <!-- 이미지 업로드 이벤트 -->
 <script>
+    // 이미지 여러장 업로드 이벤트
+    document.getElementById('upload-button').addEventListener('click', function () {
+        document.getElementById('file-input').click();
+    });
+
+    // 업로드된 여러 사진 출력
+    document.getElementById('file-input').addEventListener('change', function (event) {
+        const files = event.target.files;
+        const previewContainer = document.getElementById('preview');
+
+        if (files.length > 0) {
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'h-48 w-48 object-cover rounded-md border cursor-pointer';
+                    img.addEventListener('click', function () {
+                        previewContainer.removeChild(img);
+                    });
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    });
+
+    // 미리보기 이미지 가로 스크롤링
+    document.getElementById('preview').addEventListener('wheel', function (event) {
+        if (event.deltaY !== 0) {
+            event.preventDefault();
+            this.scrollLeft += event.deltaY;
+        }
+    });
+</script>
+<%--<script>
     //이미지 여러장 업로드 이벤트
     document.getElementById('upload-button').addEventListener('click', function () {
         document.getElementById('file-input').click();
@@ -273,7 +306,7 @@
             this.scrollLeft += event.deltaY;
         }
     });
-</script>
+</script>--%>
 
 <!-- 해시태그 이벤트 -->
 <script>
@@ -281,7 +314,7 @@
     const hashtagContainer = document.getElementById('hashtag-container');
     const hashtagInput = document.getElementById('hashtag-input');
     const hashtagListInput = document.getElementById('hashtaglist');
-    const hashtags = [];
+    let hashtags = [];
 
     //해시태그 입력중 enter가 입력되면 내용 잘라서 addHashtag함수 수행
     function handleHashtagInput(event) {
@@ -295,7 +328,7 @@
         }
     }
 
-    //전달 받는 내용 조작
+    //전달 받는 내용 추가
     function addHashtag(tag) {
         // # 안붙어 있으면 추가
         if (!tag.startsWith('#')) {
@@ -309,13 +342,49 @@
         }
     }
 
-    //나열 출력
+    // 해시태그 삭제 함수
+    function removeHashtag(tag) {
+        hashtags = hashtags.filter(item => item !== tag); // 선택된 해시태그 제외하고 필터링
+        renderHashtags(); // 해시태그 UI 업데이트
+        updateHiddenInput(); // 숨겨진 input 업데이트
+    }
+
+    /*// 해시태그 UI 업데이트 함수
     function renderHashtags() {
         hashtagContainer.innerHTML = '';
         hashtags.forEach(tag => {
             const tagElement = document.createElement('div');
-            tagElement.className = 'bg-green-50 text-green-500 px-3 py-1 rounded-full';
+            tagElement.className = 'bg-green-50 text-green-500 px-3 py-1 rounded-full cursor-pointer flex items-center gap-1';
             tagElement.textContent = tag;
+
+            // 해시태그 클릭 시 삭제 이벤트 추가
+            tagElement.addEventListener('click', () => removeHashtag(tag));
+
+            hashtagContainer.appendChild(tagElement);
+        });
+    }*/
+
+    // 해시태그 UI 업데이트 함수
+    function renderHashtags() {
+        hashtagContainer.innerHTML = '';
+        hashtags.forEach(tag => {
+            const tagElement = document.createElement('div');
+            tagElement.className = 'bg-green-50 text-green-500 px-3 py-1 rounded-full flex items-center gap-1';
+
+            // 해시태그 텍스트
+            const tagText = document.createElement('span');
+            tagText.textContent = tag;
+
+            // 삭제 버튼
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.innerHTML = '&times;'; // X 표시
+            deleteButton.className = 'text-green-500';
+            deleteButton.addEventListener('click', () => removeHashtag(tag)); // 삭제 버튼 클릭 시 해당 해시태그 삭제
+
+            tagElement.appendChild(tagText);
+            tagElement.appendChild(deleteButton);
+
             hashtagContainer.appendChild(tagElement);
         });
     }
