@@ -33,10 +33,21 @@
                     <h1 class="text-2xl font-bold">Rate Your Experience</h1>
                     <p class="text-gray-500">Please provide your feedback on the recent transaction.</p>
                 </div>
-                <form action="/product/review" method="post">
-                    <input type="hidden" name="reviewsenduser" value="1"><!-- 임시값 -->
-                    <input type="hidden" name="reviewreceiveuser" value="2"><!-- 임시값 -->
-                    <input type="hidden" name="productnum" value="50"><!-- 임시값 -->
+                <form action="./product/review" method="post">
+                    <%--<input type="hidden" name="reviewsenduser" value="${}">
+                    <input type="hidden" name="reviewreceiveuser" value="${}">
+                    <input type="hidden" name="username" value="${}">--%>
+                    <%--
+                    <input type="hidden" name="reviewsenduser" value="${productDto.usernum}"><!-- 임시값 -->
+                    <input type="hidden" name="reviewreceiveuser" value="${productDto.customernum}"><!-- 임시값 -->
+                    --%>
+
+                        <div>
+                            <p>${sendUserDto.username}님! ${receiveUserDto.username}님과의 거래는 어떠셨나요?</p>
+                            <p>${productDto.title} 거래를 함께한 ${receiveUserDto.username}님에 대해 평가해 주세요</p>
+                        </div>
+
+                    <input type="hidden" name="productnum" value="${productDto.productnum}">
 
                     <div class="grid gap-4">
                         <!-- 별점 추가 기능 -->
@@ -63,6 +74,7 @@
                                     viewBox="0 0 24 24"
                                     class="star"
                                     data-value="3">
+                                <!-- 3점이 기본 클릭 상태로 -->
                                 <polygon
                                         points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                             </svg>

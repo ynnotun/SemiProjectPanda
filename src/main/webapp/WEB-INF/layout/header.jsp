@@ -98,7 +98,7 @@
 </c:if>
 <c:if test="${sessionScope.loginok!=null}">
             <%-- sell 버튼 - 로그인시 보임 --%>
-            <a class="flex items-center gap-2 hover:text-gray-200" href="${root}/product/write">
+            <a class="cursor-pointer flex items-center gap-2 hover:text-gray-200" href="${root}/product/write">
                 <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -117,7 +117,7 @@
                 <span>Sell</span>
             </a>
             <%-- logout 버튼 - 로그인시 보임 --%>
-            <a class="flex items-center gap-2 hover:text-gray-200" id="btnlogout">
+            <a class="cursor-pointer flex items-center gap-2 hover:text-gray-200" id="btnlogout">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Logout</span>
             </a>
