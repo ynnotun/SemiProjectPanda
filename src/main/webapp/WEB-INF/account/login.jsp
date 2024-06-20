@@ -111,7 +111,7 @@
                     Remember me
                 </label>
             </div>
-            <a class="text-sm text-[#4CAF50] hover:underline" href="./seachpassword">
+            <a class="text-sm text-[#4CAF50] hover:underline" href="./searchpassword">
                 Forgot password?
             </a>
         </div>

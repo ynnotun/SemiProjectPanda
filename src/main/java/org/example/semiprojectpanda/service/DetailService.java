@@ -34,9 +34,15 @@ public class DetailService {
     }
 
 
+    public boolean checkNickname(String nickname) {
+        return userMapperInter.checkNickname(nickname) > 0;
+    }
     //마이페이지 수정
-    @Transactional
-    public void updateAccount(UserDto userDto) throws Exception {
+    public void updateUser(UserDto userDto) {
+        if (userDto.getUserprofileimage() == null || userDto.getUserprofileimage().isEmpty()) {
+            UserDto existingUser = getUserByUsernum(userDto.getUsernum());
+            userDto.setUserprofileimage(existingUser.getUserprofileimage());
+        }
         userMapperInter.updateUser(userDto);
     }
     //email값 받아서 usernum값 얻기

@@ -121,13 +121,32 @@
 </div>
 <script>
     $("#canc").click(function (){
-        window.location.href = "/"; //메인으로 이동
-    })
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: '/member/logout',
+            success: function(logoutResponse) {
+                window.location.href = '/'; // 로그인 페이지로 리디렉션
+            },
+            error: function(xhr, status, error) {
+                console.log('Logout Error:', error);
+            }
+        });    })
     $("#can").click(function (){
         window.location.href = "/quit"; ///메인으로 이동
     })
     $("#subm").click(function (){
-        window.location.href = "/"; ///메인으로 이동
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: '/member/logout',
+            success: function(logoutResponse) {
+                window.location.href = '/'; // 로그인 페이지로 리디렉션
+            },
+            error: function(xhr, status, error) {
+                console.log('Logout Error:', error);
+            }
+        });
     })
 
 </script>
