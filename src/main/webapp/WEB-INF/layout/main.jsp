@@ -12,31 +12,10 @@
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-
+   <!-- Link Swiper's CSS -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
    <style>
-      /* 위로 가는 버튼 */
-      .scroll-to-top {
-         position: fixed;
-         bottom: 30px;
-         right: 30px;
-         display: none;
-         width: 50px;
-         height: 50px;
-         background-color: #4CAF50;
-         color: white;
-         border: none;
-         border-radius: 50%;
-         text-align: center;
-         font-size: 24px;
-         line-height: 50px;
-         cursor: pointer;
-         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-         z-index: 1000;
-         transition: all 0.3s ease;
-      }
-      .scroll-to-top:hover {
-         background-color: #45a049;
-      }
+
 
       /* 카테고리 스크롤 */
       #scroll {
@@ -88,10 +67,69 @@
       div.sel{
          margin-left: 88%;
       }
+
+      html,
+      body {
+         position: relative;
+         height: 100%;
+      }
+
+      body {
+         background: #eee;
+         font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+         font-size: 14px;
+         color: #000;
+         margin: 0;
+         padding: 0;
+      }
+
+      .swiper {
+         width: 100%;
+         height: 100%;
+      }
+
+      .swiper-slide {
+         text-align: center;
+         font-size: 18px;
+         background: #fff;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+      }
+
+      .swiper-slide img {
+         display: block;
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+      }
    </style>
 </head>
 <body>
 
+<!-- Swiper -->
+<div class="swiper mySwiper">
+   <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="${root}/image/banner1.png"/></div>
+      <div class="swiper-slide"><img src="${root}/image/banner2.png"/></div>
+      <div class="swiper-slide"><img src="${root}/image/banner3.png"/></div>
+   </div>
+   <div class="swiper-button-next"></div>
+   <div class="swiper-button-prev"></div>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+   var swiper = new Swiper(".mySwiper", {
+      navigation: {
+         nextEl: ".swiper-button-next",
+         prevEl: ".swiper-button-prev",
+      },
+   });
+</script>
 
 <div class="bg-white  text-gray-900  min-h-screen">
    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
@@ -117,7 +155,7 @@
    </section>
    <br>
    <section class="py-8 px-6 md:px-8">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="">
          <c:forEach var="ele" items="${products}">
             <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
@@ -139,28 +177,10 @@
    </section>
 </div>
 
-<!-- 위로 가는 버튼 -->
-<button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">
-   <i class="bi bi-caret-up-fill"></i>
-</button>
+
    </div>
 </div>
 <script>
-   // category 스크롤
-   window.onscroll = function() {
-      var scrollToTopBtn = document.getElementById("scrollToTopBtn");
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-         scrollToTopBtn.style.display = "block";
-      } else {
-         scrollToTopBtn.style.display = "none";
-      }
-   };
-
-   // 위로 가는 버튼
-   function scrollToTop() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-   }
 
    // 슬라이드 버튼 기능
    function slide(direction) {
@@ -170,6 +190,45 @@
          top: 0,
          left: direction * scrollAmount,
          behavior: 'smooth'
+      });
+   }
+
+
+   function getList(){
+      $.ajax({
+         type:"get",
+         url:"${root}/category?categorynum=${categorynum}",
+         dataType:"json",
+         success:function (data){
+            let s="";
+            if(data.length === 0){
+               s = `<div class="w-full text-base text-gray-500">아직 찜한 이력이 없어요.</div>`;
+            } else {
+               $.each(data, function (idx, ele) {
+                  s += `
+                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                            <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
+                            <div class="p-4">
+                                <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
+                                <div class="mb-2">
+                                    <span class="text-gray-500 mr-1">\${ele.productprice}원</span>
+                                    <span class="text-gray-500">\${ele.productstatus}</span>
+                                </div>
+                                <div class="flex">
+                                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-9 rounded-md px-3 border-1 border-black mr-2 hover:bg-gray-200">
+                                        예약 취소
+                                    </button>
+                                    <button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black">
+                                        거래 완료
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+               });
+            }
+            $("#page1").html(s);
+         }
       });
    }
 </script>
