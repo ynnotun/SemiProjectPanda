@@ -15,6 +15,14 @@
           rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <style>
+        html, body, .mainlayout {
+            height: 100%;
+            background-color: black;
+        }
+        .mainlayout{
+            background-color: white;
+        }
+
     </style>
 </head>
 <c:set var="root" value="<%=request.getContextPath() %>" scope="application"/>
@@ -32,6 +40,16 @@
     </div>
 </div>
 
+<script>
+    let headerTile = document.getElementsByClassName("header-tile")[0];
+    let footerTile = document.getElementsByClassName("footer-tile")[0];
+    let mainTile = document.getElementsByClassName("main-tile")[0];
+
+    let height = headerTile.offsetHeight + footerTile.offsetHeight;
+    mainTile.style.minHeight = `calc(100% - \${height}px)`;
+
+</script>
+
 
 <%--채팅방 띄우기--%>
 <link rel="stylesheet"
@@ -44,8 +62,7 @@
         position: fixed;
         left: 30px;
         bottom: 30px;
-        <c:if test="${sessionScope.usernum == null}">
-        display: none;
+    <c:if test="${sessionScope.usernum == null}"> display: none;
     </c:if>
     }
 
@@ -95,7 +112,6 @@
     .chat-content::-webkit-scrollbar {
         display: none;
     }
-
 
 
 </style>
