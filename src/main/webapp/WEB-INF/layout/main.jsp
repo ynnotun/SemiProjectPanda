@@ -102,13 +102,13 @@
       <button class="slider-button next" onclick="slide(1)">&#10095;</button>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6" id="scroll">
          <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap"
-            href="#">
+            href="${root}?categorynum=0">
             <i class="bi bi-justify" style="font-size: 2em;"></i>
             <span>ALL</span>
          </a>
          <c:forEach var="ele" items="${categories}">
             <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap"
-               href="${root}/">
+               href="${root}?categorynum=${ele.categorynum}">
                <i class="${ele.categoryicon}" style="font-size: 2em;"></i>
                <span>${ele.categoryname}</span>
             </a>
@@ -116,32 +116,22 @@
       </div>
    </section>
    <br>
-   <div class="sel">
-      <label for="choices">Filter</label>
-      <select id="choices" name="choices" style="border: 1px solid black;">
-         <option value="">최신순</option>
-         <option value="">추천순(찜)</option>
-         <option value="">낮은가격순</option>
-         <option value="">높은가격순</option>
-      </select>
-   </div>
-
    <section class="py-8 px-6 md:px-8">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-         <c:forEach var="product" items="${products}">
-            <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-               <img
-                       src="https://kr.object.ncloudstorage.com/semi/panda/${product.imagefilename}"
-                       width="300"
-                       height="200"
-                       alt="Product"
-                       class="rounded-t-lg object-cover w-full h-48"
-                       style="aspect-ratio:300/200;object-fit:cover"
-               />
+         <c:forEach var="ele" items="${products}">
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+               <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
+                    width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"
+                    onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'"/>
                <div class="p-4">
-                  <h3 class="text-lg font-medium mb-2">${product.producttitle}</h3>
-                  <p>${product.productprice}</p>
-                  <p class="text-gray-500 mb-4">${product.productaddress}</p>
+
+                  <h3 class="cursor-pointer text-lg font-medium mb-2"
+                      onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">
+                        ${ele.producttitle}</h3>
+                  <div class="mb-2">
+                     <span class="text-gray-500 mr-1">${ele.productprice}원</span>
+                     <span class="text-gray-500">${ele.productstatus}</span>
+                  </div>
                </div>
             </div>
          </c:forEach>
