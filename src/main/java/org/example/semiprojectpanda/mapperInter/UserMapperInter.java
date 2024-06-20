@@ -16,8 +16,14 @@ public interface UserMapperInter {
 
 
     //마이페이지 수정
-    @Update("UPDATE USER SET usernickname = #{nickname}, userpassword = #{userpassword}, userprofileimage = #{userprofileimage} WHERE usernum = #{usernum}")
-    int updateUser(UserDto userdto);
+    @Update("UPDATE USER SET usernickname = #{usernickname}, userpassword = #{userpassword} WHERE usernum = #{usernum}")
+    void updateUser(UserDto userdto);
+
+    @Select("SELECT userpassword FROM USER WHERE usernum = #{usernum}")
+    String getPasswordByUsernum(int usernum);
+
+    @Update("UPDATE USER SET userprofileimage = #{photo} WHERE usernum = #{num}")
+    void updatePhoto(@Param("num") int num, @Param("photo") String photo);
 
     @Select("SELECT userpassword FROM USER WHERE useremail = #{useremail}")
     String getPasswordByEmail(@Param("useremail") String useremail);
@@ -25,6 +31,9 @@ public interface UserMapperInter {
     //usernum값 얻기
     @Select("SELECT usernum FROM USER WHERE useremail = #{useremail}")
     int getUserNumByEmail(@Param("useremail") String useremail);
+
+    @Select("SELECT COUNT(*) FROM USER WHERE usernickname = #{nickname}")
+    int checkNickname(@Param("nickname") String nickname);
 
     // 비밀번호 변경
     @Update("UPDATE USER SET userpassword = #{newPassword} WHERE usernum = #{usernum}")

@@ -87,7 +87,7 @@
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
                         </button>
-                        <input type="file" id="file-input" name="productImages" accept="image/*" multiple class="hidden">
+                        <input type="file" required="required" id="file-input" name="productImages" accept="image/*" multiple class="hidden">
 
                         <!-- 사진 미리보기 -->
                         <div id="preview" class="mt-0 flex items-start gap-2">
@@ -185,7 +185,7 @@
                             placeholder="Enter the Kakaotalk openchat"/>
                 </div>
                 --%>
-                <input type="hidden" name="productopenchat" value=""/>
+                <input type="hidden" name="productopenchat" value=""/><!-- 일단 냅두기 -->
 
                 <!-- 해시태그 입력 -->
                 <div class="grid gap-2">
@@ -265,6 +265,15 @@
         }
     });
 
+    /*// 폼 제출 이벤트에서 파일 입력 확인
+    document.querySelector('form').addEventListener('submit', function (event) {
+        const fileInput = document.getElementById('file-input');
+        if (fileInput.files.length === 0) {
+            event.preventDefault();
+            //alert('Please upload at least one image.');
+        }
+    });*/
+
     // 미리보기 이미지 가로 스크롤링
     document.getElementById('preview').addEventListener('wheel', function (event) {
         if (event.deltaY !== 0) {
@@ -273,7 +282,9 @@
         }
     });
 </script>
-<%--<script>
+
+<%--
+<script>
     //이미지 여러장 업로드 이벤트
     document.getElementById('upload-button').addEventListener('click', function () {
         document.getElementById('file-input').click();
@@ -306,7 +317,8 @@
             this.scrollLeft += event.deltaY;
         }
     });
-</script>--%>
+</script>
+--%>
 
 <!-- 해시태그 이벤트 -->
 <script>
