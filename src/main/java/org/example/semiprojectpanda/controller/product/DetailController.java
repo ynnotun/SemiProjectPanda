@@ -50,7 +50,7 @@ public class DetailController {
         }
 
         UserDto userDto = detailService.getUserByUsernum(productDto.getUsernum());
-        String userGrade = reviewService.getGradeByUsernum((Integer) usernum);
+        String userGrade = reviewService.getGradeByUsernum((productDto.getUsernum()));
         model.addAttribute("userGrade", userGrade);
 
         model.addAttribute("imageDtoList", detailService.getAllProductImages(productnum));

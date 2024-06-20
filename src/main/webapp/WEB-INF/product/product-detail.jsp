@@ -285,7 +285,7 @@
                         <div class="flex items-center gap-2">
                             <span class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border-2 border-[#4CAF50]">
                                 <img class="aspect-square h-full w-full" alt="Seller"
-                                     src="https://generated.vusercontent.net/placeholder-user.jpg"/>
+                                     src="https://kr.object.ncloudstorage.com/semi/panda/${productUserDto.userprofileimage}"/>
                             </span>
                             <div>
 
@@ -415,7 +415,7 @@
 
                         <button
                                 class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#E5E7EB] text-[black] h-11 rounded-md px-8 border-[#4CAF50] hover:bg-blue-500 hover:text-white"
-                                onclick="location.href=`./update?productnum=${productDto.productnum}`"
+                                onclick="location.href=`/product/update?productnum=${productDto.productnum}`"
                         >
                             Update
                         </button>
@@ -544,6 +544,8 @@
 
 
                 </div>
+
+
                 <div class="hidden fixed inset-0 z-50 bg-black/80" id="alertChatLogBG"
                      style="pointer-events: auto;" data-aria-hidden="true" aria-hidden="true"></div>
                 <div class="hidden fixed left-[50%] top-[40%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-white p-6 shadow-lg duration-200 sm:rounded-lg sm:max-w-[400px]"
@@ -855,19 +857,6 @@
         $("#alertChatLogOkBtn").removeClass("bg-red-500").removeClass("bg-yellow-500");
     }
 
-    function completeDeal(usernickname, customerNum) {
-        document.getElementById("alertChatLogBG").style.display = "block";
-        document.getElementById("alertChatLogContent").style.display = "block";
-
-        document.getElementById("alertChatLogText").innerText = usernickname + "님과 거래를 완료하셨습니까?"
-        document.getElementById("alertChatLogOkBtn").innerText = "완료하기"
-        document.getElementById("alertChatLogTitle").innerText = "거래완료"
-        $("#alertChatLogOkBtn").addClass("bg-red-500")
-
-        document.getElementById("alertChatLogOkBtn").onclick = function () {
-            console.log(usernum)
-        }
-    }
 
 
     function alertReserveCancelBtn() {
@@ -1009,7 +998,7 @@
                                            onclick="reserveDeal('\${chat.usernickname}','\${chat.usernum}')"
                                         >거래예약</a>
                                         <a class="text-gray-900"
-                                           onclick="completeDeal('\${chat.usernickname}','\${chat.usernum}')"
+                                           onclick="alertCompleteBtn('\${chat.usernickname}','\${chat.usernum}')"
                                         >거래완료</a>
                                     </div>
                                 </div>
