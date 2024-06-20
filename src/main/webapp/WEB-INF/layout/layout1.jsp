@@ -18,6 +18,7 @@
     </style>
 </head>
 <c:set var="root" value="<%=request.getContextPath() %>" scope="application"/>
+<c:set var="filepath" value="https://kr.object.ncloudstorage.com/semi/panda/"/>
 <body>
 <div class="mainlayout">
     <div class="header-tile">
