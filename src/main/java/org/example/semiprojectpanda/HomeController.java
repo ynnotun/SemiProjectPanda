@@ -42,7 +42,7 @@ public class HomeController {
     }*/
     @GetMapping("/")
     public String getList(
-            @RequestParam int categorynum, Model model
+            @RequestParam(defaultValue = "0") int categorynum, Model model
     ){
         List<CategoryDto> categories = productUpdateService.getAllCategories();
         List<ProductDto> products = null;

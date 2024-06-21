@@ -143,7 +143,7 @@
             $.ajax({
                 type: "get",
                 dataType: "text",
-                url: 'member/logout',
+                url: '/member/logout',
                 success: function () {
                     //새로고침
                     location.reload();
