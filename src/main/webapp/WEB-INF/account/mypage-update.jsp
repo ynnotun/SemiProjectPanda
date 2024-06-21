@@ -40,7 +40,7 @@
 <div class="max-w-md mx-auto px-4 py-8 sm:px-6 lg:px-8">
     <div class="space-y-6">
         <div>
-            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="nickname">Nickname</label>
+            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="nickname">닉네임 변경</label>
             <div class="mt-1 flex items-center">
                 <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                        type="text" id="nickname" placeholder="Enter your nickname" value="${userDto.usernickname}"/>
@@ -48,17 +48,17 @@
             </div>
         </div>
         <div>
-            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="password">Password</label>
+            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="password">비밀번호 변경</label>
             <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                    type="password" id="password" placeholder="Enter your password"/>
         </div>
         <div>
-            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="confirm-password">Confirm Password</label>
+            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="confirm-password">비밀번호 확인</label>
             <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                    type="password" id="confirm-password" placeholder="Confirm your password"/>
         </div>
         <div>
-            <label class="block text-sm font-medium text-gray-700 ">Default Profile Options</label>
+            <label class="block text-sm font-medium text-gray-700 ">프로필 사진 변경</label>
             <div class="mt-1 grid grid-cols-3 gap-3">
                 <div class="relative">
                     <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
@@ -85,7 +85,7 @@
     </div>
         <hr style="margin-bottom: 10px; margin-top: 30px;">
     <div style="margin-bottom: 10px;">
-        <button type="button" id="completeRegister" class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">Complete Registration</button>
+        <button type="button" id="completeRegister" class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">변경하기</button>
     </div>
     <!-- Button trigger modal -->
     <button id="deleteAccount" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color: #ff4141; border: 0px; float: right; font-size: 13px;">Delete Account</button>
@@ -163,18 +163,7 @@
                 data: JSON.stringify({ usernum: usernum, usernickname: usernickname, userpassword: userpassword, userprofileimage: userprofileimage }),
                 success: function(response) {
                     alert(response);
-                    // 로그아웃 요청
-                    $.ajax({
-                        type: "get",
-                        dataType: "text",
-                        url: '/member/logout',
-                        success: function(logoutResponse) {
-                            window.location.href = '${root}/login'; // 로그인 페이지로 리디렉션
-                        },
-                        error: function(xhr, status, error) {
-                            console.log('Logout Error:', error);
-                        }
-                    });
+                    logout();
                 },
                 error: function(xhr, status, error) {
                     console.log('Error:', error);
@@ -199,6 +188,21 @@
             });
         });
     });
+
+    function logout(){
+        // 로그아웃 요청
+        $.ajax({
+            type: "get",
+            dataType: "text",
+            url: '/member/logout',
+            success: function(logoutResponse) {
+                window.location.href = '${root}/login'; // 로그인 페이지로 리디렉션
+            },
+            error: function(xhr, status, error) {
+                console.log('Logout Error:', error);
+            }
+        });
+    }
 </script>
 
 </body>
