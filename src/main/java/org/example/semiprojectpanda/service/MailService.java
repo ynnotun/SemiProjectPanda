@@ -39,9 +39,8 @@ public class MailService {
 
             String htmlContent = "<div style=\"width: 600px; background-color: rgba(0,0,0,0.85); font-family: 'Noto Sans KR', sans-serif; padding: 20px; box-sizing: border-box;\">" +
                     "<div style=\"display: flex; align-items: center;\">" +
-                    "<img src=\"https://kr.object.ncloudstorage.com/semi/panda/기본프로필2.jpeg\" style=\"width: 100px; height: auto;\">" +
+                    "<img src=\"https://kr.object.ncloudstorage.com/semi/panda/logo.png\" style=\"width: 400px; height: auto;\">" +
                     "<div style=\"margin-left: 20px;\">" +
-                    "<p style=\"font-size: 30px; font-weight: bold; color: white; margin-left: 60px;\">PANDA</p>" +
                     "</div>" +
                     "</div>" +
                     "<div style=\"text-align: center; margin-top: 30px;\">" +
