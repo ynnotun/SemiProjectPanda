@@ -32,7 +32,7 @@
 
 </head>
 <body>
-<!-- 경고모달 -->
+<!-- 이미지 0장 경고모달 -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -43,6 +43,24 @@
             <div class="modal-body">
                 <p>내 상품을 보여줄 수 있는
                     한 장 이상의 사진을 올려주세요.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 이미지 10장 초과 경고모달 -->
+<div class="modal fade" id="toomanyimages" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="toomanyimagesLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="toomanyimagesLabel">사진이 너무 많습니다.</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>사진은 최대 10장까지 업로드 가능합니다.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
@@ -135,7 +153,7 @@
 
                 <!-- 가격, 거래희망지역 -->
                 <div class="grid md:grid-cols-2 gap-6">
-                    <!-- 가격 입력 -->
+                    <!-- 가격 입력 --><!-- 가격제한 1억까지 제한 -->
                     <div class="grid gap-2">
                         <label
                                 class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -149,6 +167,7 @@
                                     id="price"
                                     name="productprice"
                                     required="required"
+                                    max="100000000"
                                     placeholder="가격을 입력해주세요."/>
                         </div>
                     </div>
@@ -250,6 +269,7 @@
         const postItemButton = document.getElementById('post-item-button');
         const preview = document.getElementById('preview');
         const modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+        const modalTooManyImages = new bootstrap.Modal(document.getElementById('toomanyimages'));
         const productForm = document.getElementById('productForm');
         let uploadedFiles = [];
 
@@ -262,6 +282,12 @@
         fileInput.addEventListener('change', function(event) {
             const files = Array.from(event.target.files);
             preview.innerHTML = ''; // 이전 미리보기 내용 지우기
+
+            // 이미지가 10장을 초과하는지 확인
+            if (uploadedFiles.length + files.length > 10) {
+                modalTooManyImages.show(); // 모달 표시
+                return;
+            }
 
             files.forEach(file => {
                 const reader = new FileReader();

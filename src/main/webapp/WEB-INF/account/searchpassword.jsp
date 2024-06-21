@@ -6,6 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="${root}/js/modal.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <style>
         .emailchecked {
@@ -50,13 +51,16 @@
             인증코드 전송
         </button>
     </div>
-    <div id="verificationSection" class="flex items-center" style="padding-bottom: 15px;">
+    <div id="verificationSection" class="flex items-center" style="padding-bottom: 15px; display: none;">
         <div class="flex-1">
             <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="code">
                 인증코드
+                <div id="timer" style="color: red">남은시간 03:00</div>
+                <div id="loading">전송 중...</div>
             </label>
+
             <input
                     class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     name="code"
@@ -68,30 +72,67 @@
     </div>
     <button
             class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
-            type="button" id="find" style="margin-top: 15px">
+            type="button" id="find" style="margin-top: 15px" disabled>
         Find
     </button>
 </div>
 <script>
     let isVerified = false;
+    let timerInterval;
 
     function sendCode() {
-        const mailDto = {
-            email: $('#email').val(),
-            message: ''
-        };
+        const email = $('#email').val();
 
         $.ajax({
-            url: '/mail/send',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(mailDto),
-            success: function (response) {
-                alert('인증번호를 전송했습니다.');
-                $('#verificationSection').show();
+            type: "GET",
+            dataType: "json",
+            url: "./emailcheck",
+            data: { "searchemail": email },
+            success: function(data) {
+                if (data.count > 0) {
+                    const mailDto = {
+                        email: email,
+                        message: ''
+                    };
+
+                    $.ajax({
+                        url: '/mail/send',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(mailDto),
+                        success: function(response) {
+                            openModal('PANDA', '전송되었습니다', `closeModal()`)
+
+                            $('#verificationSection').show();
+                            $("#loading").hide();
+                            clearInterval(timerInterval);
+                            var duration = 180;
+                            var display = document.getElementById('timer');
+                            display.style.display = 'block';
+                            var timer = duration, minutes, seconds;
+                            timerInterval = setInterval(function() {
+                                minutes = parseInt(timer / 60, 10);
+                                seconds = parseInt(timer % 60, 10);
+                                minutes = minutes < 10 ? "0" + minutes : minutes;
+                                seconds = seconds < 10 ? "0" + seconds : seconds;
+                                display.textContent = "남은시간 " + minutes + ":" + seconds;
+                                if (--timer < 0) {
+                                    clearInterval(timerInterval);
+                                    openModal('PANDA', '시간이 초과되었습니다', `closeModal()`)
+                                    display.style.display = 'none';
+                                }
+                            }, 1000);
+                        },
+                        error: function(error) {
+                            alert('인증번호 전송에 실패했습니다.');
+                        }
+                    });
+                } else {
+                    openModal('PANDA', '없는 계정입니다.', `closeModal()`)
+                }
             },
-            error: function (error) {
-                alert('인증번호 전송에 실패했습니다.');
+            error: function(error) {
+                openModal('PANDA', '이메일 확인에 실패했습니다.', `closeModal()`)
             }
         });
     }
@@ -107,11 +148,13 @@
             data: $.param({email: email, code: code}),
             success: function (response) {
                 if (response === "인증 성공") {
-                    alert('인증 성공했습니다.');
+                    openModal('PANDA', '인증 성공했습니다.', `closeModal()`)
+
                     isVerified = true;
                     $('#find').prop('disabled', false);
                 } else {
-                    alert('인증 실패했습니다.');
+                    openModal('PANDA', '인증 실패했습니다.', `closeModal()`)
+
                 }
             },
             error: function (xhr, status, error) {
@@ -128,13 +171,12 @@
         }
 
         $.ajax({
-            url: '/findPassword', // URL 경로가 올바른지 확인
-            type: 'POST', // 요청 메서드가 POST인지 확인
+            url: '/findPassword',
+            type: 'POST',
             contentType: 'application/x-www-form-urlencoded',
             data: $.param({email: email}),
             success: function (response) {
                 const usernum = response.usernum;
-                console.log('Response: ', response); // 응답 로그 추가
                 if (usernum) {
                     window.location.href = `/password?usernum=` + usernum;
                 } else {
@@ -142,9 +184,6 @@
                 }
             },
             error: function (xhr, status, error) {
-                console.error('XHR: ', xhr); // XHR 로그 추가
-                console.error('Status: ', status); // Status 로그 추가
-                console.error('Error: ', error); // Error 로그 추가
                 alert('유저 번호 찾기에 실패했습니다.');
             }
         });

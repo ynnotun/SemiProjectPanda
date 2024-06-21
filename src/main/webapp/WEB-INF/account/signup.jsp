@@ -146,9 +146,9 @@
                             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             for="email">
                         인증코드 입력
+                        <div id="timer" style="color: red">남은시간 03:00</div>
+                        <div id="loading">전송 중...</div>
                     </label>
-                    <div id="timer" style="color: red">남은시간 03:00</div>
-                    <div id="loading">전송 중...</div>
                     <input
                             class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             id="emailcheck"
@@ -194,9 +194,9 @@
                         type="date"
                         name="userbirthday"
                         id="dob" style="margin-bottom: 15px;"/>
-                <form id="frm1">
+
                     <div class="g-recaptcha" data-sitekey="6Ldh4_0pAAAAAFZ33u3F4pw06gtabPhgMytSIham" style="margin-bottom: 15px; justify-content: center; display: flex"></div>
-                </form>
+
                 <button
                         class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
                         type="button" id="next">
@@ -243,8 +243,6 @@
                                     <input type="file" name="myfile" id="photoupload" style="display: none;">
                                     <input type="radio" name="userprofileimage" id="radio1" style="display: none;">
                                 </div>
-                                <span style="display: flex;flex-direction: column;align-items: center;">버튼을 눌러서</span>
-                                <span style="display: flex;flex-direction: column;align-items: center;">사진 업로드</span>
                             </div>
                             <div class="relative">
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg2">
@@ -290,6 +288,7 @@
                     <div>
                         <button
                                 type="submit"
+                                id="save"
                                 class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                             Complete Registration
                         </button>

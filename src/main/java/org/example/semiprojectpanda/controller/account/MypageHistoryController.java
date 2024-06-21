@@ -3,6 +3,7 @@ package org.example.semiprojectpanda.controller.account;
 import org.example.semiprojectpanda.dto.ProductDto;
 import org.example.semiprojectpanda.dto.WishDto;
 import org.example.semiprojectpanda.service.ProductService;
+import org.example.semiprojectpanda.service.UserService;
 import org.example.semiprojectpanda.service.WishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,12 +23,17 @@ public class MypageHistoryController {
 
     @Autowired // 매번 넣어주기
     private WishService wishService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/mypage/history") //진짜 주소
     public String mypageHistory(@RequestParam int usernum,
-                                @RequestParam String listname,
+                                @RequestParam(defaultValue = "sell") String listname,
                                 Model model) {
+        String usernickname = userService.findByUsernum(usernum).getUsernickname();
+
         model.addAttribute("usernum", usernum);
+        model.addAttribute("usernickname", usernickname);
         model.addAttribute("listname", listname);
         return "account/mypage-history"; // JSP 파일 위치
     }
@@ -58,6 +64,7 @@ public class MypageHistoryController {
     public List<ProductDto> getWishList(
             @RequestParam int usernum
     ) {
+        System.out.println(wishService.getWishList(usernum));
         return wishService.getWishList(usernum);
     }
 }
