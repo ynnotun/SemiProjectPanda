@@ -193,6 +193,26 @@
                                     </div>
                                         <%-- 유저 본인만 확인 가능--%>
                                     <c:if test="${sessionScope.loginok!=null && sessionScope.usernum == usernum}">
+<<<<<<< HEAD
+                                    <div class="flex">
+                                        <c:if test="${ele.productstatus.equals('예약 중')}">
+                                            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-9 rounded-md px-3 border-1 border-black mr-2 hover:bg-gray-200">
+                                                예약 취소
+                                            </button>
+                                            <button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black">
+                                                거래 완료
+                                            </button>
+                                        </c:if>
+                                        <c:if test="${ele.productstatus.equals('거래 완료')}">
+                                            <%--<button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black" onclick="location.href='${root}/product/review'">
+                                                리뷰작성
+                                            </button>--%>
+                                            <button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black" onclick="location.href='${root}/product/review?productnum=${ele.productnum}'">
+                                                리뷰작성
+                                            </button>
+                                        </c:if>
+                                    </div>
+=======
                                         <div class="flex">
                                             <c:if test="${ele.productstatus.equals('예약 중')}">
                                                 <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-9 rounded-md px-3 border-1 border-black mr-2 hover:bg-gray-200"
@@ -207,12 +227,16 @@
                                                 </button>
                                             </c:if>
                                             <c:if test="${ele.productstatus.equals('거래 완료')}">
-                                                <button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black"
+                                                <%--<button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black"
                                                         onclick="location.href='${root}/product/review'">
+                                                    리뷰작성
+                                                </button>--%>
+                                                <button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black" onclick="location.href='${root}/product/review?productnum=${ele.productnum}'">
                                                     리뷰작성
                                                 </button>
                                             </c:if>
                                         </div>
+>>>>>>> 9e70464b377a279ca8c9c23dd21c5cabbf3d22c8
                                     </c:if>
                                 </div>
                             </div>
@@ -222,6 +246,68 @@
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
                 <%-- 유저 본인만 확인 가능--%>
                 <c:if test="${sessionScope.loginok!=null && sessionScope.usernum == usernum}">
+<<<<<<< HEAD
+                <%-- 구매내역 --%>
+                <section class="">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=buy">구매내역</a></h2>
+                    </div>
+                    <c:if test="${buyList.size()==0}">
+                        <div class="w-full text-base text-gray-500">아직 구매한 이력이 없어요.</div>
+                    </c:if>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <c:forEach var="ele" items="${buyList}">
+                            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
+                                     width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"
+                                     onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'"/>
+                                <div class="p-4">
+                                    <h3 class="cursor-pointer text-lg font-medium mb-2"
+                                        onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">${ele.producttitle}</h3>
+                                    <div class="mb-2">
+                                        <span class="text-gray-500 mr-1">${ele.productprice}원</span>
+                                        <span class="text-gray-500">${ele.productstatus}</span>
+                                    </div>
+                                    <div class="flex">
+                                        <c:if test="${ele.productstatus.equals('예약 중')}">
+                                            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-9 rounded-md px-3 border-1 border-black mr-2 hover:bg-gray-200">
+                                                예약 취소
+                                            </button>
+                                        </c:if>
+                                        <c:if test="${ele.productstatus.equals('거래 완료')}">
+                                            <button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black" onclick="location.href='${root}/product/review'">
+                                                리뷰작성
+                                            </button>
+                                            <button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black" onclick="location.href='${root}/product/review?productnum=${ele.productnum}'">
+                                                리뷰작성
+                                            </button>
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </section>
+                <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
+
+                <!-- 찜목록 -->
+                <div class="grid gap-4">
+                    <h2 class="text-2xl font-bold"><a href="${root}/mypage/history?usernum=${usernum}&listname=wish">찜목록</a></h2>
+                    <c:if test="${wishList.size()==0}">
+                        <div class="w-full text-base text-gray-500">아직 찜 한 이력이 없어요.</div>
+                    </c:if>
+                    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        <c:forEach var="ele" items="${wishList}">
+                            <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                                <div class="p-6">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}" alt="Product Image" width="48" height="48" class="rounded-md" style="aspect-ratio:48/48;object-fit:cover"/>
+                                            <div class="grid gap-1">
+                                                <div class="font-medium">${ele.producttitle}</div>
+                                                <div class="text-sm text-gray-500 ">${ele.productprice}원</div>
+                                            </div>
+=======
                     <%-- 구매내역 --%>
                     <section class="">
                         <div class="flex items-center justify-between mb-6">
@@ -260,6 +346,7 @@
                                                     리뷰작성
                                                 </button>
                                             </c:if>
+>>>>>>> 9e70464b377a279ca8c9c23dd21c5cabbf3d22c8
                                         </div>
                                     </div>
                                 </div>
