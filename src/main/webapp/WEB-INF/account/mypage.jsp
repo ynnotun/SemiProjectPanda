@@ -321,7 +321,7 @@
                             <div class="flex items-start gap-4">
                           <span class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border">
                             <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
-                                <img src="${root}/image/good-member.svg" alt="" width="100%" class="cursor-pointer"
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.userimage}" alt="" width="100%" class="cursor-pointer"
                                      onclick="location.href='${root}/mypage?usernum=${ele.reviewsenduser}'">
                             </span>
                           </span>
