@@ -140,7 +140,7 @@
       <button class="slider-button next" onclick="slide(1)">&#10095;</button>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6" id="scroll">
          <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap"
-            href="${root}?categorynum=0">
+            href="${root}/">
             <i class="bi bi-justify" style="font-size: 2em;"></i>
             <span>ALL</span>
          </a>
@@ -202,7 +202,7 @@
          success:function (data){
             let s="";
             if(data.length === 0){
-               s = `<div class="w-full text-base text-gray-500">아직 찜한 이력이 없어요.</div>`;
+               s = `<div class="w-full text-base text-gray-500">해당 카테고리에 아직 상품이 없어요.</div>`;
             } else {
                $.each(data, function (idx, ele) {
                   s += `
@@ -213,14 +213,6 @@
                                 <div class="mb-2">
                                     <span class="text-gray-500 mr-1">\${ele.productprice}원</span>
                                     <span class="text-gray-500">\${ele.productstatus}</span>
-                                </div>
-                                <div class="flex">
-                                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-9 rounded-md px-3 border-1 border-black mr-2 hover:bg-gray-200">
-                                        예약 취소
-                                    </button>
-                                    <button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black">
-                                        거래 완료
-                                    </button>
                                 </div>
                             </div>
                         </div>
