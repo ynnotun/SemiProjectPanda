@@ -18,7 +18,7 @@
 
     <style>
         #preview {
-            width: 80%;
+            width: 87%;
             display: flex;
             overflow-x: auto; /* 가로 스크롤 활성화 */
             white-space: nowrap; /* 요소들이 한 줄로 표시되도록 설정 */
@@ -32,38 +32,23 @@
 
 </head>
 
+<%--<c:set var="stpath" value="https://kr.object.ncloudstorage.com/semi/panda"></c:set>--%>
+
 <body>
 <!-- 경고 모달 -->
-<div id="modal" class="hidden fixed z-10 inset-0 overflow-y-auto">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-        </div>
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div class="sm:flex sm:items-start">
-                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                        <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h1m0-4h-1m-1 12h4v-2H9v2H6V4h12v12h-5z"/>
-                        </svg>
-                    </div>
-                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                            이미지 업로드 필요
-                        </h3>
-                        <div class="mt-2">
-                            <p class="text-sm text-gray-500">
-                                최소 한 장의 이미지를 업로드해야 합니다.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">내 상품에 대한 사진이 없어요.</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button id="close-modal" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                    닫기
-                </button>
+            <div class="modal-body">
+                <p>내 상품을 보여줄 수 있는
+                    한 장 이상의 사진을 올려주세요.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
             </div>
         </div>
     </div>
@@ -76,14 +61,13 @@
 
             <!-- Post Your Item -->
             <div class="grid gap-2">
-                <h1 class="text-2xl font-bold">Post Your Item (내 등록글 수정하기)</h1>
-                <p class="text-gray-500 ">List your item for sale on our second-hand trading platform. (등록한 판매글을 수정하세요.)</p>
+                <h1 class="text-2xl font-bold">내 판매글 수정하기</h1>
+                <p class="text-gray-500 ">등록한 판매글을 수정하세요.</p>
             </div>
 
             <!-- 폼태그 시작 -->
-            <form class="grid gap-6" method="post" action="/product/update" enctype="multipart/form-data">
+            <form class="grid gap-6" method="post" action="../../product/update" enctype="multipart/form-data" id="productForm">
 
-                <input type="hidden" name="usernum" value="${productDto.usernum}">
                 <input type="hidden" name="productnum" value="${productDto.productnum}">
 
                 <!-- 게시글 제목 입력란 -->
@@ -104,38 +88,42 @@
                 <!-- 사진 여러장 업로드 + 미리보기 -->
                 <div>
                     <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        Photos
+                        Photos : //로직 오류 있습니다. 사진 변경없이 업데이트하려면 기존사진을 업로드 해주세요.//
                     </label>
-                    <!-- 사진 업로드와 미리보기 -->
                     <!-- 사진 업로드와 미리보기 -->
                     <div class="mt-0 flex items-start gap-2">
                         <!-- 업로드 버튼 -->
                         <button type="button"
                                 id="upload-button"
                                 class="w-48 h-48 bg-[#e8e8e8] rounded flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 width="24"
-                                 height="24"
-                                 viewBox="0 0 24 24"
-                                 fill="none"
-                                 stroke="#585858"
-                                 stroke-width="2"
-                                 stroke-linecap="round"
-                                 stroke-linejoin="round"
-                                 class="h-6 w-6">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#585858"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="h-6 w-6">
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
                         </button>
+
                         <!-- 사진 업로드 전달 -->
-                        <input type="file" <%--required="required"--%> id="file-input" name="productImages" accept="image/*" multiple class="hidden">
+                        <input type="file" id="file-input" name="productImages" accept="image/*" multiple required class="hidden">
 
                         <!-- 사진 미리보기 -->
                         <div id="preview" class="mt-0 flex items-start gap-2">
-                            <!-- 이미지 업로드 후 미리보기가 여기에 추가됩니다 -->
+                            <c:forEach var="image" items="${productImages}">
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${image.imagefilename}"
+                                     class="h-48 w-48 object-cover rounded-md border">
+                            </c:forEach>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
 
                 <!-- 중고제품 설명 입력 -->
@@ -224,23 +212,13 @@
                         <span style="font-size: x-small"> 최대 5개까지 입력 가능합니다.</span>
                     </label>
 
-
-                    <!-- 입력받은 해시태그들 나열 -->
-                    <%--<div class="flex flex-wrap gap-2" id="hashtag-container">
-                        <c:forEach var="hashtag" items="${hashtags}">
-                            <div class="bg-green-50 text-green-500 px-3 py-1 rounded-full">
-                                    ${hashtag.hashtagname}
-                            </div>
-                        </c:forEach>
-                    </div>--%>
-
                     <div class="flex flex-wrap gap-2" id="hashtag-container">
                         <!-- 기존에 저장된 해시태그들 -->
                         <c:forEach var="hashtag" items="${hashtags}">
                             <div class="bg-green-50 text-green-500 px-3 py-1 rounded-full flex items-center gap-1">
                                     ${hashtag.hashtagname}
                                 <button type="button" class="text-green-500" onclick="removeHashtag('${hashtag.hashtagname}')">
-                                    &times;
+                                    <%--&times;--%>
                                 </button>
                             </div>
                         </c:forEach>
@@ -269,11 +247,11 @@
 
                 <!-- 게시글 수정 버튼 -->
                 <div class="flex justify-end">
-                    <button class="inline-flex items-center justify-center whitespace-nowrap
-       text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none
-       focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-       disabled:pointer-events-none disabled:opacity-50 bg-black text-white
-       hover:bg-primary/90 h-11 rounded-md px-8">
+                    <button type="submit" id="post-item-button" class="inline-flex items-center justify-center whitespace-nowrap
+                   text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none
+                   focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+                   disabled:pointer-events-none disabled:opacity-50 bg-black text-white
+                   hover:bg-primary/90 h-11 rounded-md px-8">
                         Edit Item
                     </button>
                 </div>
@@ -284,81 +262,81 @@
 
 <!-- 이미지 업로드 이벤트 -->
 <script>
-    const fileInput = document.getElementById('file-input');
-    const previewContainer = document.getElementById('preview');
-    const modal = document.getElementById('modal');
-    const closeModalButton = document.getElementById('close-modal');
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.getElementById('file-input');
+        const uploadButton = document.getElementById('upload-button');
+        const postItemButton = document.getElementById('post-item-button');
+        const preview = document.getElementById('preview');
+        const modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+        const productForm = document.getElementById('productForm');
+        let uploadedFiles = [];
 
-    let uploadedFiles = []; // 업로드된 파일을 관리할 배열
-
-    // 이미지 여러장 업로드 이벤트
-    document.getElementById('upload-button').addEventListener('click', function () {
-        fileInput.click();
-    });
-
-    // 업로드된 여러 사진 출력
-    fileInput.addEventListener('change', function (event) {
-        const files = Array.from(event.target.files);
-
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.className = 'h-48 w-48 object-cover rounded-md border cursor-pointer';
-                img.dataset.filename = file.name; // 파일 이름을 데이터 속성으로 저장
-
-                // 클릭 시 미리보기에서 이미지 제거
-                img.addEventListener('click', function () {
-                    previewContainer.removeChild(img);
-
-                    // 업로드된 파일 목록에서 해당 파일 제거
-                    uploadedFiles = uploadedFiles.filter(uploadedFile => uploadedFile.name !== file.name);
-
-                    // 파일 입력 요소 값 재설정
-                    const dataTransfer = new DataTransfer();
-                    uploadedFiles.forEach(file => dataTransfer.items.add(file));
-                    fileInput.files = dataTransfer.files;
-                });
-
-                previewContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-
-            // 업로드된 파일 목록에 추가
-            uploadedFiles.push(file);
+        // 이미지 업로드 버튼 클릭
+        uploadButton.addEventListener('click', function () {
+            fileInput.click();
         });
 
-        // 파일 입력 요소 값 재설정
-        const dataTransfer = new DataTransfer();
-        uploadedFiles.forEach(file => dataTransfer.items.add(file));
-        fileInput.files = dataTransfer.files;
-    });
+        // 파일 선택 시 미리보기 표시 및 클릭 시 제거
+        fileInput.addEventListener('change', function(event) {
+            const files = Array.from(event.target.files);
+            preview.innerHTML = ''; // 이전 미리보기 내용 지우기
 
-    // 폼 제출 이벤트에서 파일 입력 확인
-    document.querySelector('form').addEventListener('submit', function (event) {
-        console.log('Form submitted'); // 디버깅 로그
-        if (fileInput.files.length === 0) {
-            event.preventDefault();
-            console.log('No files uploaded'); // 디버깅 로그
-            // 모달 표시
-            modal.classList.remove('hidden');
-        }
-    });
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('w-48', 'h-48', 'object-cover', 'rounded', 'border', 'cursor-pointer'); // TailwindCSS 클래스 사용
+                    img.dataset.filename = file.name; // 파일 이름을 데이터 속성으로 저장
 
-    // 모달 닫기 이벤트
-    closeModalButton.addEventListener('click', function () {
-        modal.classList.add('hidden');
-    });
+                    // 클릭 시 미리보기에서 이미지 제거
+                    img.addEventListener('click', function() {
+                        preview.removeChild(img);
 
-    // 미리보기 이미지 가로 스크롤링
-    previewContainer.addEventListener('wheel', function (event) {
-        if (event.deltaY !== 0) {
-            event.preventDefault();
-            this.scrollLeft += event.deltaY;
-        }
+                        // 업로드된 파일 목록에서 해당 파일 제거
+                        uploadedFiles = uploadedFiles.filter(uploadedFile => uploadedFile.name !== file.name);
+
+                        // 파일 입력 요소 값 재설정
+                        const dataTransfer = new DataTransfer();
+                        uploadedFiles.forEach(file => dataTransfer.items.add(file));
+                        fileInput.files = dataTransfer.files;
+                    });
+
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+
+                // 업로드된 파일 목록에 추가
+                uploadedFiles.push(file);
+            });
+
+            // 파일 입력 요소 값 재설정
+            const dataTransfer = new DataTransfer();
+            uploadedFiles.forEach(file => dataTransfer.items.add(file));
+            fileInput.files = dataTransfer.files;
+
+            fileInput.removeAttribute('required'); // 파일이 선택되면 required 속성 제거
+        });
+
+        // 폼 제출 시 이미지 개수 확인
+        postItemButton.addEventListener('click', function(event) {
+            if (fileInput.files.length === 0) {
+                event.preventDefault(); // 폼 제출 방지
+                modal.show(); // 모달 표시
+                fileInput.setAttribute('required', 'required'); // required 속성 추가
+            }
+        });
+
+        // 미리보기 이미지 가로 스크롤링
+        preview.addEventListener('wheel', function(event) {
+            if (event.deltaY !== 0) {
+                event.preventDefault();
+                this.scrollLeft += event.deltaY;
+            }
+        });
     });
 </script>
+
 
 <!-- 해시태그 이벤트 -->
 <script>
@@ -442,7 +420,6 @@
         hashtagListInput.value = hashtags.join(',');
     }
 </script>
-
 
 <!-- 주소입력 팝업 api -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- kakao 주소찾기 -->

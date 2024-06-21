@@ -18,7 +18,7 @@
 
     <style>
         #preview {
-            width: 80%;
+            width: 87%;
             display: flex;
             overflow-x: auto; /* 가로 스크롤 활성화 */
             white-space: nowrap; /* 요소들이 한 줄로 표시되도록 설정 */
@@ -32,13 +32,22 @@
 
 </head>
 <body>
-<!-- 경고 모달 -->
-<!-- 모달 -->
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <h2>이미지 업로드 필요</h2>
-        <p>최소 한 장의 이미지를 업로드해야 합니다.</p>
-        <button id="closeModal">닫기</button>
+<!-- 경고모달 -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">내 상품에 대한 사진이 없어요.</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>내 상품을 보여줄 수 있는
+                    한 장 이상의 사진을 올려주세요.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -49,12 +58,12 @@
 
             <!-- Post Your Item -->
             <div class="grid gap-2">
-                <h1 class="text-2xl font-bold">Post Your Item (내 중고상품 등록하기)</h1>
-                <p class="text-gray-500 ">List your item for sale on our second-hand trading platform. (판다에서 중고상품을 팔아보세요!)</p>
+                <h1 class="text-2xl font-bold">내 중고상품 등록하기</h1>
+                <p class="text-gray-500 ">판다에서 나에게 필요 없는 중고상품을 팔아보세요!</p>
             </div>
 
             <!-- 폼태그 시작 -->
-            <form class="grid gap-6" method="post" action="/product/write" enctype="multipart/form-data">
+            <form class="grid gap-6" method="post" action="../../product/write" enctype="multipart/form-data" id="productForm">
 
                 <!-- 게시글 제목 입력란 -->
                 <div class="grid gap-2">
@@ -68,7 +77,7 @@
                             id="title"
                             name="producttitle"
                             required="required"
-                            placeholder="Enter the title of your item (제목을 입력하세요.)"/>
+                            placeholder="제목을 입력하세요."/>
                 </div>
 
                 <!-- 사진 여러장 업로드 + 미리보기 -->
@@ -97,8 +106,9 @@
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
                         </button>
+
                         <!-- 사진 업로드 전달 -->
-                        <input type="file" required="required" id="file-input" name="productImages" accept="image/*" multiple class="hidden">
+                        <input type="file" id="file-input" name="productImages" accept="image/*" multiple required class="hidden">
 
                         <!-- 사진 미리보기 -->
                         <div id="preview" class="mt-0 flex items-start gap-2">
@@ -119,7 +129,7 @@
                             id="description"
                             name="productcontent"
                             required="required"
-                            placeholder="Provide a detailed description of your item (판매할 중고물품의 설명을 적어주세요.)"
+                            placeholder="판매할 중고물품의 설명을 적어주세요."
                             rows="4"></textarea>
                 </div>
 
@@ -139,7 +149,7 @@
                                     id="price"
                                     name="productprice"
                                     required="required"
-                                    placeholder="Enter the price (가격을 입력해주세요.)"/>
+                                    placeholder="가격을 입력해주세요."/>
                         </div>
                     </div>
 
@@ -156,7 +166,7 @@
                                 id="location"
                                 name="productaddress"
                                 required="required"
-                                placeholder="Enter the location (판매장소를 등록해주세요.)"
+                                placeholder="판매장소를 등록해주세요."
                                 onclick="openDaumPostcode()"/>
                     </div>
                     <input type="hidden" id="latitude" name="productlocationx"/>
@@ -180,23 +190,8 @@
                     </div>
                 </div>
 
-                <%--
-                <!-- 오픈 채팅 입력 -->
-                <div class="grid gap-2">
-                    <label
-                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            for="openchat">
-                        KakaoTalk OpenChat
-                    </label>
-                    <input
-                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            id="openchat"
-                            name="productopenchat"
-                            required="required"
-                            placeholder="Enter the Kakaotalk openchat"/>
-                </div>
-                --%>
-                <input type="hidden" name="productopenchat" value=""/><!-- 일단 냅두기 -->
+                <!-- 오픈채팅 빈값 전달 -->
+                <input type="hidden" name="productopenchat" value=""/>
 
                 <!-- 해시태그 입력 -->
                 <div class="grid gap-2">
@@ -221,7 +216,7 @@
         disabled:opacity-50 bg-green-50 text-green-500
         px-3 py-1 rounded-full"
                                 name="hashtags"
-                                placeholder="Add a hashtag (#해시태그)"
+                                placeholder="#해시태그"
                                 onkeydown="handleHashtagInput(event)"
                         />
                     </div>
@@ -232,13 +227,13 @@
                 </div>
 
                 <!-- 게시글 등록 버튼 -->
-                <!-- 클릭시 마이페이지로 이동 -->
+                <!-- 클릭시 디테일페이지로 이동 -->
                 <div class="flex justify-end">
-                    <button class="inline-flex items-center justify-center whitespace-nowrap
-       text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none
-       focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-       disabled:pointer-events-none disabled:opacity-50 bg-black text-white
-       hover:bg-primary/90 h-11 rounded-md px-8">
+                    <button type="submit" id="post-item-button" class="inline-flex items-center justify-center whitespace-nowrap
+                   text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none
+                   focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+                   disabled:pointer-events-none disabled:opacity-50 bg-black text-white
+                   hover:bg-primary/90 h-11 rounded-md px-8">
                         Post Item
                     </button>
                 </div>
@@ -249,79 +244,78 @@
 
 <!-- 이미지 업로드 이벤트 -->
 <script>
-    const fileInput = document.getElementById('file-input');
-    const previewContainer = document.getElementById('preview');
-    const modal = document.getElementById('modal');
-    const closeModalButton = document.getElementById('close-modal');
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.getElementById('file-input');
+        const uploadButton = document.getElementById('upload-button');
+        const postItemButton = document.getElementById('post-item-button');
+        const preview = document.getElementById('preview');
+        const modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+        const productForm = document.getElementById('productForm');
+        let uploadedFiles = [];
 
-    let uploadedFiles = []; // 업로드된 파일을 관리할 배열
-
-    // 이미지 여러장 업로드 이벤트
-    document.getElementById('upload-button').addEventListener('click', function () {
-        fileInput.click();
-    });
-
-    // 업로드된 여러 사진 출력
-    fileInput.addEventListener('change', function (event) {
-        const files = Array.from(event.target.files);
-
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.className = 'h-48 w-48 object-cover rounded-md border cursor-pointer';
-                img.dataset.filename = file.name; // 파일 이름을 데이터 속성으로 저장
-
-                // 클릭 시 미리보기에서 이미지 제거
-                img.addEventListener('click', function () {
-                    previewContainer.removeChild(img);
-
-                    // 업로드된 파일 목록에서 해당 파일 제거
-                    uploadedFiles = uploadedFiles.filter(uploadedFile => uploadedFile.name !== file.name);
-
-                    // 파일 입력 요소 값 재설정
-                    const dataTransfer = new DataTransfer();
-                    uploadedFiles.forEach(file => dataTransfer.items.add(file));
-                    fileInput.files = dataTransfer.files;
-                });
-
-                previewContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-
-            // 업로드된 파일 목록에 추가
-            uploadedFiles.push(file);
+        // 이미지 업로드 버튼 클릭
+        uploadButton.addEventListener('click', function() {
+            fileInput.click();
         });
 
-        // 파일 입력 요소 값 재설정
-        const dataTransfer = new DataTransfer();
-        uploadedFiles.forEach(file => dataTransfer.items.add(file));
-        fileInput.files = dataTransfer.files;
-    });
+        // 파일 선택 시 미리보기 표시 및 클릭 시 제거
+        fileInput.addEventListener('change', function(event) {
+            const files = Array.from(event.target.files);
+            preview.innerHTML = ''; // 이전 미리보기 내용 지우기
 
-    // 폼 제출 이벤트에서 파일 입력 확인
-    document.querySelector('form').addEventListener('submit', function (event) {
-        console.log('Form submitted'); // 디버깅 로그
-        if (fileInput.files.length === 0) {
-            event.preventDefault();
-            console.log('No files uploaded'); // 디버깅 로그
-            // 모달 표시
-            modal.classList.remove('hidden');
-        }
-    });
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('w-48', 'h-48', 'object-cover', 'rounded', 'border', 'cursor-pointer'); // TailwindCSS 클래스 사용
+                    img.dataset.filename = file.name; // 파일 이름을 데이터 속성으로 저장
 
-    // 모달 닫기 이벤트
-    closeModalButton.addEventListener('click', function () {
-        modal.classList.add('hidden');
-    });
+                    // 클릭 시 미리보기에서 이미지 제거
+                    img.addEventListener('click', function() {
+                        preview.removeChild(img);
 
-    // 미리보기 이미지 가로 스크롤링
-    previewContainer.addEventListener('wheel', function (event) {
-        if (event.deltaY !== 0) {
-            event.preventDefault();
-            this.scrollLeft += event.deltaY;
-        }
+                        // 업로드된 파일 목록에서 해당 파일 제거
+                        uploadedFiles = uploadedFiles.filter(uploadedFile => uploadedFile.name !== file.name);
+
+                        // 파일 입력 요소 값 재설정
+                        const dataTransfer = new DataTransfer();
+                        uploadedFiles.forEach(file => dataTransfer.items.add(file));
+                        fileInput.files = dataTransfer.files;
+                    });
+
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+
+                // 업로드된 파일 목록에 추가
+                uploadedFiles.push(file);
+            });
+
+            // 파일 입력 요소 값 재설정
+            const dataTransfer = new DataTransfer();
+            uploadedFiles.forEach(file => dataTransfer.items.add(file));
+            fileInput.files = dataTransfer.files;
+
+            fileInput.removeAttribute('required'); // 파일이 선택되면 required 속성 제거
+        });
+
+        // 폼 제출 시 이미지 개수 확인
+        postItemButton.addEventListener('click', function(event) {
+            if (fileInput.files.length === 0) {
+                event.preventDefault(); // 폼 제출 방지
+                modal.show(); // 모달 표시
+                fileInput.setAttribute('required', 'required'); // required 속성 추가
+            }
+        });
+
+        // 미리보기 이미지 가로 스크롤링
+        preview.addEventListener('wheel', function(event) {
+            if (event.deltaY !== 0) {
+                event.preventDefault();
+                this.scrollLeft += event.deltaY;
+            }
+        });
     });
 </script>
 

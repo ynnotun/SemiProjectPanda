@@ -6,6 +6,7 @@ import org.example.semiprojectpanda.dto.ReviewDto;
 import org.example.semiprojectpanda.dto.UserDto;
 import org.example.semiprojectpanda.naver.cloud.NcpObjectStorageService;
 import org.example.semiprojectpanda.service.DetailService;
+import org.example.semiprojectpanda.service.ReviewService;
 import org.example.semiprojectpanda.service.ReviewWriteService;
 import org.example.semiprojectpanda.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ import javax.servlet.http.HttpSession;
 public class ReviewController {
 
     private final ReviewWriteService reviewWriteService;
-    private final DetailService detailService;
     private final UserService userService;
+    private final DetailService detailService;
 
     // navercloud
     /*
@@ -43,26 +44,23 @@ public class ReviewController {
     {
         //리뷰를 남기는 사람은 현재 로그인 중이며 리뷰 작성에 접근한 사용자
         HttpSession session = request.getSession();
-        Integer sendusernum = (Integer) session.getAttribute("usernum"); // 리뷰를 작성하는 유저 == 로그인중인 유저
+        Integer reviewsenduser = (Integer) session.getAttribute("usernum"); // 리뷰를 작성하는 유저 == 로그인중인 유저
         ProductDto productDto = detailService.getProductByProductnum(productnum); // product에 대해 받기
-        Integer receiveusernum;
-
-        model.addAttribute("reviewSendUser", sendusernum);
-        if (sendusernum.equals(productDto.getUsernum())) { // 리뷰작성자가 판매자라면?
-            model.addAttribute("reviewReceiveUser", productDto.getCustomernum());
-            receiveusernum = productDto.getCustomernum();
-        } else { // 리뷰 작성자가 구매자라면?
-            model.addAttribute("reviewReceiveUser", productDto.getUsernum());
-            receiveusernum = productDto.getUsernum();
-        }
-
-        UserDto sendUserDto = userService.findByUsernum(sendusernum); // 리뷰 작성자 정보
-        UserDto receiveUserDto = userService.findByUsernum(receiveusernum); // 리뷰 대상자 정보
-        model.addAttribute("sendUserDto", sendUserDto);
-        model.addAttribute("receiveUserDto", receiveUserDto);
         model.addAttribute("productDto", productDto);
+        UserDto sendUserDto = userService.findByUsernum(reviewsenduser);
 
-        return "product/review?productnum=" + productnum;
+        model.addAttribute("reviewSendUser", sendUserDto);
+        if (reviewsenduser.equals(productDto.getUsernum())) { // 리뷰작성자가 판매자라면?
+            UserDto receiveUserDto = userService.findByUsernum(productDto.getCustomernum());
+            model.addAttribute("reviewReceiveUser", receiveUserDto);
+        } else { // 리뷰 작성자가 구매자라면?
+            UserDto receiveUserDto = userService.findByUsernum(productDto.getUsernum());
+            model.addAttribute("reviewReceiveUser", receiveUserDto);
+        }
+        model.addAttribute("reviewsenduser", reviewsenduser);
+        model.addAttribute("productnum", productnum);
+
+        return "product/review";
     }
 
     @PostMapping("/product/review")
@@ -70,22 +68,13 @@ public class ReviewController {
                                @ModelAttribute ReviewDto reviewDto,
                                HttpServletRequest request)
     {
+        //리뷰를 남기는 사람은 현재 로그인 중이며 리뷰 작성에 접근한 사용자
         HttpSession session = request.getSession();
-        Integer sendusernum = (Integer) session.getAttribute("usernum");
-        UserDto userDto = userService.findByUsernum(sendusernum);
+        Integer reviewsenduser = (Integer) session.getAttribute("usernum"); // 리뷰를 작성하는 유저 == 로그인중인 유저
 
-        /*
-        reviewDto.setReviewsenduser(sendusernum);
-        if(sendusernum == productDto.getUsernum())//리뷰 작성자가 판매자인 경우
-        {
-            reviewDto.setReviewreceiveuser(productDto.getCustomernum());//작성 대상자는 구매자
-        }
-        else// 리뷰 작성자가 구매자인 경우
-        {
-            reviewDto.setReviewreceiveuser(productDto.getUsernum());//작성 대상자는 판매자
-        }
+        reviewDto.setReviewsenduser(reviewsenduser);
         reviewDto.setProductnum(productDto.getProductnum());
-        */
+        reviewDto.setReviewreceiveuser(reviewDto.getReviewreceiveuser());
 
         reviewWriteService.insertReview(reviewDto);
 
