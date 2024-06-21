@@ -28,6 +28,10 @@
                 padding: 2rem;
             }
         }
+
+        #loading {
+            display: none; /* 처음엔 숨김 */
+        }
     </style>
 </head>
 <body>
@@ -58,7 +62,6 @@
                     for="code">
                 인증코드
                 <div id="timer" style="color: red">남은시간 03:00</div>
-                <div id="loading">전송 중...</div>
             </label>
 
             <input
@@ -83,6 +86,8 @@
     function sendCode() {
         const email = $('#email').val();
 
+        $('#verification').text('전송 중...'); // 버튼 텍스트 변경
+
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -105,6 +110,7 @@
 
                             $('#verificationSection').show();
                             $("#loading").hide();
+                            $('#verification').text('인증코드 전송'); // 버튼 텍스트 원래대로
                             clearInterval(timerInterval);
                             var duration = 180;
                             var display = document.getElementById('timer');
@@ -125,14 +131,20 @@
                         },
                         error: function(error) {
                             alert('인증번호 전송에 실패했습니다.');
+                            $('#loading').hide();  // 전송 실패 시 숨김
+                            $('#verification').text('인증코드 전송'); // 버튼 텍스트 원래대로
                         }
                     });
                 } else {
                     openModal('PANDA', '없는 계정입니다.', `closeModal()`)
+                    $('#loading').hide();  // 없는 계정 시 숨김
+                    $('#verification').text('인증코드 전송'); // 버튼 텍스트 원래대로
                 }
             },
             error: function(error) {
                 openModal('PANDA', '이메일 확인에 실패했습니다.', `closeModal()`)
+                $('#loading').hide();  // 확인 실패 시 숨김
+                $('#verification').text('인증코드 전송'); // 버튼 텍스트 원래대로
             }
         });
     }

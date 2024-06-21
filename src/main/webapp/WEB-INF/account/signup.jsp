@@ -139,6 +139,7 @@
                 <button class="emailchecked" id="checkButton" type="button">
                     인증코드 전송
                 </button>
+
             </div>
             <div class="flex items-center hidden" id="emailCheckSection" style="padding-bottom: 15px; width: 40%; margin: auto;">
                 <div class="flex-1">
@@ -147,7 +148,6 @@
                             for="email">
                         인증코드 입력
                         <div id="timer" style="color: red">남은시간 03:00</div>
-                        <div id="loading">전송 중...</div>
                     </label>
                     <input
                             class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -313,6 +313,7 @@
         const email = $('#email').val();
         const code = $('#emailcheck').val();
 
+
         $.ajax({
             url: '/mail/verify',
             type: 'POST',
@@ -462,8 +463,8 @@
                 success: function(data) {
                     if (data.count === 0) {
                         openModal('PANDA', '가능한 이메일입니다.', `closeModal()`)
+                        $('#checkButton').text('전송 중...'); // 버튼 텍스트 변경
                         jungbok = true;
-                        $("#loading").show();
                         const email = $('#email').val();
                         const mailDto = {
                             email: email,
@@ -475,7 +476,7 @@
                             contentType: 'application/json',
                             data: JSON.stringify(mailDto),
                             success: function(response) {
-                                $("#loading").hide();
+                                $('#checkButton').text('인증코드 전송'); // 버튼 텍스트 변경
                                 openModal('PANDA', '이메일전송이 되었습니다.', `closeModal()`)
                                 $('#emailCheckSection').removeClass('hidden');
                                 clearInterval(timerInterval);
