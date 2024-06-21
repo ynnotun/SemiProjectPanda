@@ -147,6 +147,7 @@
     </div>
 </div>
 
+
 <%--<!-- 챗봇 버튼 -->
 <button onclick="location.href='./chatbot'" style="border: none; background: none; padding: 0; margin: 0; float: right;">
     <img src="../image/pand.png" style="width: 200px; height: 150px; display: block;">

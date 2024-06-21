@@ -21,6 +21,13 @@
         top: 12px;
         left: -55px;
     }
+    .error-border {
+        border: 2px solid red !important;
+    }
+    .check-border{
+        border: 2px solid #45a049 !important;
+    }
+
     .container {
         position: relative;
         width: 300%;
@@ -161,7 +168,7 @@
             <div style="padding-bottom: 15px; width: 40%; margin: auto;">
                 <label
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        for="password">
+                        for="password" id="passwordLabel">
                     Password
                 </label>
                 <input
@@ -174,7 +181,7 @@
             <div style="padding-bottom: 15px; width: 40%; margin: auto;">
                 <label
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        for="confirm-password">
+                        for="confirm-password" id="confirmPasswordLabel">
                     Confirm Password
                 </label>
                 <input
@@ -183,6 +190,7 @@
                         id="confirm-password"
                         placeholder="Confirm your password"/>
             </div>
+
             <div style="padding-bottom: 15px; width: 40%; margin: auto;">
                 <label
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -365,6 +373,21 @@
             }
         });
     }
+    $(document).ready(function () {
+        $('#password, #confirm-password').on('keyup', function () {
+            var password = $('#password').val();
+            var confirmPassword = $('#confirm-password').val();
+
+            if (password !== confirmPassword) {
+                $('#confirm-password').addClass('error-border');
+            } else {
+                $('#confirm-password').removeClass('error-border');
+                $('#confirm-password').addClass('check-border');
+            }
+        });
+    });
+
+
 
     $("#next").click(function() {
         verifyRecaptcha();
