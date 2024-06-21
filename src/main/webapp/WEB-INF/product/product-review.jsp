@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,10 +34,8 @@
                     <h1 class="text-2xl font-bold">Rate Your Experience</h1>
                     <p class="text-gray-500">Please provide your feedback on the recent transaction.</p>
                 </div>
-                <form action="./product/review" method="post" enctype="text/plain">
-                    <%--<input type="hidden" name="reviewsenduser" value="${reviewsenduser}">
-                    <input type="hidden" name="reviewreceiveuser" value="${reviewReceiveUser.usernum}">
-                    <input type="hidden" name="productnum" value="${productnum}">--%>
+                <form action="/product/review" method="post">
+                    <input type="hidden" id="productnum" name="productnum" value="${productnum}">
 
                     <div class="grid gap-4">
                         <!-- 별점 추가 기능 -->
@@ -94,6 +93,7 @@
                                 placeholder="Write your review and feedback here..."
                                 rows="4"
                                 name="reviewcontent"
+                                id="reviewcontent"
                         ></textarea>
 
                         <!-- 제출 버튼 -->
@@ -132,6 +132,58 @@
             });
         }
     });
+
+    // reviewSubmit() 함수 정의
+    function reviewSubmit() {
+        const productnum = document.getElementById('productnum').value;
+        const reviewstar = document.getElementById('reviewstar').value;
+        const reviewcontent = document.getElementById('reviewcontent').value;
+
+        // 서버로 전송할 데이터 구성
+        const formData = new FormData();
+        formData.append('productnum', productnum);
+        formData.append('reviewstar', reviewstar);
+        formData.append('reviewcontent', reviewcontent);
+
+        // 서버로 데이터 전송
+        fetch('/product/review', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                // 응답 처리
+                console.log(response);
+            })
+            .catch(error => {
+                // 오류 처리
+                console.error(error);
+            });
+
+        // 페이지 리로드 방지
+        return false;
+    }
+    //
+    // function reviewSubmit() {
+    //     let productnum = document.getElementById('productnum').value;
+    //     let reviewstar = document.getElementById('reviewstar').value;
+    //     let reviewcontent = document.getElementById('reviewcontent').value;
+    //     fetch('/product/review', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/x-www-form-urlencoded'
+    //         },
+    //         body: new URLSearchParams({
+    //             "productnum": productnum,
+    //             "reviewstar": reviewstar,
+    //             "reviewcontent": reviewcontent
+    //         })
+    //     })
+    //         .then(response => {
+    //
+    //         })
+    //         .catch(error => {
+    //         });
+    // }
 </script>
 </body>
 </html>
