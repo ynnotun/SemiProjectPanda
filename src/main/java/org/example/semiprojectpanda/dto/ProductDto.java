@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class ProductDto {
     private int productnum;
-    private int usernum;
+    private Integer usernum;
     private Integer customernum;
     private String producttitle;
     private String productcontent;

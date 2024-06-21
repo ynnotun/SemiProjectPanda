@@ -12,10 +12,7 @@ import org.example.semiprojectpanda.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,44 +37,61 @@ public class ReviewController {
     @GetMapping("/product/review")
     public String productReview(@RequestParam int productnum,
                                 HttpServletRequest request,
-                                Model model)
-    {
+                                Model model) {
         //리뷰를 남기는 사람은 현재 로그인 중이며 리뷰 작성에 접근한 사용자
         HttpSession session = request.getSession();
-        Integer reviewsenduser = (Integer) session.getAttribute("usernum"); // 리뷰를 작성하는 유저 == 로그인중인 유저
-        ProductDto productDto = detailService.getProductByProductnum(productnum); // product에 대해 받기
-        model.addAttribute("productDto", productDto);
-        UserDto sendUserDto = userService.findByUsernum(reviewsenduser);
-
-        model.addAttribute("reviewSendUser", sendUserDto);
-        if (reviewsenduser.equals(productDto.getUsernum())) { // 리뷰작성자가 판매자라면?
-            UserDto receiveUserDto = userService.findByUsernum(productDto.getCustomernum());
-            model.addAttribute("reviewReceiveUser", receiveUserDto);
-        } else { // 리뷰 작성자가 구매자라면?
-            UserDto receiveUserDto = userService.findByUsernum(productDto.getUsernum());
-            model.addAttribute("reviewReceiveUser", receiveUserDto);
+        Integer reviewsenduser = (Integer) session.getAttribute("usernum");
+        if (reviewsenduser == null) {
+            return "redirect:/login";
         }
-        model.addAttribute("reviewsenduser", reviewsenduser);
-        model.addAttribute("productnum", productnum);
 
-        return "product/review";
+        model.addAttribute("productnum", productnum);
+        return "product/product-review";
     }
 
     @PostMapping("/product/review")
-    public String submitReview(@ModelAttribute ProductDto productDto,
-                               @ModelAttribute ReviewDto reviewDto,
-                               HttpServletRequest request)
-    {
-        //리뷰를 남기는 사람은 현재 로그인 중이며 리뷰 작성에 접근한 사용자
+    public String submitReview(
+            @RequestParam int productnum,
+            @RequestParam String reviewcontent,
+            @RequestParam int reviewstar,
+            HttpServletRequest request
+    ) {
         HttpSession session = request.getSession();
-        Integer reviewsenduser = (Integer) session.getAttribute("usernum"); // 리뷰를 작성하는 유저 == 로그인중인 유저
+        Integer reviewsenduser = (Integer) session.getAttribute("usernum");
+        if (reviewsenduser == null) {
+            return "redirect:/login";
+        }
 
+        ProductDto productDto = detailService.getProductByProductnum(productnum);
+
+        // 제품이 null인지 확인
+        if (productDto == null) {
+            return "redirect:/";
+        }
+        // 제품 상태가 "거래 완료"인지 확인
+        if (!productDto.getProductstatus().equals("거래 완료")) {
+            return "redirect:/";
+        }
+        // 리뷰 작성자와 제품 판매자/구매자가 일치하는지 확인
+        if (productDto.getUsernum() != reviewsenduser || productDto.getCustomernum() != reviewsenduser) {
+            return "redirect:/";
+        }
+
+        ReviewDto reviewDto = new ReviewDto();
+        reviewDto.setProductnum(productnum);
+        reviewDto.setReviewcontent(reviewcontent);
+        reviewDto.setReviewstar(reviewstar);
         reviewDto.setReviewsenduser(reviewsenduser);
-        reviewDto.setProductnum(productDto.getProductnum());
-        reviewDto.setReviewreceiveuser(reviewDto.getReviewreceiveuser());
+        int reviewreceiveuser;
+        if (productDto.getUsernum() == reviewsenduser) {
+            reviewreceiveuser = productDto.getCustomernum();
+        } else {
+            reviewreceiveuser = productDto.getUsernum();
+        }
+        reviewDto.setReviewreceiveuser(reviewreceiveuser);
 
         reviewWriteService.insertReview(reviewDto);
 
-        return "redirect:/mypage?usernum=" + reviewDto.getReviewsenduser();//리뷰 작성한 사람 기준으로 이동//로그인중인 사람
+        return "redirect:/mypage?usernum=" + reviewsenduser;
     }
 }
