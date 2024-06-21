@@ -45,6 +45,9 @@
             display: inline-block;
             max-width: 80%;
         }
+        #send{
+            background-color: #4CAF50;
+        }
 
         .message-sent {
             background-color: #d9edf7;
@@ -74,6 +77,8 @@
 
         .btn {
             white-space: nowrap;
+            padding: 10px 20px;
+            border-radius: 20px;
         }
 
         .received-message-content {
@@ -141,6 +146,12 @@
         </div>
     </div>
 </div>
+
+<%--<!-- 챗봇 버튼 -->
+<button onclick="location.href='./chatbot'" style="border: none; background: none; padding: 0; margin: 0; float: right;">
+    <img src="../image/pand.png" style="width: 200px; height: 150px; display: block;">
+</button>--%>
+
 <script>
     var stompClient = null;
 
