@@ -1,4 +1,4 @@
-<%--
+<%@ page import="org.example.semiprojectpanda.dto.ProductImageDto" %><%--
   Created by IntelliJ IDEA.
   User: minseok
   Date: 24. 6. 13.
@@ -53,6 +53,25 @@
         </div>
     </div>
 </div>
+
+<!-- 이미지 10장 초과 경고모달 -->
+<div class="modal fade" id="toomanyimages" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="toomanyimagesLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="toomanyimagesLabel">사진이 너무 많습니다.</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>사진은 최대 10장까지 업로드 가능합니다.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="bg-white  text-gray-950  min-h-screen">
     <div class="container mx-auto px-4 md:px-6 py-8 md:py-12">
@@ -156,6 +175,7 @@
                                     type="number"
                                     id="price"
                                     name="productprice"
+                                    max="100000000"
                                     required="required"
                                     value="${productDto.productprice}"/>
                         </div>
@@ -268,6 +288,7 @@
         const postItemButton = document.getElementById('post-item-button');
         const preview = document.getElementById('preview');
         const modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+        const modalTooManyImages = new bootstrap.Modal(document.getElementById('toomanyimages'));
         const productForm = document.getElementById('productForm');
         let uploadedFiles = [];
 
@@ -280,6 +301,12 @@
         fileInput.addEventListener('change', function(event) {
             const files = Array.from(event.target.files);
             preview.innerHTML = ''; // 이전 미리보기 내용 지우기
+
+            // 이미지가 10장을 초과하는지 확인
+            if (uploadedFiles.length + files.length > 10) {
+                modalTooManyImages.show(); // 모달 표시
+                return;
+            }
 
             files.forEach(file => {
                 const reader = new FileReader();
@@ -336,7 +363,6 @@
         });
     });
 </script>
-
 
 <!-- 해시태그 이벤트 -->
 <script>
@@ -420,6 +446,7 @@
         hashtagListInput.value = hashtags.join(',');
     }
 </script>
+
 
 <!-- 주소입력 팝업 api -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- kakao 주소찾기 -->
