@@ -21,18 +21,30 @@ public interface WishMapperInter {
 
     //찜목록
     @Select("""
-        select * from PRODUCT where productnum 
-        in (SELECT productnum FROM WISH where usernum=#{usernum})
-    """) //이 사람의 찜목록을 불러와야 하니까!
+            SELECT p.*, i.imagefilename as imagefilename
+            FROM PRODUCT p
+            JOIN (
+                SELECT productnum, MIN(imagefilename) as imagefilename
+                FROM PRODUCT_IMAGE
+                GROUP BY productnum
+            ) i ON i.productnum = p.productnum
+            WHERE p.productnum IN (
+                SELECT productnum
+                FROM WISH
+                WHERE usernum = #{usernum}
+            )
+            """) //이 사람의 찜목록을 불러와야 하니까!
     public List<ProductDto> getWishList(int usernum);
 
 
     // 찜목록 최신순으로 3개만 불러오기
     @Select("""
-        select * from PRODUCT where productnum 
-        in (SELECT productnum FROM WISH where usernum=#{usernum})
-        order by productnum desc LIMIT 0, 3
-    """)
+                select *
+                from PRODUCT
+                where productnum
+                in (SELECT productnum FROM WISH where usernum=#{usernum})
+                order by productnum desc LIMIT 0, 3
+            """)
     public List<ProductDto> getThreeFromWishList(int usernum);
 
 }

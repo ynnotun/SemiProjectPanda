@@ -108,16 +108,30 @@
 <body>
 
 <!-- Swiper -->
+<c:if test="${sessionScope.loginok==null}">
 <div class="swiper mySwiper">
    <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="${root}/image/banner1.png"/></div>
-      <div class="swiper-slide"><img src="${root}/image/banner2.png"/></div>
-      <div class="swiper-slide"><img src="${root}/image/banner3.png"/></div>
+
+      <div class="swiper-slide">
+         <a href="${root}/login">
+            <img src="${root}/image/banner1.png"/>
+         </a>
+      </div>
+      <div class="swiper-slide">
+         <a href="${root}/login">
+            <img src="${root}/image/banner2.png"/>
+         </a>
+      </div>
+      <div class="swiper-slide">
+         <a href="${root}/login">
+            <img src="${root}/image/banner3.png"/>
+         </a>
+      </div>
    </div>
    <div class="swiper-button-next"></div>
    <div class="swiper-button-prev"></div>
 </div>
-
+</c:if>
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
