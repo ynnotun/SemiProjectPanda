@@ -33,21 +33,10 @@
                     <h1 class="text-2xl font-bold">Rate Your Experience</h1>
                     <p class="text-gray-500">Please provide your feedback on the recent transaction.</p>
                 </div>
-                <form action="./product/review" method="post">
-                    <%--<input type="hidden" name="reviewsenduser" value="${}">
-                    <input type="hidden" name="reviewreceiveuser" value="${}">
-                    <input type="hidden" name="username" value="${}">--%>
-                    <%--
-                    <input type="hidden" name="reviewsenduser" value="${productDto.usernum}"><!-- 임시값 -->
-                    <input type="hidden" name="reviewreceiveuser" value="${productDto.customernum}"><!-- 임시값 -->
-                    --%>
-
-                        <div>
-                            <p>${sendUserDto.username}님! ${receiveUserDto.username}님과의 거래는 어떠셨나요?</p>
-                            <p>${productDto.title} 거래를 함께한 ${receiveUserDto.username}님에 대해 평가해 주세요</p>
-                        </div>
-
-                    <input type="hidden" name="productnum" value="${productDto.productnum}">
+                <form action="./product/review" method="post" enctype="text/plain">
+                    <%--<input type="hidden" name="reviewsenduser" value="${reviewsenduser}">
+                    <input type="hidden" name="reviewreceiveuser" value="${reviewReceiveUser.usernum}">
+                    <input type="hidden" name="productnum" value="${productnum}">--%>
 
                     <div class="grid gap-4">
                         <!-- 별점 추가 기능 -->

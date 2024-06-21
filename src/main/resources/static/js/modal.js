@@ -1,11 +1,10 @@
-
 /**
  * @description 모달 띄우는 함수
  * @param title 제목을 string으로 입력하세요
  * @param content 내용을 string으로 입력하세요
  * @param func confirm버튼 눌렀을때 실행될 함수를 입력하세요
  * */
-function openModal(title, content, func){
+function openModal(title, content, func) {
     $("body").append(`
         <div class="v0-modal">
 <div data-state="open" class="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" style="pointer-events: auto;" data-aria-hidden="true" aria-hidden="true"></div>
@@ -47,7 +46,7 @@ data-id="9" onclick="closeModal()"
 Cancel</button
 ><button
 class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 bg-black text-white"
-data-id="10" onclick="${func}"
+id="modal-confirm-btn" data-id="10" onclick="${func}"
 >
 Confirm
 </button>
@@ -78,6 +77,6 @@ class="lucide lucide-x h-4 w-4"
 `)
 }
 
-function closeModal(){
+function closeModal() {
     $(".v0-modal").remove();
 }
