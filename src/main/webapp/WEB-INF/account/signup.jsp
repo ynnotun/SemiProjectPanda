@@ -8,9 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <script src="${root}/js/modal.js"></script>
     <title></title>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <style>
-    .emailchecked{
+    .emailchecked {
         background-color: #e6e6e6;
         border: 1px solid #e6e6e6;
         border-radius: 5px;
@@ -26,22 +27,19 @@
         height: 100vh;
         overflow: hidden;
     }
-
     .page {
         position: absolute;
         width: 100%;
         height: 100%;
         transition: transform 0.6s ease-in-out;
     }
-
     #page2 {
         transform: translateX(300%);
     }
     .w-full {
         width: 90%;
     }
-
-    .w-full1{
+    .w-full1 {
         width: 85%;
     }
     @media (min-width: 768px) {
@@ -49,21 +47,7 @@
             padding: 2rem;
         }
     }
-    #propileimg1{
-        border: 1px solid #ddd;
-        width: 150px;
-        height: 150px;
-        border-radius: 200px;
-        cursor: pointer;
-    }
-    #propileimg2{
-        border: 1px solid #ddd;
-        width: 150px;
-        height: 150px;
-        border-radius: 200px;
-        cursor: pointer;
-    }
-    #propileimg3{
+    #propileimg1, #propileimg2, #propileimg3 {
         border: 1px solid #ddd;
         width: 150px;
         height: 150px;
@@ -90,57 +74,52 @@
         border-radius: 5px;
         display: none; /* 처음엔 숨김 */
     }
-
 </style>
 <body>
-<!--
-// v0 by Vercel.
-// https://v0.dev/t/ouRbB40Wl7q
--->
 <div class="w-full mx-auto p-6 md:p-8 container">
     <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
     <form class="space-y-4" action="./save" method="post" enctype="multipart/form-data">
         <div class="page" id="page1" style="width: 100%">
             <div style="padding-bottom: 15px; width: 40%; margin: auto;">
-           <label
-                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    for="name">
-                Name
-            </label>
-            <input
-                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="text"
-                    id="name"
-                    name="username"
-                    placeholder="Enter your full name"/>
-        </div>
-        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
-            <label
-                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    for="phone">
-                Phone Number
-            </label>
-            <input
-                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="tel"
-                    id="phone"
-                    name="userphonenumber"
-                    placeholder="Enter your phone number"/>
-        </div>
-        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
-            <label
-                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    for="address">
-                Address
-            </label>
-            <input
-                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="text"
-                    id="address"
-                    name="useraddress"
-                    placeholder="Enter your address"
-                    onclick="openDaumPostcode()"/>
-        </div>
+                <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="name">
+                    Name
+                </label>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="text"
+                        id="name"
+                        name="username"
+                        placeholder="Enter your full name"/>
+            </div>
+            <div style="padding-bottom: 15px; width: 40%; margin: auto;">
+                <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="phone">
+                    Phone Number
+                </label>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="tel"
+                        id="phone"
+                        name="userphonenumber"
+                        placeholder="Enter your phone number"/>
+            </div>
+            <div style="padding-bottom: 15px; width: 40%; margin: auto;">
+                <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="address">
+                    Address
+                </label>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="text"
+                        id="address"
+                        name="useraddress"
+                        placeholder="Enter your address"
+                        onclick="openDaumPostcode()"/>
+            </div>
             <input type="hidden" id="latitude" name="productlocationx"/>
             <input type="hidden" id="longitude" name="productlocationy"/>
             <div class="flex items-center" style="padding-bottom: 15px; width: 40%; margin: auto;">
@@ -168,9 +147,7 @@
                             for="email">
                         인증코드 입력
                     </label>
-                        Email Check
                     <div id="timer" style="color: red">남은시간 03:00</div>
-                    <!-- 로딩바 -->
                     <div id="loading">전송 중...</div>
                     <input
                             class="flex h-10 w-full1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -181,55 +158,53 @@
                     인증
                 </button>
             </div>
-        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
-            <label
-                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    for="password">
-                Password
-            </label>
-            <input
-                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="password"
-                    id="password"
-                    name="userpassword"
-                    placeholder="Enter your password"/>
-        </div>
-        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
-            <label
-                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    for="confirm-password">
-                Confirm Password
-            </label>
-            <input
-                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="password"
-                    id="confirm-password"
-                    placeholder="Confirm your password"/>
-        </div>
-        <div style="padding-bottom: 15px; width: 40%; margin: auto;">
-            <label
-                    class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    for="dob">
-                Date of Birth
-            </label>
-            <input
-                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="date"
-                    name="userbirthday"
-                    id="dob" style="margin-bottom: 15px;"/>
-            <button
-                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
-                    type="button" id="next">
-                Next
-            </button>
-        </div>
+            <div style="padding-bottom: 15px; width: 40%; margin: auto;">
+                <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="password">
+                    Password
+                </label>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="password"
+                        id="password"
+                        name="userpassword"
+                        placeholder="Enter your password"/>
+            </div>
+            <div style="padding-bottom: 15px; width: 40%; margin: auto;">
+                <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="confirm-password">
+                    Confirm Password
+                </label>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="password"
+                        id="confirm-password"
+                        placeholder="Confirm your password"/>
+            </div>
+            <div style="padding-bottom: 15px; width: 40%; margin: auto;">
+                <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        for="dob">
+                    Date of Birth
+                </label>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        type="date"
+                        name="userbirthday"
+                        id="dob" style="margin-bottom: 15px;"/>
+                <form id="frm1">
+                    <div class="g-recaptcha" data-sitekey="6Ldh4_0pAAAAAFZ33u3F4pw06gtabPhgMytSIham" style="margin-bottom: 15px; justify-content: center; display: flex"></div>
+                </form>
+                <button
+                        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 w-full bg-[#4CAF50] hover:bg-[#43a047] text-white"
+                        type="button" id="next">
+                    Next
+                </button>
+            </div>
         </div>
         <div class="page" id="page2" style="width: 100%">
-            <!--
-            // v0 by Vercel.
-            // https://v0.dev/t/d59eRWti5iV
-            -->
-
             <div class="max-w-md mx-auto px-4 py-8 sm:px-6 lg:px-8">
                 <div class="space-y-6">
                     <div>
@@ -283,8 +258,7 @@
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg3">
                                     <img src="https://kr.object.ncloudstorage.com/semi/panda/기본프로필3.jpeg"
                                          alt="Profile 3" class="h-full w-full object-cover profilephoto"
-                                         style="width: 150px; height: 150px;"
-                                         />
+                                         style="width: 150px; height: 150px;"/>
                                     <input type="radio" name="userprofileimage" value="기본프로필3.jpeg" id="radio3" style="display: none;">
                                 </div>
                             </div>
@@ -326,22 +300,17 @@
     </form>
 </div>
 
-
 <script>
-    let jungbok=false;
-    let isVerified = false;
+    let isEmailVerified = false;
+    let isRecaptchaVerified = false;
     var timerInterval;
 
-    $("#back").click(function (){
+    $("#back").click(function() {
         $("#page1").css("transform", "translateX(0)");
         $("#page2").css("transform", "translateX(100%)");
-    })
+    });
 
-    // function sendCode() {
-    //
-    // }
-
-    function verifyCode() {
+    function verifyEmailCode() {
         const email = $('#email').val();
         const code = $('#emailcheck').val();
 
@@ -352,13 +321,13 @@
             data: $.param({ email: email, code: code }),
             success: function(response) {
                 if (response === "인증 성공") {
-                    openModal('PANDA', '이메일 인증이 성공하였습니다.',`closeModal()`)
-                    isVerified = true;
-                    clearInterval(timer); // 타이머 정지
+                    openModal('PANDA', '이메일 인증이 성공하였습니다.', `closeModal()`)
+                    isEmailVerified = true;
+                    clearInterval(timerInterval); // 타이머 정지
                     document.getElementById('timer').style.display = 'none'; // 타이머 숨기기
                     document.getElementById('emailCheckSection').classList.add('hidden'); // 인증 섹션 숨기기
                 } else {
-                    openModal('PANDA', '이메일 인증이 실패하였습니다.',`closeModal()`)
+                    openModal('PANDA', '이메일 인증이 실패하였습니다.', `closeModal()`)
                 }
             },
             error: function(xhr, status, error) {
@@ -371,112 +340,135 @@
         });
     }
 
-    $("#next").click(function (){
-        if (isVerified) {
-            $("#page1").css("transform", "translateX(-100%)");
-            $("#page2").css("transform", "translateX(0)");
-        } else {
-            openModal('PANDA', '이메일 인증이 완료해주세요.',`closeModal()`)
-        }
-    })
+    function verifyRecaptcha() {
+        $.ajax({
+            url: '/VerifyRecaptcha',
+            type: 'post',
+            data: { recaptcha: $("#g-recaptcha-response").val() },
+            success: function(res) {
+                const data = JSON.parse(res);
+                if (data.success) {
+                    isRecaptchaVerified = true;
+                    if (isEmailVerified) {
+                        $("#page1").css("transform", "translateX(-100%)");
+                        $("#page2").css("transform", "translateX(0)");
+                    } else {
+                        alert("이메일 인증을 완료해주세요.");
+                    }
+                } else {
+                    isRecaptchaVerified = false;
+                    alert("자동 가입 방지 봇을 확인 한뒤 진행 해 주세요.");
+                }
+            },
+            error: function() {
+                alert("자동 가입 방지 봇을 확인 한뒤 진행 해 주세요.");
+            }
+        });
+    }
 
-        $("#propileimg1").click(function (){
+    $("#next").click(function() {
+        verifyRecaptcha();
+    });
+
+    $("#verifyButton").click(function() {
+        verifyEmailCode();
+    });
+
+    $("#propileimg1").click(function() {
         $("#propileimg1").css("border", "3px solid black");
         $("#propileimg2").css("border", "1px solid #ddd");
         $("#propileimg3").css("border", "1px solid #ddd");
-        $("#radio1").prop("checked",true);
-    })
-    $("#propileimg2").click(function (){
-            $("#propileimg1").css("border", "1px solid #ddd");
-            $("#propileimg2").css("border", "3px solid black");
-            $("#propileimg3").css("border", "1px solid #ddd");
-        $("#radio2").prop("checked",true);
-    })
-    $("#propileimg3").click(function (){
+        $("#radio1").prop("checked", true);
+    });
+
+    $("#propileimg2").click(function() {
+        $("#propileimg1").css("border", "1px solid #ddd");
+        $("#propileimg2").css("border", "3px solid black");
+        $("#propileimg3").css("border", "1px solid #ddd");
+        $("#radio2").prop("checked", true);
+    });
+
+    $("#propileimg3").click(function() {
         $("#propileimg1").css("border", "1px solid #ddd");
         $("#propileimg2").css("border", "1px solid #ddd");
         $("#propileimg3").css("border", "3px solid black");
-        $("#radio3").prop("checked",true);
-    })
-    $(document).ready(function() {
-
-        $("#verifyButton").click(function() {
-            verifyCode();
-        });
+        $("#radio3").prop("checked", true);
     });
-    $("#photoupload").change(function () {
+
+    $("#photoupload").change(function() {
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 $("#photo").attr("src", e.target.result);
                 $("#photo").css({
                     "width": "150px",
                     "height": "150px",
-                    "top":"0px",
-                    "left":"0px"
+                    "top": "0px",
+                    "left": "0px"
                 });
             }
             reader.readAsDataURL(file);
         }
-    })
-    $(function (){
-        $("#nicknamebtn").click(function () {
-            if ($("#nickname").val()==''){
-                openModal('PANDA', '가입할 닉네임을 작성해주세요.',`closeModal()`)
+    });
+
+    $(function() {
+        $("#nicknamebtn").click(function() {
+            if ($("#nickname").val() == '') {
+                openModal('PANDA', '가입할 닉네임을 작성해주세요.', `closeModal()`)
                 return;
             }
             $.ajax({
-                type:"get",
-                dataType:"json",
-                url:"./nicknamecheck",
-                data:{"searchnickname":$("#nickname").val()},
-                success:function (data) {
-                    if (data.count==0){
-                        openModal('PANDA', '가입이 가능한 닉네임입니다.',`closeModal()`)
-                        jungbok=true;
-                    }else {
-                        openModal('PANDA', '이미 사용중인 닉네임입니다.',`closeModal()`)
-                        jungbok=false;
+                type: "get",
+                dataType: "json",
+                url: "./nicknamecheck",
+                data: { "searchnickname": $("#nickname").val() },
+                success: function(data) {
+                    if (data.count == 0) {
+                        openModal('PANDA', '가입이 가능한 닉네임입니다.', `closeModal()`)
+                        jungbok = true;
+                    } else {
+                        openModal('PANDA', '이미 사용중인 닉네임입니다.', `closeModal()`)
+                        jungbok = false;
                         $("#nickname").val("");
                     }
                 }
             })
             //아이디를 입력시 다시 중복확인을 누르도록 중복변수를 초기화
-            $("#nickname").keyup(function () {
-                jungbok=false;
+            $("#nickname").keyup(function() {
+                jungbok = false;
             })
         })//
 
-        function check(){
-            if (!jungbok){
-                openModal('PANDA', '닉네임 중복확인을 해주세요.',`closeModal()`)
-                return false;//false반환시 action 실행을 안함
+        function check() {
+            if (!jungbok) {
+                openModal('PANDA', '닉네임 중복확인을 해주세요.', `closeModal()`)
+                return false; // false반환시 action 실행을 안함
             }
         }
-    })
-    $(function (){
-        $("#checkButton").click(function () {
+    });
+
+    $(function() {
+        $("#checkButton").click(function() {
             if ($("#email").val() == '') {
-                openModal('PANDA', '가입할 이메일을 입력해주세요.',`closeModal()`)
+                openModal('PANDA', '가입할 이메일을 입력해주세요.', `closeModal()`)
                 return;
             }
             $.ajax({
                 type: "get",
                 dataType: "json",
                 url: "./emailcheck",
-                data: {"searchemail": $("#email").val()},
-                async:false,
-                success: function (data) {
+                data: { "searchemail": $("#email").val() },
+                async: false,
+                success: function(data) {
                     if (data.count === 0) {
-                        openModal('PANDA', '가능한 이메일입니다.',`closeModal()`)
+                        openModal('PANDA', '가능한 이메일입니다.', `closeModal()`)
                         jungbok = true;
                         $("#loading").show();
                         const email = $('#email').val();
                         const mailDto = {
                             email: email,
                             message: ''
-
                         };
                         $.ajax({
                             url: '/mail/send',
@@ -485,34 +477,32 @@
                             data: JSON.stringify(mailDto),
                             success: function(response) {
                                 $("#loading").hide();
-                                openModal('PANDA', '이메일전송이 되었습니다.',`closeModal()`)
+                                openModal('PANDA', '이메일전송이 되었습니다.', `closeModal()`)
                                 $('#emailCheckSection').removeClass('hidden');
-                                    clearInterval(timerInterval);
-                                    var duration = 180;
-                                    var display = document.getElementById('timer');
-                                    display.style.display = 'block';
-                                    var timer = duration, minutes, seconds;
-                                    timerInterval = setInterval(function() {
-                                        minutes = parseInt(timer / 60, 10);
-                                        seconds = parseInt(timer % 60, 10);
-                                        minutes = minutes < 10 ? "0" + minutes : minutes;
-                                        seconds = seconds < 10 ? "0" + seconds : seconds;
-                                        display.textContent = "남은시간 " + minutes + ":" + seconds;
-                                        if (--timer < 0) {
-                                            clearInterval(timerInterval);
-                                            openModal('PANDA', '시간이 초과되었습니다.',`closeModal()`)
-                                        }
-                                    }, 1000);
+                                clearInterval(timerInterval);
+                                var duration = 180;
+                                var display = document.getElementById('timer');
+                                display.style.display = 'block';
+                                var timer = duration, minutes, seconds;
+                                timerInterval = setInterval(function() {
+                                    minutes = parseInt(timer / 60, 10);
+                                    seconds = parseInt(timer % 60, 10);
+                                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                                    seconds = seconds < 10 ? "0" + seconds : seconds;
+                                    display.textContent = "남은시간 " + minutes + ":" + seconds;
+                                    if (--timer < 0) {
+                                        clearInterval(timerInterval);
+                                        openModal('PANDA', '시간이 초과되었습니다.', `closeModal()`)
+                                    }
+                                }, 1000);
                             },
                             error: function(error) {
                                 $("#loading").hide();
-                                openModal('PANDA', '전송이 실패하였습니다.',`closeModal()`)
-
+                                openModal('PANDA', '전송이 실패하였습니다.', `closeModal()`)
                             }
                         });
-
                     } else {
-                        openModal('PANDA', '이미 생성된 이메일입니다.',`closeModal()`)
+                        openModal('PANDA', '이미 생성된 이메일입니다.', `closeModal()`)
                         jungbok = false;
                         $("#email").val("");
                         clearInterval(timer); // 타이머 정지
@@ -522,37 +512,32 @@
                 }
             })
         })
-    })
+    });
+
+    function openDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var geocoder = new kakao.maps.services.Geocoder();
+                var roadAddr = data.roadAddress;
+                var callback = function(result, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        console.log(result);
+                        var lat = result[0].y;
+                        var lng = result[0].x;
+                        document.getElementById('latitude').value = lat;
+                        document.getElementById('longitude').value = lng;
+                        console.log('위도:', lat, '경도:', lng);
+                    }
+                };
+                document.getElementById('address').value = roadAddr;
+                console.log(roadAddr);
+                geocoder.addressSearch(roadAddr, callback);
+            }
+        }).open();
+    }
 </script>
 <!-- 주소입력 팝업 api -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- kakao 주소찾기 -->
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d0988ea389a80dcfa4f93816fc3b6129&libraries=services"></script><!-- kakao JS appkey 콩비꺼 넣음 -->
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function openDaumPostcode() {
-            new daum.Postcode({
-                oncomplete: function (data) {
-                    var geocoder = new kakao.maps.services.Geocoder();
-                    var roadAddr = data.roadAddress;
-                    var callback = function(result, status) {
-                        if (status === kakao.maps.services.Status.OK) {
-                            console.log(result);
-                            var lat = result[0].y;
-                            var lng = result[0].x;
-                            document.getElementById('latitude').value = lat;
-                            document.getElementById('longitude').value = lng;
-                            console.log('위도:', lat, '경도:', lng);
-                        }
-                    };
-                    document.getElementById('address').value = roadAddr;  // 여기서 location 대신 address 사용
-                    console.log(roadAddr);
-                    geocoder.addressSearch(roadAddr, callback);
-                }
-            }).open();
-        }
-        window.openDaumPostcode = openDaumPostcode;
-    });
-</script>
 </body>
 </html>
