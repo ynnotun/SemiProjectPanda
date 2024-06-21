@@ -140,13 +140,13 @@
       <button class="slider-button next" onclick="slide(1)">&#10095;</button>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6" id="scroll">
          <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap"
-            href="${root}/">
+            onclick="getList(0)">
             <i class="bi bi-justify" style="font-size: 2em;"></i>
             <span>ALL</span>
          </a>
          <c:forEach var="ele" items="${categories}">
             <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap"
-               href="${root}?categorynum=${ele.categorynum}">
+               onclick="getList(${ele.categorynum})">
                <i class="${ele.categoryicon}" style="font-size: 2em;"></i>
                <span>${ele.categoryname}</span>
             </a>
@@ -155,7 +155,7 @@
    </section>
    <br>
    <section class="py-8 px-6 md:px-8">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="item-seciton">
          <c:forEach var="ele" items="${products}">
             <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
@@ -194,10 +194,10 @@
    }
 
 
-   function getList(){
+   function getList(categorynum){
       $.ajax({
          type:"get",
-         url:"${root}/category?categorynum=${categorynum}",
+         url:"${root}/category?categorynum="+categorynum,
          dataType:"json",
          success:function (data){
             let s="";
@@ -219,7 +219,7 @@
                     `;
                });
             }
-            $("#page1").html(s);
+            $("#item-seciton").html(s);
          }
       });
    }
