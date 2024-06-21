@@ -12,31 +12,10 @@
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-
+   <!-- Link Swiper's CSS -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
    <style>
-      /* 위로 가는 버튼 */
-      .scroll-to-top {
-         position: fixed;
-         bottom: 30px;
-         right: 30px;
-         display: none;
-         width: 50px;
-         height: 50px;
-         background-color: #4CAF50;
-         color: white;
-         border: none;
-         border-radius: 50%;
-         text-align: center;
-         font-size: 24px;
-         line-height: 50px;
-         cursor: pointer;
-         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-         z-index: 1000;
-         transition: all 0.3s ease;
-      }
-      .scroll-to-top:hover {
-         background-color: #45a049;
-      }
+
 
       /* 카테고리 스크롤 */
       #scroll {
@@ -88,10 +67,69 @@
       div.sel{
          margin-left: 88%;
       }
+
+      html,
+      body {
+         position: relative;
+         height: 100%;
+      }
+
+      body {
+         background: #eee;
+         font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+         font-size: 14px;
+         color: #000;
+         margin: 0;
+         padding: 0;
+      }
+
+      .swiper {
+         width: 100%;
+         height: 100%;
+      }
+
+      .swiper-slide {
+         text-align: center;
+         font-size: 18px;
+         background: #fff;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+      }
+
+      .swiper-slide img {
+         display: block;
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+      }
    </style>
 </head>
 <body>
 
+<!-- Swiper -->
+<div class="swiper mySwiper">
+   <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="${root}/image/banner1.png"/></div>
+      <div class="swiper-slide"><img src="${root}/image/banner2.png"/></div>
+      <div class="swiper-slide"><img src="${root}/image/banner3.png"/></div>
+   </div>
+   <div class="swiper-button-next"></div>
+   <div class="swiper-button-prev"></div>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+   var swiper = new Swiper(".mySwiper", {
+      navigation: {
+         nextEl: ".swiper-button-next",
+         prevEl: ".swiper-button-prev",
+      },
+   });
+</script>
 
 <div class="bg-white  text-gray-900  min-h-screen">
    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
@@ -101,218 +139,48 @@
       <button class="slider-button prev" onclick="slide(-1)">&#10094;</button>
       <button class="slider-button next" onclick="slide(1)">&#10095;</button>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6" id="scroll">
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
+         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap"
+            onclick="getList(0)">
             <i class="bi bi-justify" style="font-size: 2em;"></i>
             <span>ALL</span>
          </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-incognito" style="font-size: 2em;"></i>
-            <span>패션/잡화</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-pc-display-horizontal" style="font-size: 2em;"></i>
-            <span>디지털기기</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-house" style="font-size: 2em;"></i>
-            <span>생활가전</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-lamp" style="font-size: 2em;"></i>
-            <span>가구/인테리어</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-controller" style="font-size: 2em;"></i>
-            <span>취미/게임/음반</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-scissors" style="font-size: 2em;"></i>
-            <span>뷰티</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-book" style="font-size: 2em;"></i>
-            <span>도서/티켓</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-bicycle" style="font-size: 2em;"></i>
-            <span>스포츠</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-piggy-bank" style="font-size: 2em;"></i>
-            <span>반려동물용품</span>
-         </a>
-         <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap" href="#">
-            <i class="bi bi-box-seam" style="font-size: 2em;"></i>
-            <span>기타 중고물품</span>
-         </a>
+         <c:forEach var="ele" items="${categories}">
+            <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap"
+               onclick="getList(${ele.categorynum})">
+               <i class="${ele.categoryicon}" style="font-size: 2em;"></i>
+               <span>${ele.categoryname}</span>
+            </a>
+         </c:forEach>
       </div>
    </section>
    <br>
-   <div class="sel">
-      <label for="choices">Filter</label>
-      <select id="choices" name="choices" style="border: 1px solid black;">
-         <option value="">최신순</option>
-         <option value="">추천순(찜)</option>
-         <option value="">낮은가격순</option>
-         <option value="">높은가격순</option>
-      </select>
-   </div>
-
    <section class="py-8 px-6 md:px-8">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-         <c:forEach var="product" items="${products}">
-            <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-               <img
-                       src="/placeholder.svg"
-                       width="300"
-                       height="200"
-                       alt="Product"
-                       class="rounded-t-lg object-cover w-full h-48"
-                       style="aspect-ratio:300/200;object-fit:cover"
-               />
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="item-seciton">
+         <c:forEach var="ele" items="${products}">
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+               <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
+                    width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"
+                    onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'"/>
                <div class="p-4">
-                  <h3 class="text-lg font-medium mb-2"><c:out value="${product.title}"/></h3>
-                  <p><c:out value="${product.price}"/></p>
-                  <p class="text-gray-500 mb-4"><c:out value="${product.location}"/></p>
+
+                  <h3 class="cursor-pointer text-lg font-medium mb-2"
+                      onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">
+                        ${ele.producttitle}</h3>
+                  <div class="mb-2">
+                     <span class="text-gray-500 mr-1">${ele.productprice}원</span>
+                     <span class="text-gray-500">${ele.productstatus}</span>
+                  </div>
                </div>
             </div>
          </c:forEach>
       </div>
    </section>
-
-   <section class="py-8 px-6 md:px-8">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-
-         <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-            <img
-                    src="/placeholder.svg"
-                    width="300"
-                    height="200"
-                    alt="Product"
-                    class="rounded-t-lg object-cover w-full h-48"
-                    style="aspect-ratio:300/200;object-fit:cover"
-            />
-            <div class="p-4">
-               <h3 class="text-lg font-medium mb-2">Vintage Camera</h3>
-               <p class="text-gray-500 mb-4">$50</p>
-            </div>
-         </div>
-      </div>
-   </section>
-
 </div>
 
-<!-- 위로 가는 버튼 -->
-<button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">
-   <i class="bi bi-caret-up-fill"></i>
-</button>
+
    </div>
 </div>
 <script>
-   // category 스크롤
-   window.onscroll = function() {
-      var scrollToTopBtn = document.getElementById("scrollToTopBtn");
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-         scrollToTopBtn.style.display = "block";
-      } else {
-         scrollToTopBtn.style.display = "none";
-      }
-   };
-
-   // 위로 가는 버튼
-   function scrollToTop() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-   }
 
    // 슬라이드 버튼 기능
    function slide(direction) {
@@ -322,6 +190,37 @@
          top: 0,
          left: direction * scrollAmount,
          behavior: 'smooth'
+      });
+   }
+
+
+   function getList(categorynum){
+      $.ajax({
+         type:"get",
+         url:"${root}/category?categorynum="+categorynum,
+         dataType:"json",
+         success:function (data){
+            let s="";
+            if(data.length === 0){
+               s = `<div class="w-full text-base text-gray-500">해당 카테고리에 아직 상품이 없어요.</div>`;
+            } else {
+               $.each(data, function (idx, ele) {
+                  s += `
+                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                            <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
+                            <div class="p-4">
+                                <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
+                                <div class="mb-2">
+                                    <span class="text-gray-500 mr-1">\${ele.productprice}원</span>
+                                    <span class="text-gray-500">\${ele.productstatus}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+               });
+            }
+            $("#item-seciton").html(s);
+         }
       });
    }
 </script>

@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: minseok
-  Date: 24. 6. 13.
-  Time: 오전 11:07
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -17,7 +11,7 @@
     <title>나의 내역</title>
 
     <style>
-        .round-button{
+        .round-button {
             border-radius: 20px;
         }
         .active {
@@ -37,7 +31,7 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <a class="text-sm underline" href="./mypage/history?usernum=${usernum}&listname=sell"> </a>
-                    <div class="flex w-full justify-start mb-4">
+                    <div id="menubutton" class="flex w-full justify-start mb-4">
                         <button id="sell" class="tab-button round-button inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-9 px-3 mr-2 bg-gray-200">
                             판매내역
                         </button>
@@ -50,6 +44,10 @@
                     </div>
                 </div>
                 <div class="page active-page grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="page1">
+                    <!-- 검색 결과가 표시될 영역 -->
+                </div>
+                <div id="no-result-message" class="w-full text-base text-gray-500" style="display: none;">
+                    아직 판매한 이력이 없어요.
                 </div>
             </section>
         </div>
@@ -58,12 +56,12 @@
 
 <script>
     $(function(){
-        $(${listname}).addClass("active");
-        if(${listname.equals("sell")}){
+        $(`#${listname}`).addClass("active");
+        if("${listname}" === "sell"){
             getSell();
-        }else if (${listname.equals("buy")}){
+        }else if ("${listname}" === "buy"){
             getBuy();
-        }else if(${listname.equals("wish")}){
+        }else if("${listname}" === "wish"){
             getWish();
         }
 
@@ -83,6 +81,21 @@
         })
     })
 
+    function hideButton(){
+        $.ajax({
+            success:function(data){
+                let s="";
+                $.each(data,function(idx,ele){
+                    s+=
+                        `
+                        //usernum 과 판매내역, 구매내역, 찜목록 버튼 출력
+                        `;
+                });
+                $("#menubutton").html(s);
+            }
+        })
+    }
+
 
     function getSell(){
         $.ajax({
@@ -91,12 +104,13 @@
             dataType:"json",
             success:function (data){
                 let s="";
-                $.each(data,function (idx,ele){
-                    s+=
-                        `
-
-                           <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                            <img src="" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
+                if(data.length === 0){
+                    s = `<div class="w-full text-base text-gray-500">아직 판매한 이력이 없어요.</div>`;
+                } else {
+                    $.each(data, function (idx, ele) {
+                        s += `
+                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                            <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
                             <div class="p-4">
                                 <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
                                 <div class="mb-2">
@@ -113,11 +127,12 @@
                                 </div>
                             </div>
                         </div>
-                         `;
-                })
+                    `;
+                    });
+                }
                 $("#page1").html(s);
             }
-        })
+        });
     }
 
     function getBuy(){
@@ -127,12 +142,13 @@
             dataType:"json",
             success:function (data){
                 let s="";
-                $.each(data,function (idx,ele){
-                    s+=
-                        `
-
-                           <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                            <img src="" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
+                if(data.length === 0){
+                    s = `<div class="w-full text-base text-gray-500">아직 구매한 이력이 없어요.</div>`;
+                } else {
+                    $.each(data, function (idx, ele) {
+                        s += `
+                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                            <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
                             <div class="p-4">
                                 <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
                                 <div class="mb-2">
@@ -149,11 +165,12 @@
                                 </div>
                             </div>
                         </div>
-                         `;
-                })
+                    `;
+                    });
+                }
                 $("#page1").html(s);
             }
-        })
+        });
     }
 
     function getWish(){
@@ -163,12 +180,13 @@
             dataType:"json",
             success:function (data){
                 let s="";
-                $.each(data,function (idx,ele){
-                    s+=
-                        `
-
-                           <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                            <img src="" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
+                if(data.length === 0){
+                    s = `<div class="w-full text-base text-gray-500">아직 찜한 이력이 없어요.</div>`;
+                } else {
+                    $.each(data, function (idx, ele) {
+                        s += `
+                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                            <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
                             <div class="p-4">
                                 <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
                                 <div class="mb-2">
@@ -185,11 +203,12 @@
                                 </div>
                             </div>
                         </div>
-                         `;
-                })
+                    `;
+                    });
+                }
                 $("#page1").html(s);
             }
-        })
+        });
     }
 </script>
 </body>

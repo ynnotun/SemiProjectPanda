@@ -16,7 +16,7 @@ public class SearchController {
 
     @Autowired
     private ProductService productService;
-/*
+
     @GetMapping("/search")
     public String search(@RequestParam("keyword") String keyword, Model model) {
         // 키워드를 리스트로 변환
@@ -29,5 +29,5 @@ public class SearchController {
         model.addAttribute("searchResults", searchResults);
         model.addAttribute("keyword", keyword);
         return "product/product-search"; // 검색 결과를 보여줄 JSP 파일
-    }*/
+    }
 }

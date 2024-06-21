@@ -33,10 +33,10 @@
                     <h1 class="text-2xl font-bold">Rate Your Experience</h1>
                     <p class="text-gray-500">Please provide your feedback on the recent transaction.</p>
                 </div>
-                <form action="/product/review" method="post">
-                    <input type="hidden" name="reviewsenduser" value="1"><!-- 임시값 -->
-                    <input type="hidden" name="reviewreceiveuser" value="2"><!-- 임시값 -->
-                    <input type="hidden" name="productnum" value="50"><!-- 임시값 -->
+                <form action="./product/review" method="post" enctype="text/plain">
+                    <%--<input type="hidden" name="reviewsenduser" value="${reviewsenduser}">
+                    <input type="hidden" name="reviewreceiveuser" value="${reviewReceiveUser.usernum}">
+                    <input type="hidden" name="productnum" value="${productnum}">--%>
 
                     <div class="grid gap-4">
                         <!-- 별점 추가 기능 -->
@@ -63,6 +63,7 @@
                                     viewBox="0 0 24 24"
                                     class="star"
                                     data-value="3">
+                                <!-- 3점이 기본 클릭 상태로 -->
                                 <polygon
                                         points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                             </svg>
