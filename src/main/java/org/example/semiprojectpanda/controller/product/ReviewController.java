@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -73,7 +74,7 @@ public class ReviewController {
             return "redirect:/";
         }
         // 리뷰 작성자와 제품 판매자/구매자가 일치하는지 확인
-        if (productDto.getUsernum() != reviewsenduser || productDto.getCustomernum() != reviewsenduser) {
+        if (!Objects.equals(productDto.getUsernum(), reviewsenduser) && !Objects.equals(productDto.getCustomernum(), reviewsenduser)) {
             return "redirect:/";
         }
 
