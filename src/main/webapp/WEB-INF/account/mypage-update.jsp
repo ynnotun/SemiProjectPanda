@@ -15,16 +15,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">Membership Cancellation Confirmation</h5>
+                <h5 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">회원 탈퇴</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to cancel your membership? This action cannot be undone.</p>
+                <p>회원 탈퇴를 진행하시겠습니까? 이 작업은 되돌릴 수 없습니다.</p>
                 <br>
-                <p>If you proceed, you will lose access to:
+                <p>탈퇴를 진행하면 다음 항목에 대한 접근을 잃게 됩니다 :
                 <ul>
-                    <li>∙ Premium content and features</li>
-                    <li>∙ Saved preferences and data</li>
+                    <li>∙ 프리미엄 콘텐츠 및 기능</li>
+                    <li>∙ 저장된 설정 및 데이터</li>
                 </ul>
                 </p>
             </div>
