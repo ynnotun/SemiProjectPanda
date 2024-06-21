@@ -196,7 +196,7 @@
         showMessage(message, "message-sent");
         $("#msg").val(""); // 메시지를 보낸 후 입력 필드 비우기
 
-        stompClient.send("/app/sendMessage", {}, JSON.stringify({'content': message})); // 서버에 보낼 메시지
+        stompClient.send("/app/sendMessage", {}, JSON.stringify(message)); // 서버에 보낼 메시지
 
         // 채팅 내용이 갱신될 때 스크롤을 가장 아래로 이동
         var conversation = $("#conversation");
