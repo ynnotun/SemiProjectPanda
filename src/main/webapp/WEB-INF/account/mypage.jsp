@@ -43,7 +43,7 @@
               </span>
             </span>
                         <div class="grid gap-1">
-                            <h1 class="text-2xl font-bold">${dto.username}</h1>
+                            <h1 class="text-2xl font-bold">${dto.usernickname}</h1>
 
                             <%-- 주소 --%>
                             <%-- 유저 본인만 확인 가능--%>
