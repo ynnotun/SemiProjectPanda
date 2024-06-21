@@ -5,11 +5,14 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Chat Room</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.2/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <title>Hello WebSocket</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+
+    <script src="/app.js" charset="UTF-8"></script>
     <style>
         body {
             background-color: #f5f5f5;
@@ -115,6 +118,7 @@
             </form>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div id="conversation">
@@ -122,16 +126,21 @@
                     <tbody id="communicate"></tbody>
                 </table>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
             <form class="form-inline">
                 <div class="form-group">
-                    <input type="text" id="msg" class="form-control" placeholder="내용을 입력하세요..." style="width: 500px;">
+                    <label for="msg">Chat : </label>
+                    <input type="text" id="msg" class="form-control" placeholder="내용을 입력하세요....">
                 </div>
                 <button id="send" class="btn btn-default" disabled type="submit">보내기</button>
             </form>
         </div>
     </div>
 </div>
-</body>
 <script>
     var stompClient = null;
 
@@ -156,6 +165,9 @@
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/public', function (message) {
                 showMessage(message.body, "message-received"); // 서버에 메시지 전달 후 리턴받는 메시지
+                // 채팅 내용이 갱신될 때 스크롤을 가장 아래로 이동
+                var conversation = $("#conversation");
+                conversation.scrollTop(conversation[0].scrollHeight);
             });
         });
     }
@@ -174,6 +186,10 @@
         $("#msg").val(""); // 메시지를 보낸 후 입력 필드 비우기
 
         stompClient.send("/app/sendMessage", {}, JSON.stringify({'content': message})); // 서버에 보낼 메시지
+
+        // 채팅 내용이 갱신될 때 스크롤을 가장 아래로 이동
+        var conversation = $("#conversation");
+        conversation.scrollTop(conversation[0].scrollHeight);
     }
 
     function showMessage(message, messageClass) {
@@ -200,4 +216,6 @@
     });
 
 </script>
+</body>
 </html>
+
