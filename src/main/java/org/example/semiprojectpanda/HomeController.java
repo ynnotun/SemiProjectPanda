@@ -29,32 +29,29 @@ public class HomeController {
     @Autowired
     private MainService mainService;
 
-/*    @GetMapping("/")
+    @GetMapping("/")
     public String home(
             Model model
     ) {
         List<CategoryDto> categories = productUpdateService.getAllCategories();
-
+        List<ProductDto> products = mainService.getAllProduct();
 
         model.addAttribute("categories", categories);
-
+        model.addAttribute("products", products);
         return "layout/main";
-    }*/
-    @GetMapping("/")
-    public String getList(
-            @RequestParam(defaultValue = "0") int categorynum, Model model
+    }
+
+    @GetMapping("/category")
+    @ResponseBody
+    public List<ProductDto> category(
+            @RequestParam int categorynum
     ){
-        List<CategoryDto> categories = productUpdateService.getAllCategories();
         List<ProductDto> products = null;
         if (categorynum == 0){
             products = mainService.getAllProduct();
         } else {
             products = mainService.getAllProductByCategorynum(categorynum);
         }
-
-
-        model.addAttribute("categories", categories);
-        model.addAttribute("products", products);
-        return "layout/main";
+        return products;
     }
 }
