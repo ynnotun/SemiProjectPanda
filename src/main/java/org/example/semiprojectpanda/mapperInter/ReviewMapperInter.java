@@ -28,7 +28,7 @@ public interface ReviewMapperInter {
 
     // 리뷰 출력
     @Select("""
-            SELECT U.username AS username, R.* FROM REVIEW R 
+            SELECT U.username AS username, U.userprofileimage AS userimage, R.* FROM REVIEW R 
                 JOIN USER U ON R.reviewsenduser = U.usernum where R.reviewreceiveuser = #{usernum}
             """)
     public List<ReviewDto> getReviewsByUsernum(int usernum);
