@@ -22,6 +22,25 @@
         .mainlayout{
             background-color: white;
         }
+        #bot{
+            position: fixed;
+            bottom: 120px;
+            left: 30px;
+            width: 70px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.84);
+            border-radius: 20px;
+        }
+        #pay{
+            position: fixed;
+            bottom: 120px;
+            right: 30px;
+            width: 70px;
+            height: 50px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 20px;
+        }
         /* 위로 가는 버튼 */
         .scroll-to-top {
             position: fixed;
@@ -57,6 +76,15 @@
     <div class="main-tile">
         <tiles:insertAttribute name="main"/>
     </div>
+    <!-- 챗봇버튼 -->
+    <button onclick="location.href='./chatbot'" id="bot">
+        <img src="https://kr.object.ncloudstorage.com/semi/panda/logo.png">
+    </button>
+
+    <!-- 결제버튼 -->
+    <button onclick="location.href='./pay'" id="pay">
+        <p>결제</p>
+    </button>
     <!-- 위로 가는 버튼 -->
     <button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">
         <i class="bi bi-caret-up-fill"></i>
