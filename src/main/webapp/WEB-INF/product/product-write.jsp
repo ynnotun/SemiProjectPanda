@@ -37,7 +37,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">내 상품에 대한 사진이 없어요.</h5>
+                <h2 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">내 상품에 대한 사진이 없어요.</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -56,7 +56,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="toomanyimagesLabel">사진이 너무 많습니다.</h5>
+                <h2 class="modal-title" id="toomanyimagesLabel">사진이 너무 많습니다.</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
