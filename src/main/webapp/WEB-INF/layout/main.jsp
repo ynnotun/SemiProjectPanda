@@ -46,7 +46,7 @@
          width: 40px;
          height: 40px;
          cursor: pointer;
-         z-index: 1000;
+         z-index: 1;
       }
 
       .slider-button:hover {
