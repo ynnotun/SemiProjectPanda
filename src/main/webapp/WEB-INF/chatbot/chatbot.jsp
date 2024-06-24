@@ -5,14 +5,18 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Chat Room</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.2/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <title>Hello WebSocket</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/app.js" charset="UTF-8"></script>
     <style>
         body {
             background-color: #f5f5f5;
+            font-family: 'Noto Sans KR', sans-serif;
         }
 
         #main-content {
@@ -43,16 +47,9 @@
             max-width: 80%;
         }
 
-        .message-sent {
-            background-color: #d9edf7;
-            text-align: right;
-            margin-left: auto;
-        }
-
-        .message-received {
-            background-color: #f2f2f2;
-            text-align: left;
-            margin-right: auto;
+        #send {
+            background-color: #4CAF50;
+            color: white;
         }
 
         .form-inline {
@@ -71,6 +68,8 @@
 
         .btn {
             white-space: nowrap;
+            padding: 10px 20px;
+            border-radius: 20px;
         }
 
         .received-message-content {
@@ -86,6 +85,9 @@
 
         .message-text {
             max-width: 70%;
+            border-radius: 20px;
+            background-color: #e0f7fa;
+            border: 1px solid #b2ebf2;
         }
 
         .sent {
@@ -97,24 +99,56 @@
             display: flex;
             justify-content: flex-start;
         }
+
+        .message-received {
+            background-color: #e0f7fa;
+            border: 1px solid #b2ebf2;
+        }
+
+        .message-sent {
+            background-color: #e0f2f1;
+            border: 1px solid #b2dfdb;
+        }
+
+        #panda-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px 5px 0 0;
+        }
+
+        #panda-header img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        #chat-input-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        #chat-input {
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <label for="connect">판다와 대화하기</label>
-                    <button id="connect" class="btn btn-default" type="submit" style="background-color: #4CAF50">연결</button>
-                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled" style="background-color: palevioletred">해제</button>
-                </div>
-            </form>
+<div id="main-content" class="container" style="margin-top: 70px;">
+    <div id="panda-header">
+        <div style="display: flex; align-items: center;">
+            <img src="../image/panda.png" alt="Panda Logo">
+            <h3>판다와 대화하기</h3>
+        </div>
+        <div>
+            <button id="connect" class="btn btn-default" type="submit" style="background-color: #4CAF50">연결</button>
+            <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled" style="background-color: palevioletred">해제</button>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div id="conversation">
@@ -122,16 +156,23 @@
                     <tbody id="communicate"></tbody>
                 </table>
             </div>
-            <form class="form-inline">
-                <div class="form-group">
-                    <input type="text" id="msg" class="form-control" placeholder="내용을 입력하세요..." style="width: 500px;">
+        </div>
+    </div>
+
+    <div class="row" id="chat-input-container">
+        <div class="col-md-6">
+            <form class="form-inline" id="chat-input">
+                <div class="form-group" style="margin-left: 180px;">
+                    <input type="text" id="msg" class="form-control" placeholder="내용을 입력하세요....">
                 </div>
-                <button id="send" class="btn btn-default" disabled type="submit">보내기</button>
+                <button id="send" class="btn btn-default" disabled type="submit">
+                    <i class="bi bi-arrow-return-left"></i>
+                </button>
             </form>
         </div>
     </div>
 </div>
-</body>
+
 <script>
     var stompClient = null;
 
@@ -156,6 +197,9 @@
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/public', function (message) {
                 showMessage(message.body, "message-received"); // 서버에 메시지 전달 후 리턴받는 메시지
+                // 채팅 내용이 갱신될 때 스크롤을 가장 아래로 이동
+                var conversation = $("#conversation");
+                conversation.scrollTop(conversation[0].scrollHeight);
             });
         });
     }
@@ -171,17 +215,21 @@
     function sendMessage() {
         let message = $("#msg").val()
         showMessage(message, "message-sent");
-        $("#msg").val(""); // 메시지를 보낸 후 입력 필드 비우기
+        $("#msg").val(""); // 메시지를 보낸 후 입력 필드를 비우기
 
-        stompClient.send("/app/sendMessage", {}, JSON.stringify({'content': message})); // 서버에 보낼 메시지
+        stompClient.send("/app/sendMessage", {}, JSON.stringify(message)); // 서버에 보낼 메시지
+
+        // 채팅 내용이 갱신될 때 스크롤을 가장 아래로 이동
+        var conversation = $("#conversation");
+        conversation.scrollTop(conversation[0].scrollHeight);
     }
 
     function showMessage(message, messageClass) {
         if (messageClass === "message-received") {
             $("#communicate").append(
+                "<img src='../image/panda.png' style='width: 40px; height: auto'>"+
                 "<tr class='received'><td class='message " + messageClass + "'>" +
                 "<div class='received-message-content'>" +
-                "<img src='../image/panda.png' class='message-image' />" +
                 "<div class='message-text'>" + message + "</div>" +
                 "</div></td></tr>");
         } else {
@@ -200,4 +248,5 @@
     });
 
 </script>
+</body>
 </html>

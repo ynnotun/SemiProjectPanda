@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,21 +28,29 @@ public class MypageUpdateController {
 
     @Autowired
     private UserService userService;
-    private String bucketName="semi";
-    private String folderName="panda";
+    private String bucketName = "semi";
+    private String folderName = "panda";
 
 
     //마이페이지
     @GetMapping("/mypage/update")
     public String mypage(
-            @RequestParam("usernum") int usernum, Model model
-    )
-    {
+            @RequestParam("usernum") Integer usernum,
+            HttpServletRequest request,
+            Model model
+    ) {
+        HttpSession session = request.getSession();
+        Integer sessionUsernum = (Integer) session.getAttribute("usernum");
+        if (sessionUsernum == null || !sessionUsernum.equals(usernum)) {
+            return "redirect:/";
+        }
+
         UserDto userDto = detailService.getUserByUsernum(usernum);
         model.addAttribute(userDto);
 
         return "account/mypage-update";
     }
+
     @PostMapping("/upload")
     @ResponseBody
     public Map<String, String> uploadPhoto(
@@ -59,6 +68,7 @@ public class MypageUpdateController {
         map.put("photoname", photo);
         return map;
     }
+
     //닉네임중복체크
     @PostMapping("/mypage/checkNickname")
     @ResponseBody

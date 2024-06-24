@@ -69,7 +69,6 @@ public class LoginController {
             //로그인 성공시 세션에 저장
             session.setAttribute("saveid",saveid.equals("no")?"no":"yes");
             session.setAttribute("loginok","yes");
-            session.setAttribute("loginid",useremail);
 
             // 추가 사용자 정보 가져오기
             int usernum = userService.getUserNumByEmail(useremail);
@@ -90,6 +89,9 @@ public class LoginController {
     @GetMapping("/member/logout")
     public void memberLogout(HttpSession session){
         session.removeAttribute("loginok");
+        session.removeAttribute("usernum");
+        session.removeAttribute("usernickname");
+        session.removeAttribute("userprofileimage");
     }
     @ResponseBody
     @GetMapping("/nicknamecheck")

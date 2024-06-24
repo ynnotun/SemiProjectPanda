@@ -47,7 +47,6 @@ public class ProductUpdateService {
 
     // 수정이 완료된다면 모두 함께 실행되어야 함
     //1. 상품 설명 수정
-    //@Transactional
     public void updateProduct(ProductDto productDto)
     {
         productMapperInter.updateProduct(productDto);
@@ -57,28 +56,30 @@ public class ProductUpdateService {
     //ncpobjectservice에서 수행
 
     //3. 상품이미지 테이블의 현재 상품에 해당하는 행 전부 삭제
-    //@Transactional
     public void deleteAllProductImages(int productnum)
     {
         productImageMapperInter.deleteProductImageByProductnum(productnum);
     }
 
+    //3.1 상품이미지 테이블에서 지정된 행만 삭제
+    public void deleteProductImageByFilename(String filename)
+    {
+        productImageMapperInter.deleteProductImageByFilename(filename);
+    }
+
     //4. 상품이미지 테이블에 추가
-    //@Transactional
     public void insertProductImage(ProductImageDto productImageDto)
     {
         productImageMapperInter.insertProductImage(productImageDto);
     }
 
     //5. 해시태그 테이블의 현재 상품에 해당하는 행 전부 삭제
-    //@Transactional
     public void deleteAllHashtags(int productnum)
     {
         hashtagMapperInter.deleteHashtagByProductnum(productnum);
     }
 
     //6. 해시태그 테이블에 추가
-    //@Transactional
     public void insertHashtag(HashtagDto hashtagDto)
     {
         hashtagMapperInter.insertHashTag(hashtagDto);

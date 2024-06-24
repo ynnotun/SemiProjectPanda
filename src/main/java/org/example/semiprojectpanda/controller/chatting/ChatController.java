@@ -24,7 +24,7 @@ import java.util.Date;
 public class ChatController {
 
     private static String secretKey = "aVREZXBvWHZRQ3N0blpSQ0lqbE1Sa3laUnFobGxiUkQ=";
-    private static String apiUrl = "https://bgtp3dpg76.apigw.ntruss.com/custom/v1/14847/a7cdf5d0586b392473dd0cd08c9ba833240006a8a7310bf9bc8bf1aefdfaeadb";
+    private static String apiUrl = "https://s40egjh0rw.apigw.ntruss.com/custom/v1/14847/a7cdf5d0586b392473dd0cd08c9ba833240006a8a7310bf9bc8bf1aefdfaeadb";
 
     @MessageMapping("/sendMessage")
     @SendTo("/topic/public")
@@ -121,8 +121,6 @@ public class ChatController {
 
             long timestamp = new Date().getTime();
 
-            System.out.println("##"+timestamp);
-
             obj.put("version", "v2");
             obj.put("userId", "U47b00b58c90f8e47428af8b7bddc1231heo2");
             obj.put("timestamp", timestamp);
@@ -154,6 +152,6 @@ public class ChatController {
 
     @GetMapping("/chatbot")
     public String chatbot() {
-        return "websocket/chatbot";
+        return "chatbot/chatbot";
     }
 }

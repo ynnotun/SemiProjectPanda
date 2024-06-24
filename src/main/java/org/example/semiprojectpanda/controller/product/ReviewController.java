@@ -6,26 +6,25 @@ import org.example.semiprojectpanda.dto.ReviewDto;
 import org.example.semiprojectpanda.dto.UserDto;
 import org.example.semiprojectpanda.naver.cloud.NcpObjectStorageService;
 import org.example.semiprojectpanda.service.DetailService;
+import org.example.semiprojectpanda.service.ReviewService;
 import org.example.semiprojectpanda.service.ReviewWriteService;
 import org.example.semiprojectpanda.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
 public class ReviewController {
 
     private final ReviewWriteService reviewWriteService;
-    private final DetailService detailService;
     private final UserService userService;
+    private final DetailService detailService;
 
     // navercloud
     /*
@@ -39,57 +38,61 @@ public class ReviewController {
     @GetMapping("/product/review")
     public String productReview(@RequestParam int productnum,
                                 HttpServletRequest request,
-                                Model model)
-    {
+                                Model model) {
         //리뷰를 남기는 사람은 현재 로그인 중이며 리뷰 작성에 접근한 사용자
         HttpSession session = request.getSession();
-        Integer sendusernum = (Integer) session.getAttribute("usernum"); // 리뷰를 작성하는 유저 == 로그인중인 유저
-        ProductDto productDto = detailService.getProductByProductnum(productnum); // product에 대해 받기
-        Integer receiveusernum;
-
-        model.addAttribute("reviewSendUser", sendusernum);
-        if (sendusernum.equals(productDto.getUsernum())) { // 리뷰작성자가 판매자라면?
-            model.addAttribute("reviewReceiveUser", productDto.getCustomernum());
-            receiveusernum = productDto.getCustomernum();
-        } else { // 리뷰 작성자가 구매자라면?
-            model.addAttribute("reviewReceiveUser", productDto.getUsernum());
-            receiveusernum = productDto.getUsernum();
+        Integer reviewsenduser = (Integer) session.getAttribute("usernum");
+        if (reviewsenduser == null) {
+            return "redirect:/login";
         }
 
-        UserDto sendUserDto = userService.findByUsernum(sendusernum); // 리뷰 작성자 정보
-        UserDto receiveUserDto = userService.findByUsernum(receiveusernum); // 리뷰 대상자 정보
-        model.addAttribute("sendUserDto", sendUserDto);
-        model.addAttribute("receiveUserDto", receiveUserDto);
-        model.addAttribute("productDto", productDto);
-
-        //return "product/product-review/?productnum=" + productnum;
+        model.addAttribute("productnum", productnum);
         return "product/product-review";
     }
 
     @PostMapping("/product/review")
-    public String submitReview(@ModelAttribute ProductDto productDto,
-                               @ModelAttribute ReviewDto reviewDto,
-                               HttpServletRequest request)
-    {
+    public String submitReview(
+            @RequestParam int productnum,
+            @RequestParam String reviewcontent,
+            @RequestParam int reviewstar,
+            HttpServletRequest request
+    ) {
         HttpSession session = request.getSession();
-        Integer sendusernum = (Integer) session.getAttribute("usernum");
-        UserDto userDto = userService.findByUsernum(sendusernum);
+        Integer reviewsenduser = (Integer) session.getAttribute("usernum");
+        if (reviewsenduser == null) {
+            return "redirect:/login";
+        }
 
-        /*
-        reviewDto.setReviewsenduser(sendusernum);
-        if(sendusernum == productDto.getUsernum())//리뷰 작성자가 판매자인 경우
-        {
-            reviewDto.setReviewreceiveuser(productDto.getCustomernum());//작성 대상자는 구매자
+        ProductDto productDto = detailService.getProductByProductnum(productnum);
+
+        // 제품이 null인지 확인
+        if (productDto == null) {
+            return "redirect:/";
         }
-        else// 리뷰 작성자가 구매자인 경우
-        {
-            reviewDto.setReviewreceiveuser(productDto.getUsernum());//작성 대상자는 판매자
+        // 제품 상태가 "거래 완료"인지 확인
+        if (!productDto.getProductstatus().equals("거래 완료")) {
+            return "redirect:/";
         }
-        reviewDto.setProductnum(productDto.getProductnum());
-        */
+        // 리뷰 작성자와 제품 판매자/구매자가 일치하는지 확인
+        if (!Objects.equals(productDto.getUsernum(), reviewsenduser) && !Objects.equals(productDto.getCustomernum(), reviewsenduser)) {
+            return "redirect:/";
+        }
+
+        ReviewDto reviewDto = new ReviewDto();
+        reviewDto.setProductnum(productnum);
+        reviewDto.setReviewcontent(reviewcontent);
+        reviewDto.setReviewstar(reviewstar);
+        reviewDto.setReviewsenduser(reviewsenduser);
+        int reviewreceiveuser;
+        if (productDto.getUsernum() == reviewsenduser) {
+            reviewreceiveuser = productDto.getCustomernum();
+        } else {
+            reviewreceiveuser = productDto.getUsernum();
+        }
+        reviewDto.setReviewreceiveuser(reviewreceiveuser);
 
         reviewWriteService.insertReview(reviewDto);
 
-        return "redirect:/mypage?usernum=" + reviewDto.getReviewsenduser();//리뷰 작성한 사람 기준으로 이동//로그인중인 사람
+        return "redirect:/mypage?usernum=" + reviewsenduser;
     }
 }

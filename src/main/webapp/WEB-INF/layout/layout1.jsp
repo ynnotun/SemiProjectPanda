@@ -22,7 +22,48 @@
         .mainlayout{
             background-color: white;
         }
-
+        #bot{
+            position: fixed;
+            bottom: 120px;
+            left: 30px;
+            width: 70px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.84);
+            border-radius: 20px;
+        }
+        #pay{
+            position: fixed;
+            bottom: 180px;
+            left: 30px;
+            width: 70px;
+            height: 50px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 20px;
+        }
+        /* 위로 가는 버튼 */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: none;
+            width: 50px;
+            height: 50px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 24px;
+            line-height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .scroll-to-top:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <c:set var="root" value="<%=request.getContextPath() %>" scope="application"/>
@@ -35,6 +76,19 @@
     <div class="main-tile">
         <tiles:insertAttribute name="main"/>
     </div>
+    <!-- 챗봇버튼 -->
+    <button onclick="location.href='./chatbot'" id="bot">
+        <img src="https://kr.object.ncloudstorage.com/semi/panda/logo.png">
+    </button>
+
+    <!-- 결제버튼 -->
+    <button onclick="location.href='./pay'" id="pay">
+        <p>결제</p>
+    </button>
+    <!-- 위로 가는 버튼 -->
+    <button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">
+        <i class="bi bi-caret-up-fill"></i>
+    </button>
     <div class="footer-tile">
         <tiles:insertAttribute name="footer"/>
     </div>
@@ -48,6 +102,20 @@
     let height = headerTile.offsetHeight + footerTile.offsetHeight;
     mainTile.style.minHeight = `calc(100% - \${height}px)`;
 
+    // 위로 가는 버튼 보임 여부
+    window.onscroll = function() {
+        var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            scrollToTopBtn.style.display = "block";
+        } else {
+            scrollToTopBtn.style.display = "none";
+        }
+    };
+    // 위로 가는 버튼 동작
+    function scrollToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
 </script>
 
 
