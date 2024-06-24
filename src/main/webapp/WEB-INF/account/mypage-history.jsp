@@ -19,6 +19,30 @@
             background-color: black;
             color: white !important;
         }
+
+        .grayscale {
+            filter: grayscale(50%);
+            position: relative;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.25rem;
+            color: gray;
+            text-align: center;
+        }
+
+        .relative {
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -93,22 +117,6 @@
         })
     })
 
-    function hideButton() {
-        $.ajax({
-            success: function (data) {
-                let s = "";
-                $.each(data, function (idx, ele) {
-                    s +=
-                        `
-                        //usernum 과 판매내역, 구매내역, 찜목록 버튼 출력
-                        `;
-                });
-                $("#menubutton").html(s);
-            }
-        })
-    }
-
-
     function getSell() {
         $.ajax({
             type: "get",
@@ -121,9 +129,10 @@
                 } else {
                     $.each(data, function (idx, ele) {
                         s += `
-                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                            <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"
-onclick="location.href='/product/detail?productnum=\${ele.productnum}'"/>
+                        <div class="relative rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <div class="relative w-full h-48">
+                            <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48 \${ele.productstatus === '거래 완료' ? 'grayscale' : ''}" style="aspect-ratio:300/200;object-fit:cover"/>
+                            \${ele.productstatus === '거래 완료' ? '<div class="overlay">SOLD</div>' : ''}</div>
                             <div class="p-4">
                                 <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
                                 <div class="mb-2">
@@ -181,8 +190,11 @@ onclick="location.href='/product/detail?productnum=\${ele.productnum}'"/>
                 } else {
                     $.each(data, function (idx, ele) {
                         s += `
-                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                            <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
+                        <div class="relative rounded-lg border bg-card text-card-foreground shadow-sm">
+                            <div class="relative w-full h-48">
+                            <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48 \${ele.productstatus === '거래 완료' ? 'grayscale' : ''}" style="aspect-ratio:300/200;object-fit:cover"/>
+                            \${ele.productstatus === '거래 완료' ? '<div class="overlay">SOLD</div>' : ''}
+                            </div>
                             <div class="p-4">
                                 <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
                                 <div class="mb-2">
@@ -219,17 +231,19 @@ onclick="location.href='/product/detail?productnum=\${ele.productnum}'"/>
                 } else {
                     $.each(data, function (idx, ele) {
                         s += `
-                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                            <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
-                                <div class="mb-2">
-                                    <span class="text-gray-500 mr-1">\${ele.productprice}원</span>
-                                    <span class="text-gray-500">\${ele.productstatus}</span>
+                            <div class="relative rounded-lg border bg-card text-card-foreground shadow-sm">
+                                <div class="relative w-full h-48">
+                                <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48 \${ele.productstatus === '거래 완료' ? 'grayscale' : ''}" style="aspect-ratio:300/200;object-fit:cover"/>
+                                \${ele.productstatus === '거래 완료' ? '<div class="overlay">SOLD</div>' : ''}
                                 </div>
-
+                                <div class="p-4">
+                                    <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
+                                    <div class="mb-2">
+                                        <span class="text-gray-500 mr-1">\${ele.productprice}원</span>
+                                        <span class="text-gray-500">\${ele.productstatus}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
                     `;
                     });
                 }
