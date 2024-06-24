@@ -31,14 +31,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">Confirm
-                    Password</h5>
+                <h5 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">
+                    비밀번호 확인</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>For security reasons, please re-enter your current</p>
-                <p>password to continue </p>
-                <br>
                 <label style="font-weight: bold;">Password</label>&nbsp;&nbsp;
                 <input style="width: 200px;" type="password" id="confirmPassword"
                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black sm:text-sm"
@@ -46,7 +43,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="confirm"
-                        style="background-color: black; border: 0px;">Confirm
+                        style="background-color: black; border: 0px;">확인
                 </button>
             </div>
         </div>
