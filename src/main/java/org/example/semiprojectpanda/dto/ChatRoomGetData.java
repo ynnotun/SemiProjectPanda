@@ -9,14 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @AllArgsConstructor
-public class ChatroomPrintDto {
+public class ChatRoomGetData {
     private int chatroomnum;
     private String chatroomname;
-    private String productaddress;
-    private String productusernickname;
-    private String productuserprofile;
     private String applyusernickname;
-    private String applyprofile;
+    private String productusernickname;
     private int productnum;
-
 }

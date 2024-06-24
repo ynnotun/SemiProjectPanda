@@ -1,6 +1,7 @@
 package org.example.semiprojectpanda.controller.chatting;
 
 import lombok.RequiredArgsConstructor;
+import org.example.semiprojectpanda.dto.ChatRoomGetData;
 import org.example.semiprojectpanda.dto.ChatroomDto;
 import org.example.semiprojectpanda.dto.ChatroomPrintDto;
 import org.example.semiprojectpanda.dto.ChattingPrintDto;
@@ -62,6 +63,31 @@ public class ChattingController {
             return Collections.emptyList();
         }
         return chatroomMapperInter.getChatroomByUserNum(usernum);
+    }
+
+    @GetMapping("/chat/name")
+    @ResponseBody
+    public ChatRoomGetData chatRoomGetData(
+            @RequestParam("chatroomnum") int chatroomnum,
+            HttpServletRequest request
+    ) {
+        HttpSession session = request.getSession();
+        String usernickname = (String) session.getAttribute("usernickname");
+
+        try {
+            ChatRoomGetData chatRoomGetData = chatroomMapperInter.getRoom(chatroomnum);
+
+            // 이하 동일한 코드
+            if (chatRoomGetData == null || (!chatRoomGetData.getApplyusernickname().equals(usernickname) && !chatRoomGetData.getProductusernickname().equals(usernickname))
+            ) {
+                return new ChatRoomGetData();
+            }
+            return chatRoomGetData;
+        } catch (Exception e) {
+            // 적절한 예외 처리 로직 추가
+            throw new RuntimeException("Error getting chat room data", e);
+        }
+
     }
 
 
