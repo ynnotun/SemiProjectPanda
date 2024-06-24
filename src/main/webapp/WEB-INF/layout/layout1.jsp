@@ -6,8 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>PANDA</title>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <link href="/image/icon.png" rel="shortcut icon" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
@@ -288,6 +289,7 @@
     <input type="hidden" id="roomId" value="">
     <div id="chat-head">
         <div id="chat-head-title">글 제목이 뜰거임</div>
+        <div id="chat-head-member"></div>
 
         <div class="absolute right-3 top-3 chat-close" id="chatting-close">
             <span class="material-symbols-outlined">
@@ -334,7 +336,28 @@
                 // 서버에서 반환된 ChatroomPrintDto 목록 처리
                 // href="/chatting/\${chatroom.chatroomnum}"
                 data.forEach(chatroom => {
-                    s += `
+                    if (chatroom.applyusernickname === "${sessionScope.usernickname}") {
+                        s += `
+                    <a class="hover:bg-gray-100 p-2 flex items-center gap-2 transition-colors hover:bg-muted" onclick="chatStart(\${chatroom.chatroomnum})">
+                      <span class="relative flex shrink-0 overflow-hidden rounded-full border w-12 h-12">
+                        <img class="aspect-square h-full w-full" alt="Chatroom Image"
+                             src="https://kr.object.ncloudstorage.com/semi/panda/\${chatroom.productuserprofile}"/>
+                      </span>
+                        <div class="flex-1 grid gap-1">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-base font-medium">\${chatroom.productusernickname}</h3>
+                                <span class="text-xs text-muted-foreground truncate w-2/3 text-right">
+                                    \${chatroom.productaddress}
+                                </span>
+                            </div>
+                            <p class="text-sm text-muted-foreground truncate">
+                                \${chatroom.chatroomname}
+                            </p>
+                        </div>
+                    </a>
+                    `;
+                    } else {
+                        s += `
                     <a class="hover:bg-gray-100 p-2 flex items-center gap-2 transition-colors hover:bg-muted" onclick="chatStart(\${chatroom.chatroomnum})">
                       <span class="relative flex shrink-0 overflow-hidden rounded-full border w-12 h-12">
                         <img class="aspect-square h-full w-full" alt="Chatroom Image"
@@ -353,11 +376,7 @@
                         </div>
                     </a>
                     `;
-                    console.log(`채팅방 번호: \${chatroom.chatroomnum}`);
-                    console.log(`채팅방 이름: \${chatroom.chatroomname}`);
-                    console.log(`상품 주소: \${chatroom.productaddress}`);
-                    console.log(`신청자 닉네임: \${chatroom.applyusernickname}`);
-                    console.log(`신청자 프로필: \${chatroom.applyprofile}`);
+                    }
                 });
                 listArea.innerHTML = s;
                 document.getElementsByClassName("chat-symbol")[0].style.transform = "scale(0) translateY(-100%)";
@@ -375,11 +394,28 @@
     })
 
     function chatStart(chatRoom) {
-        document.getElementById("chattingArea").style.left = "30px";
-        ws = new WebSocket("ws://" + location.host + "/chatroom/" + chatRoom);
-        document.getElementById("chating").innerHTML = "";
-        document.getElementById("roomId").value = chatRoom;
-        wsEvt(chatRoom);
+        fetch(`/chat/name?chatroomnum=` + chatRoom)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("chattingArea").style.left = "30px";
+                ws = new WebSocket("ws://" + location.host + "/chatroom/" + chatRoom);
+                document.getElementById("chating").innerHTML = "";
+                document.getElementById("roomId").value = chatRoom;
+                wsEvt(chatRoom);
+                document.getElementById("chat-head-title").innerHTML =
+                    `<a href="/product/detail?productnum=\${data.productnum}">\${data.chatroomname}</a>`;
+                if (data.applyusernickname === "${sessionScope.usernickname}") {
+                    document.getElementById("chat-head-member").innerText = `\${data.productusernickname}님과 채팅`;
+                } else {
+                    document.getElementById("chat-head-member").innerText = `\${data.applyusernickname}님과 채팅`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching chat log:', error);
+                alert("접속 실패")
+                window.location.reload()
+            });
+
     }
 
     document.getElementById("chatting-close").addEventListener("click", function () {
@@ -387,8 +423,6 @@
         document.getElementById("sessionId").value = "";
         document.getElementById("roomId").value = "";
         ws.close();
-
-
     })
 </script>
 
@@ -436,8 +470,8 @@
                             `
                             <%--                   내 채팅 --%>
                                     <div class="flex items-start gap-3 justify-end">
-                                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">
-                                            <p class="font-medium">\${d.userNickName}</p>
+                                        <div class="bg-gray-200 text-gray-900 px-3 py-2 rounded-lg max-w-[75%]">
+                                            <!--<p class="font-medium">\${d.userNickName}</p>-->
                                             <p>\${d.msg}</p>
                                         </div>
                                         <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
@@ -462,8 +496,8 @@
                                                    onclick="location.href='/mypage?usernum=\${d.usernum}'"/>
                                           </span>
                                         </span>
-                                        <div class="bg-[#4CAF50] text-white px-4 py-2 rounded-lg max-w-[75%] relative">
-                                            <p class="font-medium">\${d.userNickName}</p>
+                                        <div class="bg-[#4CAF50] text-white px-3 py-2 rounded-lg max-w-[75%] relative">
+                                            <!--<p class="font-medium">\${d.userNickName}</p>-->
                                             <p>\${d.msg}</p>
                                         </div>
                                     </div>
@@ -480,9 +514,10 @@
 
         document.addEventListener("keypress", function (e) {
             if (e.keyCode == 13) { //enter press
-                if ($("#chatting").val().length > 0 || $("#roomId").val().length > 0) {
-                    send();
+                if ($("#chatting").val().length === 0 || $("#roomId").val().length === 0) {
+                    return;
                 }
+                send();
             }
         });
 
@@ -494,8 +529,8 @@
                         `
                 <%--                    내 채팅--%>
                     <div class="flex items-start gap-3 justify-end">
-                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">
-                            <p class="font-medium">\${chat.usernickname}</p>
+                        <div class="bg-gray-200 text-gray-900 px-3 py-2 rounded-lg max-w-[75%]">
+
                             <p>\${chat.chattingmessage}</p>
                         </div>
                         <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
@@ -519,8 +554,8 @@
                                    onclick="location.href='/mypage?usernum=\${chat.sendusernum}'"/>
                           </span>
                         </span>
-                        <div class="bg-[#4CAF50] text-white px-4 py-2 rounded-lg max-w-[75%] relative">
-                            <p class="font-medium">\${chat.usernickname}</p>
+                        <div class="bg-[#4CAF50] text-white px-3 py-2 rounded-lg max-w-[75%] relative">
+
                             <p>\${chat.chattingmessage}</p>
 
                         </div>
@@ -536,17 +571,17 @@
 
 
     function send() {
-            let roomid = $("#roomId").val()
-            var option = {
-                type: "message",
-                roomNumber: roomid,
-                usernum: ${sessionScope.usernum},
-                userProfile: "${sessionScope.userprofileimage}",
-                userNickName: "${sessionScope.usernickname}",
-                msg: $("#chatting").val()
-            }
-            ws.send(JSON.stringify(option))
-            $('#chatting').val("");
+        let roomid = $("#roomId").val()
+        var option = {
+            type: "message",
+            roomNumber: roomid,
+            usernum: ${sessionScope.usernum},
+            userProfile: "${sessionScope.userprofileimage}",
+            userNickName: "${sessionScope.usernickname}",
+            msg: $("#chatting").val()
+        }
+        ws.send(JSON.stringify(option))
+        $('#chatting').val("");
     }
 </script>
 
