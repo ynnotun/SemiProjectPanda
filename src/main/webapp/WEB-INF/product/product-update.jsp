@@ -1,10 +1,3 @@
-<%@ page import="org.example.semiprojectpanda.dto.ProductImageDto" %><%--
-  Created by IntelliJ IDEA.
-  User: minseok
-  Date: 24. 6. 13.
-  Time: 오전 10:33
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -32,15 +25,13 @@
 
 </head>
 
-<%--<c:set var="stpath" value="https://kr.object.ncloudstorage.com/semi/panda"></c:set>--%>
-
 <body>
 <!-- 경고 모달 -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">내 상품에 대한 사진이 없어요.</h5>
+                <h2 class="modal-title" id="staticBackdropLabel" style="font-size: 20px; font-weight: bold;">내 상품에 대한 사진이 없어요.</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -59,7 +50,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="toomanyimagesLabel">사진이 너무 많습니다.</h5>
+                <h2 class="modal-title" id="toomanyimagesLabel">사진이 너무 많습니다.</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -107,7 +98,7 @@
                 <!-- 사진 여러장 업로드 + 미리보기 -->
                 <div>
                     <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        Photos : //로직 오류 있습니다. 사진 변경없이 업데이트하려면 기존사진을 업로드 해주세요.//
+                        Photos
                     </label>
                     <!-- 사진 업로드와 미리보기 -->
                     <div class="mt-0 flex items-start gap-2">
@@ -132,16 +123,16 @@
                         </button>
 
                         <!-- 사진 업로드 전달 -->
-                        <input type="file" id="file-input" name="productImages" accept="image/*" multiple required class="hidden">
+                        <input type="file" id="file-input" name="productImages" accept="image/*" multiple <%--required--%> class="hidden">
 
                         <!-- 사진 미리보기 -->
                         <div id="preview" class="mt-0 flex items-start gap-2">
-                            <c:forEach var="image" items="${productImages}">
-                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${image.imagefilename}"
-                                     class="h-48 w-48 object-cover rounded-md border">
-                            </c:forEach>
+                            <%--<c:forEach var="file" items="${uploadedFiles}">
+                                <img src="${file.src}"
+                                     class="h-48 w-48 object-cover rounded-md border cursor-pointer"
+                                     data-filename="${file.name}">
+                            </c:forEach>--%>
                         </div>
-
                     </div>
                 </div>
 
@@ -238,7 +229,7 @@
                             <div class="bg-green-50 text-green-500 px-3 py-1 rounded-full flex items-center gap-1">
                                     ${hashtag.hashtagname}
                                 <button type="button" class="text-green-500" onclick="removeHashtag('${hashtag.hashtagname}')">
-                                    <%--&times;--%>
+                                        <%--&times;--%>
                                 </button>
                             </div>
                         </c:forEach>
@@ -291,6 +282,34 @@
         const modalTooManyImages = new bootstrap.Modal(document.getElementById('toomanyimages'));
         const productForm = document.getElementById('productForm');
         let uploadedFiles = [];
+        let deletedImages = []; // 삭제된 이미지를 추적하는 배열
+
+        // 기존 이미지들을 배열에 추가
+        <c:forEach var="image" items="${productImages}">
+        uploadedFiles.push({
+            name: '${image.imagefilename}',
+            src: 'https://kr.object.ncloudstorage.com/semi/panda/${image.imagefilename}'
+        });
+        </c:forEach>
+
+        // 기존 이미지를 미리보기 섹션에 렌더링
+        uploadedFiles.forEach(file => {
+            const img = document.createElement('img');
+            img.src = file.src;
+            img.classList.add('w-48', 'h-48', 'object-cover', 'rounded', 'border', 'cursor-pointer'); // TailwindCSS 클래스 사용
+            img.dataset.filename = file.name;
+
+            // 클릭 시 미리보기에서 이미지 제거
+            img.addEventListener('click', function() {
+                preview.removeChild(img);
+                // 업로드된 파일 목록에서 해당 파일 제거
+                uploadedFiles = uploadedFiles.filter(uploadedFile => uploadedFile.name !== file.name);
+                // 삭제된 이미지 목록에 추가
+                deletedImages.push(file.name);
+            });
+
+            preview.appendChild(img);
+        });
 
         // 이미지 업로드 버튼 클릭
         uploadButton.addEventListener('click', function () {
@@ -319,16 +338,14 @@
                     // 클릭 시 미리보기에서 이미지 제거
                     img.addEventListener('click', function() {
                         preview.removeChild(img);
-
                         // 업로드된 파일 목록에서 해당 파일 제거
                         uploadedFiles = uploadedFiles.filter(uploadedFile => uploadedFile.name !== file.name);
 
                         // 파일 입력 요소 값 재설정
-                        const dataTransfer = new DataTransfer();
+                        /*const dataTransfer = new DataTransfer();
                         uploadedFiles.forEach(file => dataTransfer.items.add(file));
-                        fileInput.files = dataTransfer.files;
+                        fileInput.files = dataTransfer.files;*/
                     });
-
                     preview.appendChild(img);
                 };
                 reader.readAsDataURL(file);
@@ -341,16 +358,31 @@
             const dataTransfer = new DataTransfer();
             uploadedFiles.forEach(file => dataTransfer.items.add(file));
             fileInput.files = dataTransfer.files;
-
-            fileInput.removeAttribute('required'); // 파일이 선택되면 required 속성 제거
+            //fileInput.removeAttribute('required'); // 파일이 선택되면 required 속성 제거
         });
 
         // 폼 제출 시 이미지 개수 확인
         postItemButton.addEventListener('click', function(event) {
-            if (fileInput.files.length === 0) {
+            if (uploadedFiles.length === 0) {
                 event.preventDefault(); // 폼 제출 방지
                 modal.show(); // 모달 표시
                 fileInput.setAttribute('required', 'required'); // required 속성 추가
+            } else {
+                // 삭제된 이미지를 hidden input에 추가
+                const deletedImagesInput = document.createElement('input');
+                deletedImagesInput.type = 'hidden';
+                deletedImagesInput.name = 'deletedImages';
+                deletedImagesInput.value = JSON.stringify(deletedImages);
+                productForm.appendChild(deletedImagesInput);
+
+                // 업로드된 파일 목록을 hidden input에 추가
+                const dataTransfer = new DataTransfer();
+                uploadedFiles.forEach(file => {
+                    if (file instanceof File) {
+                        dataTransfer.items.add(file);
+                    }
+                });
+                fileInput.files = dataTransfer.files;
             }
         });
 
@@ -446,7 +478,6 @@
         hashtagListInput.value = hashtags.join(',');
     }
 </script>
-
 
 <!-- 주소입력 팝업 api -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- kakao 주소찾기 -->
