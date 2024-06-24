@@ -205,7 +205,7 @@
       });
    }
 
-
+   // 카테고리 별 목록 호출
    function getList(categorynum){
       $.ajax({
          type:"get",
@@ -218,7 +218,8 @@
             } else {
                $.each(data, function (idx, ele) {
                   s += `
-                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm cursor-pointer"
+                             onclick="location.href='${root}/product/detail/\${ele.productnum}'">
                             <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
                             <div class="p-4">
                                 <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
@@ -235,6 +236,14 @@
          }
       });
    }
+
+   // 스크롤 시 목록 불러오기
+   $(window).scroll(function() {
+      if($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
+         currentPage++;
+         getList(currentCategory, currentPage);
+      }
+   });
 </script>
 
 </body>
