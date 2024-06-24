@@ -29,4 +29,9 @@ public class MainService {
     public List<ProductDto> getAllProductByCategorynum(int categorynum){
         return ProductMapperInter.getAllProductByCategorynum(categorynum);
     }
+
+    public List<ProductDto> getProductsByCategory(int categorynum, int offset, int pageSize) {
+        return ProductMapperInter.getProductsByCategory(categorynum, offset, pageSize);
+    }
+
 }

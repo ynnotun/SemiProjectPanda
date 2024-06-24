@@ -16,8 +16,6 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <style>
         html, body, .mainlayout {
-            height: 100%;
-            background-color: black;
         }
         .mainlayout{
             background-color: white;
@@ -70,10 +68,10 @@
 <c:set var="filepath" value="https://kr.object.ncloudstorage.com/semi/panda/"/>
 <body>
 <div class="mainlayout">
-    <div class="header-tile">
+    <div id="header-tile" class="header-tile">
         <tiles:insertAttribute name="header"/>
     </div>
-    <div class="main-tile">
+    <div id="main-tile" class="main-tile">
         <tiles:insertAttribute name="main"/>
     </div>
     <!-- 챗봇버튼 -->
@@ -89,19 +87,18 @@
     <button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">
         <i class="bi bi-caret-up-fill"></i>
     </button>
-    <div class="footer-tile">
+    <div id="footer-tile" class="footer-tile">
         <tiles:insertAttribute name="footer"/>
     </div>
 </div>
 
 <script>
-    let headerTile = document.getElementsByClassName("header-tile")[0];
-    let footerTile = document.getElementsByClassName("footer-tile")[0];
-    let mainTile = document.getElementsByClassName("main-tile")[0];
+    let headerTile = document.getElementById("header-tile");
+    let footerTile = document.getElementById("footer-tile");
+    let mainTile = document.getElementById("main-tile");
 
     let height = headerTile.offsetHeight + footerTile.offsetHeight;
-    mainTile.style.minHeight = `calc(100% - \${height}px)`;
-
+    mainTile.style.minHeight = `calc(100vh - \${height}px)`;
     // 위로 가는 버튼 보임 여부
     window.onscroll = function() {
         var scrollToTopBtn = document.getElementById("scrollToTopBtn");

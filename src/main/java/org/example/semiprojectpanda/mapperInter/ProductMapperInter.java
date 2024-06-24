@@ -130,5 +130,21 @@ public interface ProductMapperInter {
             ORDER BY p.PRODUCTNUM DESC
         """)
     public List<ProductDto> getAllProductByCategorynum(int categorynum);
+
+        @Select("""
+        SELECT p.* , i.imagefilename
+            FROM PRODUCT p
+            JOIN (
+                SELECT productnum, MIN(imagefilename) as imagefilename
+                FROM PRODUCT_IMAGE
+                GROUP BY productnum
+            ) i ON i.productnum = p.productnum
+            WHERE p.categorynum = #{categorynum}
+            LIMIT #{pageSize} OFFSET #{offset}
+            ORDER BY p.PRODUCTNUM DESC
+        """)
+    public List<ProductDto> getProductsByCategory(int categorynum, int offset, int pageSize);
+
+
 }
 
