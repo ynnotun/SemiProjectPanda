@@ -61,6 +61,7 @@ public class UpdateController {
     public String submitProduct(
             @ModelAttribute ProductDto productDto,
             @RequestParam("productImages") List<MultipartFile> productImages,
+            @RequestParam(value = "deletedImages", required = false) String deletedImagesJson,
             @RequestParam("hashtaglist") String hashtaglist,
             HttpServletRequest request
     )
@@ -68,23 +69,31 @@ public class UpdateController {
         //수정 폼이 제출된 상품의 상품번호
         int productnum = productDto.getProductnum();
 
-        //product에 대한 update
+        // product에 대한 update
         productUpdateService.updateProduct(productDto);
 
-        if(!productImages.isEmpty())
-        {
-            //1.1 버켓에 업로드된 기존 이미지 파일들 삭제
-            List<ProductImageDto> existImages = productUpdateService.getAllProductImages(productnum);
-            for(ProductImageDto existImage : existImages) {
-                storageService.deleteFile(bucketName, folderName, existImage.getImagefilename());
+        // 삭제된 이미지 처리
+        if (deletedImagesJson != null && !deletedImagesJson.isEmpty()) {
+            List<String> deletedImages = Arrays.asList(deletedImagesJson.replace("[", "").replace("]", "").replace("\"", "").split(","));
+            for (String imageName : deletedImages) {
+                // 버켓에서 이미지 삭제
+                storageService.deleteFile(bucketName, folderName, imageName.trim());
+                // DB에서 이미지 행 삭제
+                productUpdateService.deleteProductImageByFilename(imageName.trim());
+            }
+        }
+
+        // 새로운 이미지 파일이 업로드된 경우 처리
+        if (!productImages.isEmpty() && productImages.get(0).getSize() > 0) {
+            // 기존 이미지 삭제
+            List<ProductImageDto> existingImages = productUpdateService.getAllProductImages(productnum);
+            for (ProductImageDto image : existingImages) {
+                storageService.deleteFile(bucketName, folderName, image.getImagefilename());
+                productUpdateService.deleteProductImageByFilename(image.getImagefilename());
             }
 
-            //1.2 prouctimage 테이블에 저장된 기존 이미지 행들 삭제
-            productUpdateService.deleteAllProductImages(productnum);
-
-            //1.3 새로 입력된 파일들 버켓에 업로드 + productimage 테이블에 삽입
-            for (MultipartFile image : productImages)
-            {
+            // 새로 입력된 파일들 버켓에 업로드 + productimage 테이블에 삽입
+            for (MultipartFile image : productImages) {
                 if (!image.isEmpty()) {
                     String filename = storageService.uploadFile(bucketName, folderName, image);
                     // DB에 이미지 정보 저장
@@ -97,7 +106,10 @@ public class UpdateController {
         }
 
         //업데이트 결과 해시태그 행 삽입
-        // 기존 해시태그 업데이트 로직
+        if(hashtaglist.isEmpty())
+        {
+            productUpdateService.deleteAllHashtags(productnum);
+        }
         if (hashtaglist != null && !hashtaglist.isEmpty()) {
             productUpdateService.deleteAllHashtags(productnum);
             List<String> hashtags = new ArrayList<>(Arrays.asList(hashtaglist.split(",")));

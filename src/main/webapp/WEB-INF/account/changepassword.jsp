@@ -7,6 +7,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        .error-border {
+            border: 2px solid red !important;
+        }
+        .check-border{
+            border: 2px solid #45a049 !important;
+        }
+    </style>
 </head>
 <body>
 <div class="mx-auto max-w-md space-y-6 py-12">
@@ -70,6 +79,21 @@
     </div>
 </div>
 <script>
+    $(document).ready(function () {
+        $('#new-password, #confirm-password').on('keyup', function () {
+            var password = $('#new-password').val();
+            var confirmPassword = $('#confirm-password').val();
+
+            if (password !== confirmPassword) {
+                $('#confirm-password').addClass('error-border');
+            } else {
+                $('#confirm-password').removeClass('error-border');
+                $('#confirm-password').addClass('check-border');
+            }
+        });
+    });
+
+
     $(document).ready(function () {
         const urlParams = new URLSearchParams(window.location.search);
         const usernum = urlParams.get('usernum');
