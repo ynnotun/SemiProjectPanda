@@ -33,8 +33,8 @@
         }
         #pay{
             position: fixed;
-            bottom: 120px;
-            right: 30px;
+            bottom: 180px;
+            left: 30px;
             width: 70px;
             height: 50px;
             background-color: #4CAF50;
