@@ -195,11 +195,17 @@
         stompClient.connect({}, function (frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
+            // 기본 안내멘트 추가
+            showMessage("판다챗봇에 오신 것을 환영합니다!<br>" +
+                "무엇을 도와드릴까요?<br><br>" +
+                "<button class='btn btn-info quick-btn' style='background-color: #4CAF50; border: 0px; margin-right: 10px;' data-question='거래'>거래방법</button>" +
+                "<button class='btn btn-info quick-btn' style='background-color: #4CAF50; border: 0px; margin-right: 10px;' data-question='배송'>배송관련</button>" +
+                "<button class='btn btn-info quick-btn' style='background-color: #4CAF50; border: 0px; margin-right: 10px;' data-question='사기'>사기문의</button>", "message-received");
+
             stompClient.subscribe('/topic/public', function (message) {
                 showMessage(message.body, "message-received"); // 서버에 메시지 전달 후 리턴받는 메시지
                 // 채팅 내용이 갱신될 때 스크롤을 가장 아래로 이동
-                var conversation = $("#conversation");
-                conversation.scrollTop(conversation[0].scrollHeight);
+                scrollToBottom();
             });
         });
     }
@@ -219,9 +225,15 @@
 
         stompClient.send("/app/sendMessage", {}, JSON.stringify(message)); // 서버에 보낼 메시지
 
-        // 채팅 내용이 갱신될 때 스크롤을 가장 아래로 이동
-        var conversation = $("#conversation");
-        conversation.scrollTop(conversation[0].scrollHeight);
+        //스크롤을 가장 아래로 이동
+        scrollToBottom();
+    }
+
+    function sendQuickMessage(question) {
+        showMessage(question, "message-sent");
+        stompClient.send("/app/sendMessage", {}, JSON.stringify(question));
+        //스크롤을 가장 아래로 이동
+        scrollToBottom();
     }
 
     function showMessage(message, messageClass) {
@@ -236,6 +248,13 @@
             $("#communicate").append(
                 "<tr class='sent'><td class='message " + messageClass + "'>" + message + "</td></tr>");
         }
+        //스크롤을 가장 아래로 이동
+        scrollToBottom();
+    }
+
+    function scrollToBottom() {
+        var conversation = $("#conversation");
+        conversation.scrollTop(conversation.prop("scrollHeight"));
     }
 
     $(function () {
@@ -245,6 +264,11 @@
         $("#connect").click(function() { connect(); });
         $("#disconnect").click(function() { disconnect(); });
         $("#send").click(function() { sendMessage(); });
+
+        $(document).on('click', '.quick-btn', function() {
+            let question = $(this).data('question');
+            sendQuickMessage(question);
+        });
     });
 
 </script>
