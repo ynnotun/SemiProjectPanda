@@ -41,6 +41,9 @@ public class MypageController {
     @Autowired
     private ProductImageMapperInter productImageMapperInter;
 
+    @Autowired
+    private PayService payService;
+
 
     @GetMapping("/mypage")
     public String mypage(@RequestParam int usernum, Model model) {
@@ -83,6 +86,16 @@ public class MypageController {
         model.addAttribute("reviewCount", reviewCount);
         model.addAttribute("reviews", reviews);
         model.addAttribute("userGrade", userGrade);
+
+
+        //포인트
+        Object usernumObj = usernum;
+        if (usernumObj == null) {
+            model.addAttribute("pointamount", 0);
+            return "pay/payment";
+        }
+        int pointamount = payService.getPointAmountByUsernum(usernum);
+        model.addAttribute("pointamount", pointamount);
 
 
         return "account/mypage";

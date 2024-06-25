@@ -162,6 +162,9 @@
                                 <span class="sr-only">Settings</span>
                             </button>
                         </c:if>
+                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
+                            <span>나의 포인트 : </span> ${pointamount}P
+                        </div>
                     </div>
                 </div>
 

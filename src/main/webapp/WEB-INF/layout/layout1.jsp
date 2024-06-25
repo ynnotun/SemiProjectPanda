@@ -82,9 +82,11 @@
     </button>
 
     <!-- 결제버튼 -->
+    <c:if test="${sessionScope.usernum != null}">
     <button onclick="location.href='./pay'" id="pay">
-        <p>결제</p>
+        <p>PAY</p>
     </button>
+    </c:if>
     <!-- 위로 가는 버튼 -->
     <button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">
         <i class="bi bi-caret-up-fill"></i>
