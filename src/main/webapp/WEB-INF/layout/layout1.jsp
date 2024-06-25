@@ -37,17 +37,6 @@
             justify-content: center;
         }
 
-        #pay {
-            position: fixed;
-            bottom: 180px;
-            left: 30px;
-            width: 70px;
-            height: 50px;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 20px;
-        }
-
         /* 위로 가는 버튼 */
         .scroll-to-top {
             position: fixed;
@@ -88,13 +77,6 @@
     <button onclick="chatbotShow()" id="bot">
         <img src="https://kr.object.ncloudstorage.com/semi/panda/logo.png">
     </button>
-
-    <!-- 결제버튼 -->
-    <c:if test="${sessionScope.usernum != null}">
-    <button onclick="location.href='./pay'" id="pay">
-        <p>PAY</p>
-    </button>
-    </c:if>
 
     <!-- 위로 가는 버튼 -->
     <button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">

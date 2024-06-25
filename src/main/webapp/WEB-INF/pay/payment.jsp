@@ -108,11 +108,13 @@
 
         function createOrderId(user_no) {
             const randomLetters = generateRandomUppercaseLetters(5);
-            return randomLetters + user_no;
+            const timestamp = new Date().getTime(); // 타임스탬프 추가로 고유성 보장
+            return randomLetters + timestamp;
         }
     </script>
 </head>
 <body>
+
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
