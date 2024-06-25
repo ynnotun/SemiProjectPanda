@@ -127,7 +127,7 @@
                     <label style="font-weight: bold; min-width: 100px;">나의 포인트</label>
                     <h2>${pointamount}원</h2>
                 </div>
-                <input type="" value="${sessionScope.usernickname}">
+                <input type="hidden" value="${sessionScope.usernickname}">
                 <div style="display: flex; margin-bottom: 15px;">
                     <label style="font-weight: bold; min-width: 100px; margin-right: 50px;">판매자 닉네임</label>
                     <input id="pointseller" name="seller" style="width: 200px;" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"/>
