@@ -7,170 +7,40 @@
     <meta charset="utf-8">
     <title>Hello WebSocket</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/main.css" rel="stylesheet">
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/app.js" charset="UTF-8"></script>
     <style>
-        body {
-            background-color: #f5f5f5;
-            font-family: 'Noto Sans KR', sans-serif;
-        }
 
-        #main-content {
-            max-width: 940px;
-            padding: 2em 3em;
-            margin: 0 auto 20px;
-            background-color: #fff;
-            border: 1px solid #e5e5e5;
-            border-radius: 5px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        #conversation {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 1em;
-            padding: 1em;
-            border: 1px solid #e5e5e5;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-
-        .message {
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            border-radius: 20px;
-            display: inline-block;
-            max-width: 80%;
-        }
-
-        #send {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .form-inline {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .form-group {
-            flex: 1;
-            margin-right: 10px;
-        }
-
-        .form-control {
-            width: 100%;
-        }
-
-        .btn {
-            white-space: nowrap;
-            padding: 10px 20px;
-            border-radius: 20px;
-        }
-
-        .received-message-content {
-            display: flex;
-            align-items: center;
-        }
-
-        .message-image {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        .message-text {
-            max-width: 70%;
-            border-radius: 20px;
-            background-color: #e0f7fa;
-            border: 1px solid #b2ebf2;
-        }
-
-        .sent {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .received {
-            display: flex;
-            justify-content: flex-start;
-        }
-
-        .message-received {
-            background-color: #e0f7fa;
-            border: 1px solid #b2ebf2;
-        }
-
-        .message-sent {
-            background-color: #e0f2f1;
-            border: 1px solid #b2dfdb;
-        }
-
-        #panda-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 5px 5px 0 0;
-        }
-
-        #panda-header img {
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        #chat-input-container {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        #chat-input {
-            display: flex;
-            align-items: center;
-        }
     </style>
 </head>
 <body>
-<div id="main-content" class="container" style="margin-top: 70px;">
-    <div id="panda-header">
-        <div style="display: flex; align-items: center;">
-            <img src="../image/panda.png" alt="Panda Logo">
-            <h3>판다와 대화하기</h3>
-        </div>
-        <div>
-            <button id="connect" class="btn btn-default" type="submit" style="background-color: #4CAF50">연결</button>
-            <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled" style="background-color: palevioletred">해제</button>
-        </div>
-    </div>
+<div class="" style="">
+    <div class="">
+        <div id="chat-scroll">
+            <div class="flex-1  p-4" id="conversation">
+                <div class="space-y-4 w-full" id="communicate">
 
-    <div class="row">
-        <div class="col-md-12">
-            <div id="conversation">
-                <table class="table">
-                    <tbody id="communicate"></tbody>
-                </table>
+
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row" id="chat-input-container">
-        <div class="col-md-6">
+        <div class="rounded-b-2xl bg-white border-t border-gray-200 p-4 flex items-center" id="">
             <form class="form-inline" id="chat-input">
-                <div class="form-group" style="margin-left: 180px;">
-                    <input type="text" id="msg" class="form-control" placeholder="내용을 입력하세요....">
-                </div>
-                <button id="send" class="btn btn-default" disabled type="submit">
-                    <i class="bi bi-arrow-return-left"></i>
+                <input
+                        class="flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1 bg-gray-100 border-none focus:ring-0 focus:outline-none"
+                        id="msg"
+                        placeholder="Type your message..."
+                />
+                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-[#4CAF50] hover:bg-green-600 text-white ml-2"
+                        onclick="send()" id="send" disabled type="submit">
+                    Send
                 </button>
             </form>
         </div>
     </div>
+
 </div>
 
 <script>
@@ -182,8 +52,7 @@
         $("#send").prop("disabled", !connected);
         if (connected) {
             $("#conversation").show();
-        }
-        else {
+        } else {
             $("#conversation").hide();
         }
         $("#msg").val("");
@@ -198,9 +67,9 @@
             // 기본 안내멘트 추가
             showMessage("판다챗봇에 오신 것을 환영합니다!<br>" +
                 "무엇을 도와드릴까요?<br><br>" +
-                "<button class='btn btn-info quick-btn' style='background-color: #4CAF50; border: 0px; margin-right: 10px;' data-question='거래'>거래방법</button>" +
-                "<button class='btn btn-info quick-btn' style='background-color: #4CAF50; border: 0px; margin-right: 10px;' data-question='배송'>배송관련</button>" +
-                "<button class='btn btn-info quick-btn' style='background-color: #4CAF50; border: 0px; margin-right: 10px;' data-question='사기'>사기문의</button>", "message-received");
+                "<button class='btn btn-info quick-btn' style='background-color: #4CAF50; border: 0; margin-right: 10px;' data-question='거래'>거래방법</button>" +
+                "<button class='btn btn-info quick-btn' style='background-color: #4CAF50; border: 0; margin-right: 10px;' data-question='배송'>배송관련</button>" +
+                "<button class='btn btn-info quick-btn' style='background-color: #4CAF50; border: 0; margin-right: 10px;' data-question='사기'>사기문의</button>", "message-received");
 
             stompClient.subscribe('/topic/public', function (message) {
                 showMessage(message.body, "message-received"); // 서버에 메시지 전달 후 리턴받는 메시지
@@ -220,6 +89,9 @@
 
     function sendMessage() {
         let message = $("#msg").val()
+        if (message.length === 0) {
+            return;
+        }
         showMessage(message, "message-sent");
         $("#msg").val(""); // 메시지를 보낸 후 입력 필드를 비우기
 
@@ -239,14 +111,37 @@
     function showMessage(message, messageClass) {
         if (messageClass === "message-received") {
             $("#communicate").append(
-                "<img src='../image/panda.png' style='width: 40px; height: auto'>"+
-                "<tr class='received'><td class='message " + messageClass + "'>" +
-                "<div class='received-message-content'>" +
-                "<div class='message-text'>" + message + "</div>" +
-                "</div></td></tr>");
+                // "<img src='../image/panda.png' style='width: 40px; height: auto'>" +
+                `
+                <div class="flex items-start gap-3">
+                    <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
+                      <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
+                          <img class="aspect-square h-full w-full" alt="Seller"
+                               src='../image/panda.png'/>
+                      </span>
+                    </span>
+                    <div class="bg-[#4CAF50] text-white px-3 py-2 rounded-lg max-w-[75%] relative">
+                        <p>\${message}</p>
+                    </div>
+                </div>
+                `
+                // +
+                // "<tr class='received'><td class='message " + messageClass + "'>" +
+                // "<div class='received-message-content'>" +
+                // "<div class='message-text'>" + message + "</div>" +
+                // "</div></td></tr>"
+            );
         } else {
             $("#communicate").append(
-                "<tr class='sent'><td class='message " + messageClass + "'>" + message + "</td></tr>");
+                `
+                <div class="flex items-start gap-3 justify-end">
+                    <div class="bg-gray-200 text-gray-900 px-3 py-2 rounded-lg max-w-[75%]">
+                        <p>\${message}</p>
+                    </div>
+                </div>
+                `
+                // "<tr class='sent'><td class='message " + messageClass + "'>" + message + "</td></tr>"
+            );
         }
         //스크롤을 가장 아래로 이동
         scrollToBottom();
@@ -258,14 +153,21 @@
     }
 
     $(function () {
+        connect();
         $("form").on('submit', function (e) {
             e.preventDefault();
         });
-        $("#connect").click(function() { connect(); });
-        $("#disconnect").click(function() { disconnect(); });
-        $("#send").click(function() { sendMessage(); });
+        $("#connect").click(function () {
+            connect();
+        });
+        $("#disconnect").click(function () {
+            disconnect();
+        });
+        $("#send").click(function () {
+            sendMessage();
+        });
 
-        $(document).on('click', '.quick-btn', function() {
+        $(document).on('click', '.quick-btn', function () {
             let question = $(this).data('question');
             sendQuickMessage(question);
         });
