@@ -219,7 +219,7 @@
                $.each(data, function (idx, ele) {
                   s += `
                         <div class="rounded-lg border bg-card text-card-foreground shadow-sm cursor-pointer"
-                             onclick="location.href='${root}/product/detail/\${ele.productnum}'">
+                             onclick="location.href='${root}/product/detail?productnum=\${ele.productnum}'">
                             <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
                             <div class="p-4">
                                 <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
