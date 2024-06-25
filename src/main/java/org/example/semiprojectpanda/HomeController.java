@@ -54,4 +54,18 @@ public class HomeController {
         }
         return products;
     }
+/*
+    @GetMapping("/scroll")
+    @ResponseBody
+    public List<ProductDto> getCategoryProducts(
+            @RequestParam(defaultValue = "1") int currentPage) {
+
+
+        int pageSize = 10;
+        int offset = (page - 1) * pageSize;
+
+        //목록 가져오기
+        List<ProductDto> products = mainService.getProductsByCategory(start, perPage);
+        return products;
+    }*/
 }

@@ -87,13 +87,21 @@
                 <input type="submit" id="search-submit" />
             </form>
 
-                <%-- login 버튼 - 로그인 안하면 보임 --%>
+
 <c:if test="${sessionScope.loginok==null}">
+                <%-- login 버튼 - 로그인 안하면 보임 --%>
                 <button
                         class="inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-[#4CAF50] hover:bg-[#43a047] text-white"
                         type="submit" onclick="location.href='${root}/login'">
-                    <i class="bi bi-box-arrow-left"></i>
+                    <i class="bi bi-box-arrow-left inline-flex items-center justify-center"></i>
                     <span>Login</span>
+                </button>
+                <%-- login 버튼 - 로그인 안하면 보임 --%>
+                <button
+                        class="inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-[#4CAF50] hover:bg-[#43a047] text-white"
+                        type="submit" onclick="location.href='${root}/signup'">
+                    <i class="bi bi-person-plus-fill inline-flex items-center justify-center"></i>
+                    <span>Signup</span>
                 </button>
 </c:if>
 <c:if test="${sessionScope.loginok!=null}">
