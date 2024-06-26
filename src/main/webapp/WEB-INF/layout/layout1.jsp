@@ -713,7 +713,7 @@
                     <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#fff] text-white flex items-center justify-center border-0 border-[#4CAF50]">
                       <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
                           <img class="aspect-square h-full w-full" alt="Seller"
-                               src='../image/panda.png'/>
+                               src='/image/panda.png'/>
                       </span>
                     </span>
                     <div class="bg-[#4CAF50] text-white px-3 py-2 rounded-lg max-w-[75%] relative">
@@ -750,7 +750,7 @@
 
     $(function () {
         connect();
-        $("form").on('submit', function (e) {
+        $("#chatbot-send-form").on('submit', function (e) {
             e.preventDefault();
         });
         $("#connect").click(function () {
