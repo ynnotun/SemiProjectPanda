@@ -30,9 +30,12 @@ public class MainService {
         return ProductMapperInter.getAllProductByCategorynum(categorynum);
     }
 
-/*    public List<ProductDto> getProductsByCategory(int start, int perPage) {
+    public List<ProductDto> getAllProducts(int start, int perPage) {
 
-        return ProductMapperInter.getProductsByCategory(start, perPage);
-    }*/
+        return ProductMapperInter.getAllProducts(start, perPage);
+    }
 
+    public List<ProductDto> getAllProductsByCategorynum(int categorynum,int start, int perPage) {
+        return ProductMapperInter.getAllProductsByCategorynum(categorynum, start, perPage);
+    }
 }

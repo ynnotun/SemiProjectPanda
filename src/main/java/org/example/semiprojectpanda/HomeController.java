@@ -34,38 +34,27 @@ public class HomeController {
             Model model
     ) {
         List<CategoryDto> categories = productUpdateService.getAllCategories();
-        List<ProductDto> products = mainService.getAllProduct();
 
         model.addAttribute("categories", categories);
-        model.addAttribute("products", products);
         return "layout/main";
     }
 
-    @GetMapping("/category")
-    @ResponseBody
-    public List<ProductDto> category(
-            @RequestParam int categorynum
-    ){
-        List<ProductDto> products = null;
-        if (categorynum == 0){
-            products = mainService.getAllProduct();
-        } else {
-            products = mainService.getAllProductByCategorynum(categorynum);
-        }
-        return products;
-    }
-/*
     @GetMapping("/scroll")
     @ResponseBody
     public List<ProductDto> getCategoryProducts(
-            @RequestParam(defaultValue = "1") int currentPage) {
+            @RequestParam int categorynum,
+            @RequestParam int page) {
 
+        int perPage = 4; // 한 페이지에 보여줄 아이템 수
+        int start = (page - 1) * perPage;
 
-        int pageSize = 10;
-        int offset = (page - 1) * pageSize;
+        List<ProductDto> products = null;
+        if (categorynum == 0){
+            products = mainService.getAllProducts(start, perPage);
+        } else {
+            products = mainService.getAllProductsByCategorynum(categorynum, start, perPage);
+        }
 
-        //목록 가져오기
-        List<ProductDto> products = mainService.getProductsByCategory(start, perPage);
         return products;
-    }*/
+    }
 }
