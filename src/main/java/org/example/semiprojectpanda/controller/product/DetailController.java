@@ -1,7 +1,11 @@
 package org.example.semiprojectpanda.controller.product;
 
 import lombok.RequiredArgsConstructor;
-import org.example.semiprojectpanda.dto.*;
+import org.example.semiprojectpanda.dto.ChatLogDto;
+import org.example.semiprojectpanda.dto.ProductDto;
+import org.example.semiprojectpanda.dto.UserDto;
+import org.example.semiprojectpanda.dto.WishDto;
+import org.example.semiprojectpanda.mapperInter.ProductMapperInter;
 import org.example.semiprojectpanda.mapperInter.UserMapperInter;
 import org.example.semiprojectpanda.service.*;
 import org.springframework.http.HttpStatus;
@@ -25,6 +29,8 @@ public class DetailController {
     private final WishService wishService;
     private final UserMapperInter userMapperInter;
     private final ReviewService reviewService;
+    private final ProductMapperInter productMapperInter;
+    private final ProductService productService;
 
 
     @Transactional
@@ -82,6 +88,31 @@ public class DetailController {
         }
 
         return result;
+    }
+
+
+    @Transactional
+    @PostMapping("/product/delete")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> delete(
+            @RequestParam("productnum") int productnum,
+            HttpServletRequest request
+    ) {
+        Map<String, String> result = new HashMap<>();
+        HttpSession session = request.getSession();
+        var usernum = session.getAttribute("usernum");
+        if (usernum == null) {
+            result.put("status", "user not logged in");
+            return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+        }
+        int check = productMapperInter.checkProductNum(productnum, (Integer) usernum);
+        if (check != 1) {
+            result.put("status", "product not exist");
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        detailService.deleteProduct(productnum, (Integer) usernum);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 
