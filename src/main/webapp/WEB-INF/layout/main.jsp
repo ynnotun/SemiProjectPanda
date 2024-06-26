@@ -176,13 +176,13 @@
       <button class="slider-button next" onclick="slide(1)">&#10095;</button>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6" id="scroll">
          <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap"
-            onclick="getList(0)">
+            onclick="changeCategory(0);">
             <i class="bi bi-justify" style="font-size: 2em;"></i>
             <span>ALL</span>
          </a>
          <c:forEach var="ele" items="${categories}">
             <a class="flex flex-col items-center gap-2 hover:text-[#4CAF50] whitespace-nowrap"
-               onclick="getList(${ele.categorynum})">
+               onclick="changeCategory(${ele.categorynum});">
                <i class="${ele.categoryicon}" style="font-size: 2em;"></i>
                <span>${ele.categoryname}</span>
             </a>
@@ -221,7 +221,9 @@
    </div>
 </div>
 <script>
-
+   let currentPage = 1;
+   let loading = false;
+   let currentCategory = 0;
    // 슬라이드 버튼 기능
    function slide(direction) {
       const scrollContainer = document.getElementById('scroll');
@@ -233,21 +235,26 @@
       });
    }
 
-   // 카테고리 별 목록 호출
-   function getList(categorynum){
+   function getList(categorynum, page){
+      if (loading) return;
+      loading = true;
+
       $.ajax({
-         type:"get",
-         url:"${root}/category?categorynum="+categorynum,
-         dataType:"json",
-         success:function (data){
-            let s="";
+         type: "get",
+         url: `${root}/scroll`,
+         data: { categorynum: categorynum, page: page },
+         dataType: "json",
+         success: function(data){
+            let s = "";
             if(data.length === 0){
-               s = `<div class="w-full text-base text-gray-500">해당 카테고리에 아직 상품이 없어요.</div>`;
+               if(page === 1) {
+                  s = `<div class="w-full text-base text-gray-500">해당 카테고리에 아직 상품이 없어요.</div>`;
+                  $("#item-seciton").html(s);
+               }
             } else {
-               $.each(data, function (idx, ele) {
+               $.each(data, function(idx, ele) {
                   s += `
-                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm cursor-pointer"
-                             onclick="location.href='${root}/product/detail?productnum=\${ele.productnum}'">
+                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                             <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
                             <div class="p-4">
                                 <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
@@ -259,19 +266,36 @@
                         </div>
                     `;
                });
+               if(page === 1) {
+                  $("#item-seciton").html(s);
+               } else {
+                  $("#item-seciton").append(s);
+               }
             }
-            $("#item-seciton").html(s);
+            loading = false;
+         },
+         error: function() {
+            loading = false;
          }
       });
    }
 
-   // 스크롤 시 목록 불러오기
    $(window).scroll(function() {
       if($(window).scrollTop() + $(window).height() >= $(document).height() - 200) {
          currentPage++;
          getList(currentCategory, currentPage);
       }
    });
+
+   function changeCategory(categorynum) {
+      currentCategory = categorynum;
+      currentPage = 1;
+      getList(categorynum, currentPage);
+   }
+
+   getList(0,1);
+
+
 </script>
 
 </body>
