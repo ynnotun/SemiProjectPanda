@@ -110,7 +110,8 @@ public class DetailController {
             result.put("status", "product not exist");
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
-        detailService.deleteProduct(productnum, (Integer) usernum);
+
+        detailService.deleteProduct((Integer) usernum, productnum);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -153,21 +154,37 @@ public class DetailController {
 
         HttpSession session = request.getSession();
         Integer usernum = (Integer) session.getAttribute("usernum");
-        if (usernum == null || !usernum.equals(productUserNum)) {
+        if (usernum == null) {
             result.put("status", "fail");
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
+        ProductDto productDto = productMapperInter.getProductByProductnum(productnum);
 
         switch (action) {
             case "reservation":
-                chatService.chatReserve(usernum, productnum, customerNum);
-                break;
+                if (productDto.getUsernum().equals(usernum)) {
+                    chatService.chatReserve(usernum, productnum, customerNum);
+                    break;
+                } else {
+                    result.put("status", "fail");
+                    return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+                }
             case "finish":
-                chatService.chatComplete(usernum, productnum, customerNum);
-                break;
+                if (productDto.getUsernum().equals(usernum)) {
+                    chatService.chatComplete(usernum, productnum, customerNum);
+                    break;
+                } else {
+                    result.put("status", "fail");
+                    return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+                }
             case "cancel":
-                chatService.chatReserveCancel(usernum, productnum, customerNum);
-                break;
+                if (productDto.getUsernum().equals(usernum) || productDto.getCustomernum().equals(usernum)) {
+                    chatService.chatReserveCancel(usernum, productnum, customerNum);
+                    break;
+                }else {
+                    result.put("status", "fail");
+                    return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+                }
             default:
                 result.put("status", "fail");
                 return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
@@ -187,23 +204,6 @@ public class DetailController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Transactional
     @PostMapping("/product/login")
     public ResponseEntity<Map<String, String>> loginAction(
@@ -215,7 +215,7 @@ public class DetailController {
         session.setAttribute("usernum", usernum);
         session.setAttribute("usernickname", userDto.getUsernickname());
         session.setAttribute("userprofileimage", userDto.getUserprofileimage());
-        session.setAttribute("loginok","yes");
+        session.setAttribute("loginok", "yes");
         return ResponseEntity.ok(Map.of("message", "Success"));
     }
 

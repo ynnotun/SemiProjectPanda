@@ -61,8 +61,10 @@
             <label class="block text-sm font-medium text-gray-700 ">프로필 사진 변경</label>
             <div class="mt-1 grid grid-cols-3 gap-3">
                 <div class="relative">
-                    <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
-                        <img id="photo" src="https://kr.object.ncloudstorage.com/semi/panda/${userDto.userprofileimage}" alt="Profile 1" class="h-full w-full object-cover"/>
+                    <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" style="border: 1px solid green">
+                        <img id="photo" src="https://kr.object.ncloudstorage.com/semi/panda/${userDto.userprofileimage}" alt="Profile 1" class="h-full w-full object-cover"
+                             style="aspect-ratio: 32 / 32; object-fit: cover;"
+                        />
                         <input type="file" name="myfile" id="photoupload" style="display: none;">
                     </div>
                     <div class="absolute inset-0 flex items-center justify-center bg-green-500 bg-opacity-75 opacity-0 transition-opacity hover:opacity-100">
@@ -71,7 +73,7 @@
                 </div>
             </div>
             <div class="mt-3">
-                <button onclick="$('#photoupload').trigger('click')" type="file" class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                <button onclick="$('#photoupload').trigger('click')" type="button" class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 h-5 w-5">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="17 8 12 3 7 8"></polyline>

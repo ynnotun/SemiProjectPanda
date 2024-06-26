@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title></title>
     <style>
+        pre{
+            overflow: auto;
+            white-space: pre-wrap; /* pre tag내에 word wrap */
+        }
 
 
         /*하트스타일*/
@@ -311,18 +315,15 @@
 
                         </div>
                     </a>
-                    <div class="prose max-w-none">
+                    <div class="prose max-w-none w-full">
                         <%--                        <h2 class=" text-[black] font-bold text-2xl ">글 설명</h2>--%>
-                        <p class=" text-[black] mt-3">
-                            ${productDto.productcontent}
-                        </p>
+                        <pre class=" text-[black] mt-3">${productDto.productcontent}</pre>
                     </div>
                 </div>
                 <div>
-                    <p>${productDto.productaddress}</p>
                     <!-- 지도를 표시할 div 입니다 -->
                     <div class="rounded-md" id="map" style="width:100%;height:250px;"></div>
-
+                    <p class="mt-3">${productDto.productaddress}</p>
 
                     <script type="text/javascript"
                             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e18b4a131af7b6c7a7ea0d069757da3a&libraries=services"></script>
@@ -361,12 +362,14 @@
                         >
                             예약 취소
                         </button>
-                        <button
-                                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white h-11 rounded-md px-8"
-                                onclick="alertCompleteBtn()"
-                        >
-                            거래 완료
-                        </button>
+                    </c:if>
+                    <c:if test="${(sessionScope.usernum eq productDto.usernum ) and productDto.productstatus eq '예약 중'}">
+                    <button
+                            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white h-11 rounded-md px-8"
+                            onclick="alertCompleteBtn()"
+                    >
+                        거래 완료
+                    </button>
                     </c:if>
 
                     <c:if test="${sessionScope.usernum != productDto.usernum and (productDto.productstatus eq '예약 중' or productDto.productstatus eq '판매 중')}">
@@ -870,10 +873,9 @@
         document.getElementById("alertChatLogText").innerText = "예약을 취소하시겠습니까?"
         document.getElementById("alertChatLogOkBtn").innerText = "예약 취소"
         document.getElementById("alertChatLogTitle").innerText = "예약취소"
-        $("#alertChatLogOkBtn").addClass("bg-red-500")
 
         document.getElementById("alertChatLogOkBtn").onclick = function () {
-            fetch('./cancel', {
+            fetch('/product/cancel', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

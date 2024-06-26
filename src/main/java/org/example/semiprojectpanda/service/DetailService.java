@@ -63,14 +63,10 @@ public class DetailService {
 
     @Transactional
     public void deleteProduct(int usernum, int productnum) {
-        int checkUser = productMapperInter.checkProductNum(productnum, usernum);
-        if (checkUser == 1) {
-            productMapperInter.deleteChatting(productnum);
-            productMapperInter.deleteChatroomByProductnum(productnum);
-            productMapperInter.deleteProduct(productnum, usernum);
-        } else {
-            return;
-        }
+        productMapperInter.deleteChatting(productnum);
+        productMapperInter.deleteChatroomByProductnum(productnum);
+        productMapperInter.deleteChatLogByProductnum(productnum);
+        productMapperInter.deleteProduct(productnum, usernum);
     }
 
 

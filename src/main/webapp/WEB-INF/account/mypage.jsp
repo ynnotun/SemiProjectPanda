@@ -507,7 +507,7 @@
                                                     거래 완료
                                                 </button>
                                             </c:if>
-                                            <c:if test="${ele.productstatus.equals('거래 완료')}">
+                                            <c:if test="${ele.productstatus.equals('거래 완료') or ele.productstatus.equals('구매자 리뷰 완료')}">
                                                 <button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black"
                                                         onclick="location.href='${root}/product/review?productnum=${ele.productnum}'">
                                                     리뷰작성
@@ -552,7 +552,7 @@
                                                     예약 취소
                                                 </button>
                                             </c:if>
-                                            <c:if test="${ele.productstatus.equals('거래 완료')}">
+                                            <c:if test="${ele.productstatus.equals('거래 완료') or ele.productstatus.equals('판매자 리뷰 완료')}">
                                                 <button class="button-primary inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-9 rounded-md px-3 mr-2 bg-black"
                                                         onclick="location.href='${root}/product/review?productnum=${ele.productnum}'">
                                                     리뷰작성

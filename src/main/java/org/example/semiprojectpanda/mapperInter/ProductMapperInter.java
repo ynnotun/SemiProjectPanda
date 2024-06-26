@@ -156,8 +156,8 @@ public interface ProductMapperInter {
     @Delete("""
             DELETE FROM CHATTING
             WHERE chatroomnum IN (
-              SELECT chatroomnu
-              FROM CHATROO
+              SELECT chatroomnum
+              FROM CHATROOM
               WHERE productnum = #{productnum}
             )
             """)
@@ -168,6 +168,12 @@ public interface ProductMapperInter {
             WHERE productnum = #{productnum};
             """)
     public void deleteChatroomByProductnum(@Param("productnum") int productnum);
+
+    @Delete("""
+            DELETE FROM CHAT
+            WHERE productnum = #{productnum};
+            """)
+    public void deleteChatLogByProductnum(@Param("productnum") int productnum);
 
     @Delete("""
             DELETE FROM PRODUCT
@@ -181,5 +187,8 @@ public interface ProductMapperInter {
                 WHERE productnum = #{productnum} and usernum = #{usernum};
             """)
     public Integer checkProductNum(@Param("productnum") int productnum, @Param("usernum") int usernum);
+
+    @Select("SELECT productstatus FROM PRODUCT WHERE productnum = #{productnum}")
+    String getProductStatus(int productnum);
 }
 
