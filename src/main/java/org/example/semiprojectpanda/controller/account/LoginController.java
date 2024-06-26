@@ -76,6 +76,7 @@ public class LoginController {
             session.setAttribute("usernum", usernum);
             session.setAttribute("usernickname", userDto.getUsernickname());
             session.setAttribute("userprofileimage", userDto.getUserprofileimage());
+            session.setAttribute("useremail", userDto.getUseremail());
 
         }else {
             //아이디와 비번이 틀린경우
@@ -90,6 +91,7 @@ public class LoginController {
         session.removeAttribute("usernum");
         session.removeAttribute("usernickname");
         session.removeAttribute("userprofileimage");
+        session.removeAttribute("useremail");
     }
     @ResponseBody
     @GetMapping("/nicknamecheck")
