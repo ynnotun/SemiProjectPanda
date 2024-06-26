@@ -3,16 +3,14 @@ package org.example.semiprojectpanda.controller.product;
 import lombok.RequiredArgsConstructor;
 import org.example.semiprojectpanda.dto.ProductDto;
 import org.example.semiprojectpanda.dto.ReviewDto;
-import org.example.semiprojectpanda.dto.UserDto;
-import org.example.semiprojectpanda.naver.cloud.NcpObjectStorageService;
 import org.example.semiprojectpanda.service.DetailService;
-import org.example.semiprojectpanda.service.ReviewService;
 import org.example.semiprojectpanda.service.ReviewWriteService;
 import org.example.semiprojectpanda.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -70,7 +68,7 @@ public class ReviewController {
             return "redirect:/";
         }
         // 제품 상태가 "거래 완료"인지 확인
-        if (!productDto.getProductstatus().equals("거래 완료")) {
+        if (!productDto.getProductstatus().equals("거래 완료") && !productDto.getProductstatus().equals("판매자 리뷰 완료") && !productDto.getProductstatus().equals("구매자 리뷰 완료")) {
             return "redirect:/";
         }
         // 리뷰 작성자와 제품 판매자/구매자가 일치하는지 확인
@@ -84,14 +82,20 @@ public class ReviewController {
         reviewDto.setReviewstar(reviewstar);
         reviewDto.setReviewsenduser(reviewsenduser);
         int reviewreceiveuser;
-        if (productDto.getUsernum() == reviewsenduser) {
+        System.out.println(productDto);
+        if (productDto.getUsernum() == (int) reviewsenduser) {
+            //구매자 리뷰 완
             reviewreceiveuser = productDto.getCustomernum();
         } else {
+            //판매자 리뷰 완
             reviewreceiveuser = productDto.getUsernum();
         }
         reviewDto.setReviewreceiveuser(reviewreceiveuser);
 
+        System.out.println(reviewDto);
         reviewWriteService.insertReview(reviewDto);
+        reviewWriteService.productStatChange((int) reviewsenduser, productnum, productDto.getCustomernum());
+
 
         return "redirect:/mypage?usernum=" + reviewsenduser;
     }
