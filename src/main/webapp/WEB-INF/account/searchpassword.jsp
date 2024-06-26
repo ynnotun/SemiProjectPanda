@@ -91,7 +91,7 @@
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "./emailcheck",
+            url: "/emailcheck",
             data: { "searchemail": email },
             success: function(data) {
                 if (data.count > 0) {
@@ -190,7 +190,7 @@
             success: function (response) {
                 const usernum = response.usernum;
                 if (usernum) {
-                    window.location.href = `/password?usernum=` + usernum;
+                    window.location.href = '/password?usernum=' + usernum + '&email=' + email;
                 } else {
                     alert('유저를 찾을 수 없습니다.');
                 }

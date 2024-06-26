@@ -20,7 +20,6 @@
 <body>
 <div class="mx-auto max-w-md space-y-6 py-12">
     <div class="space-y-2 text-center">
-        <input type="hidden" id="email" name="email" value="${email}" />
         <h1 class="text-3xl font-bold">비밀번호 재설정</h1>
         <p class="text-gray-500 ">
             안전한 비밀번호로 내정보를 보호하세요.
@@ -97,6 +96,7 @@
     $(document).ready(function () {
         const urlParams = new URLSearchParams(window.location.search);
         const usernum = urlParams.get('usernum');
+        const useremail = urlParams.get('email');
 
         $('#changePassword').click(function () {
             const newPassword = $('#new-password').val();
@@ -111,7 +111,7 @@
                 url: '/password/change',
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({ usernum: usernum, newPassword: newPassword }),
+                data: JSON.stringify({ usernum: usernum, newPassword: newPassword, email: useremail }),
                 success: function (response) {
                     alert(response);
                     window.location.href = '/login';

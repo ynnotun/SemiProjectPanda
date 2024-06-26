@@ -1,11 +1,14 @@
 package org.example.semiprojectpanda.controller.account;
 
+import org.example.semiprojectpanda.config.SHA256;
 import org.example.semiprojectpanda.service.DetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
 
@@ -23,12 +26,7 @@ public class ChangePasswordController {
     }*/
 
     @GetMapping("/password")
-    public String changePassword(@RequestParam(value = "email", required = false) String email, Model model) {
-        if (email == null || email.isEmpty()) {
-            model.addAttribute("message", "Email not found in URL parameters.");
-            return "account/changepassword"; // 변경 비밀번호 페이지로 이동
-        }
-        model.addAttribute("email", email);
+    public String changePassword(Model model) {
         return "account/changepassword"; // 변경 비밀번호 페이지로 이동
     }
 
@@ -41,9 +39,12 @@ public class ChangePasswordController {
         try {
             int usernum = Integer.parseInt((String) payload.get("usernum"));
             String newPassword = (String) payload.get("newPassword");
+            String email = (String) payload.get("email");
+            SHA256 sha256 = new SHA256();
+            String password = sha256.encrypt(newPassword + sha256.encrypt(email));
 
-            detailService.changePassword(usernum, newPassword);
-            System.out.println("Usernum: " + usernum + ", New Password: " + newPassword);
+            detailService.changePassword(usernum, password);
+            System.out.println("Usernum: " + usernum + ", New Password: " + password);
             return ResponseEntity.ok("Password changed successfully.");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Failed to change password.");
