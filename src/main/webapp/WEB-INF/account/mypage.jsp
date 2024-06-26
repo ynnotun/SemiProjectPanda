@@ -283,20 +283,23 @@
                     </label>
                 </div>
             </div>
-            <div class="flex items-center gap-2" style="margin-top: 40px; margin-left: 50px;">
-                <input value="${sessionScope.usernickname}" style="width: 200px; text-align: center; font-size: 18px; box-shadow: 2px 2px 2px #595858;" type="hidden" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="name"/>
-            </div>
-            <div class="flex items-center gap-2" style="margin-left: 50px;">
-                <label style="min-width: 120px; height: 30px; margin-right: 30px;" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="seller">
-                    <p style="line-height: 30px; font-size: 22px; color: white">판매자 닉네임</p>
-                </label>
-                <input name="seller" style="width: 200px; font-size: 16px; box-shadow: 2px 2px 2px #595858;" placeholder="Enter the Nickname..." class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="seller"/>
-            </div>
-            <div class="flex items-center gap-2" style="margin-left: 50px;">
-                <label style="min-width: 120px; height: 30px; margin-right: 30px;" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="amount">
-                    <p style="line-height: 30px; font-size: 22px; color: white">가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;격</p>
-                </label>
-                <input name="pointamount" style="box-shadow: 2px 2px 2px #595858; width: 200px; font-size: 16px;" placeholder="Enter the Price..." class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" type="number" id="amount"/>
+
+            <div class="flex flex-col gap-2 align-top p-8">
+                <div class="flex gap-2" style="margin-top: 40px; justify-content: space-between;">
+                    <input value="${sessionScope.usernickname}" style="width: 200px; text-align: center; font-size: 18px; box-shadow: 2px 2px 2px #595858;" type="hidden" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="name"/>
+                </div>
+                <div class="flex gap-2" style="justify-content: space-between;">
+                    <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="seller">
+                        <p style="line-height: 30px; font-size: 22px; color: white">판매자 닉네임</p>
+                    </label>
+                    <input name="seller" style="width: 200px; font-size: 18px; box-shadow: 2px 2px 2px #595858;" placeholder="Enter the Nickname..." class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="seller"/>
+                </div>
+                <div class="flex gap-2" style="justify-content: space-between;">
+                    <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="amount">
+                        <p style="line-height: 30px; font-size: 22px; color: white">Price</p>
+                    </label>
+                    <input name="pointamount" style="box-shadow: 2px 2px 2px #595858; width: 200px; font-size: 18px;" placeholder="Enter the Price..." class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" type="number" id="amount"/>
+                </div>
             </div>
         </div>
         <div class="flex items-center p-6" style="width: 100%; justify-content: center; align-items: center;">

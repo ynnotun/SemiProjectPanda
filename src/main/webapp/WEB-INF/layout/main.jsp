@@ -101,6 +101,30 @@
          height: 100%;
          object-fit: cover;
       }
+
+      .grayscale {
+         filter: grayscale(50%);
+         position: relative;
+      }
+
+      .overlay {
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background: rgba(255, 255, 255, 0.6);
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         font-size: 1.25rem;
+         color: gray;
+         text-align: center;
+      }
+
+      .relative {
+         position: relative;
+      }
    </style>
 </head>
 <body>
@@ -170,9 +194,13 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="item-seciton">
          <c:forEach var="ele" items="${products}">
             <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+               <div class="relative w-full h-48">
                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
-                    width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"
+                    width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48
+                    ${ele.productstatus == '거래 완료' ? 'grayscale' : ''}" style="aspect-ratio:300/200;object-fit:cover"
                     onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'"/>
+                     ${ele.productstatus == '거래 완료' ? '<div class="overlay">SOLD</div>' : ''}
+               </div>
                <div class="p-4">
 
                   <h3 class="cursor-pointer text-lg font-medium mb-2"

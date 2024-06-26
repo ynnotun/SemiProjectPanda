@@ -12,7 +12,31 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        .grayscale {
+            filter: grayscale(50%);
+            position: relative;
+        }
 
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.25rem;
+            color: gray;
+            text-align: center;
+        }
+
+        .relative {
+            position: relative;
+        }
+    </style>
     <title></title>
 </head>
 <body>
@@ -27,10 +51,14 @@
                     <c:forEach items="${searchResults}" var="ele">
                         <a href="<c:url value="/product/detail?productnum=${ele.productnum}"/>">
                             <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}" width="300"
-                                     height="200" alt="Product"
-                                     class="rounded-t-lg object-cover w-full h-48"
-                                     style="aspect-ratio:300/200;object-fit:cover"/>
+                                <div class="relative w-full h-48">
+                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}" width="300"
+                                         height="200" alt="Product"
+                                         class="rounded-t-lg object-cover w-full h-48
+                                        ${ele.productstatus == '거래 완료' ? 'grayscale' : ''}"
+                                         style="aspect-ratio:300/200;object-fit:cover"/>
+                                        ${ele.productstatus == '거래 완료' ? '<div class="overlay">SOLD</div>' : ''}
+                                </div>
                                 <div class="p-4">
                                     <h3 class="text-lg font-medium mb-2 truncate">${ele.producttitle}</h3>
                                     <div class="mb-2">
