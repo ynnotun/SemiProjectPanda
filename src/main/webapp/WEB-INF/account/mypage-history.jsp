@@ -132,7 +132,8 @@
                         <div class="relative rounded-lg border bg-card text-card-foreground shadow-sm">
                         <div class="relative w-full h-48">
                             <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48 \${ele.productstatus === '거래 완료' ? 'grayscale' : ''}" style="aspect-ratio:300/200;object-fit:cover"/>
-                            \${ele.productstatus === '거래 완료' ? '<div class="overlay">SOLD</div>' : ''}</div>
+                            \${ele.productstatus === '거래 완료' ? '<div class="overlay">SOLD</div>' : ''}
+                            </div>
                             <div class="p-4">
                                 <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
                                 <div class="mb-2">

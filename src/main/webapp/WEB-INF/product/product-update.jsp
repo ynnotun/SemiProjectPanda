@@ -294,21 +294,7 @@
 
         // 기존 이미지를 미리보기 섹션에 렌더링
         uploadedFiles.forEach(file => {
-            const img = document.createElement('img');
-            img.src = file.src;
-            img.classList.add('w-48', 'h-48', 'object-cover', 'rounded', 'border', 'cursor-pointer'); // TailwindCSS 클래스 사용
-            img.dataset.filename = file.name;
-
-            // 클릭 시 미리보기에서 이미지 제거
-            img.addEventListener('click', function() {
-                preview.removeChild(img);
-                // 업로드된 파일 목록에서 해당 파일 제거
-                uploadedFiles = uploadedFiles.filter(uploadedFile => uploadedFile.name !== file.name);
-                // 삭제된 이미지 목록에 추가
-                deletedImages.push(file.name);
-            });
-
-            preview.appendChild(img);
+            renderPreviewImage(file.name, file.src, false);
         });
 
         // 이미지 업로드 버튼 클릭
@@ -319,7 +305,6 @@
         // 파일 선택 시 미리보기 표시 및 클릭 시 제거
         fileInput.addEventListener('change', function(event) {
             const files = Array.from(event.target.files);
-            preview.innerHTML = ''; // 이전 미리보기 내용 지우기
 
             // 이미지가 10장을 초과하는지 확인
             if (uploadedFiles.length + files.length > 10) {
@@ -327,30 +312,21 @@
                 return;
             }
 
+            // 이전 미리보기 내용 지우기 및 삭제 대기 목록에 추가
+            preview.innerHTML = '';
+            uploadedFiles.forEach(file => {
+                if (!(file instanceof File)) {
+                    deletedImages.push(file.name);
+                }
+            });
+            uploadedFiles = [];
+
             files.forEach(file => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.classList.add('w-48', 'h-48', 'object-cover', 'rounded', 'border', 'cursor-pointer'); // TailwindCSS 클래스 사용
-                    img.dataset.filename = file.name; // 파일 이름을 데이터 속성으로 저장
-
-                    // 클릭 시 미리보기에서 이미지 제거
-                    img.addEventListener('click', function() {
-                        preview.removeChild(img);
-                        // 업로드된 파일 목록에서 해당 파일 제거
-                        uploadedFiles = uploadedFiles.filter(uploadedFile => uploadedFile.name !== file.name);
-
-                        // 파일 입력 요소 값 재설정
-                        /*const dataTransfer = new DataTransfer();
-                        uploadedFiles.forEach(file => dataTransfer.items.add(file));
-                        fileInput.files = dataTransfer.files;*/
-                    });
-                    preview.appendChild(img);
+                    renderPreviewImage(file.name, e.target.result, true);
                 };
                 reader.readAsDataURL(file);
-
-                // 업로드된 파일 목록에 추가
                 uploadedFiles.push(file);
             });
 
@@ -358,7 +334,6 @@
             const dataTransfer = new DataTransfer();
             uploadedFiles.forEach(file => dataTransfer.items.add(file));
             fileInput.files = dataTransfer.files;
-            //fileInput.removeAttribute('required'); // 파일이 선택되면 required 속성 제거
         });
 
         // 폼 제출 시 이미지 개수 확인
@@ -393,6 +368,33 @@
                 this.scrollLeft += event.deltaY;
             }
         });
+
+        // 미리보기 이미지 렌더링 함수
+        function renderPreviewImage(name, src, isNew) {
+            const img = document.createElement('img');
+            img.src = src;
+            img.classList.add('w-48', 'h-48', 'object-cover', 'rounded', 'border', 'cursor-pointer'); // TailwindCSS 클래스 사용
+            img.dataset.filename = name;
+
+            // 클릭 시 미리보기에서 이미지 제거
+            img.addEventListener('click', function() {
+                preview.removeChild(img);
+                // 업로드된 파일 목록에서 해당 파일 제거
+                uploadedFiles = uploadedFiles.filter(file => file.name !== name);
+
+                // 삭제된 이미지 목록에 추가
+                if (!isNew) {
+                    deletedImages.push(name);
+                }
+
+                // 파일 입력 요소 값 재설정
+                const dataTransfer = new DataTransfer();
+                uploadedFiles.forEach(file => dataTransfer.items.add(file));
+                fileInput.files = dataTransfer.files;
+            });
+
+            preview.appendChild(img);
+        }
     });
 </script>
 

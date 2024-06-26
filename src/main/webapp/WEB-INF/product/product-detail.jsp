@@ -692,7 +692,7 @@
 <%--오픈채팅 버튼--%>
 <script>
     function openChatting() {
-        fetch('./chat', {
+        fetch('/product/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -719,6 +719,7 @@
     }
 
     async function createChattingRoom(productnum) {
+        console.log("productnum : " + productnum)
         try {
             const response = await fetch('/chatting/room', {
                 method: 'POST',
@@ -733,7 +734,11 @@
             if (data.status === 'success') {
                 // 채팅방 생성 성공
                 // 채팅방 번호를 사용하여 채팅 페이지로 이동
-                window.location.href = "/chatting/" + data.chatRoomNum;
+                document.getElementsByClassName("chat-symbol")[0].click()
+                // window.location.href = "/chatting/" + data.chatRoomNum;
+                alertChatLogClose();
+                chatStart(data.chatRoomNum);
+                document.getElementById("chatting").focus()
             } else {
                 // 채팅방 생성 실패
                 console.error('Failed to create chatting room');
@@ -781,17 +786,16 @@
     }
 
     function deleteProduct() {
-        fetch('./delete', {
+        fetch('/product/delete', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({
-                "productnum": "${productDto.productnum}"
+                "productnum": "${productDto.productnum}",
             })
         })
             .then(response => {
-                console.log(response);
                 if (response.ok) {
                     // 등록 성공 처리
                     location.href = `/`;
