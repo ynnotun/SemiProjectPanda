@@ -213,6 +213,9 @@
             </span>
             </div>
         </div>
+        <label style="margin-top: 30px; min-width: 120px; margin-right: 30px;" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="name">
+            <p style="font-size: 22px; color: white">${sessionScope.usernickname}님의 결제창</p>
+        </label>
         <div class="p-6 grid gap-6">
             <div style="background-color: white; color: black; border-radius: 10px; box-shadow: 2px 2px 2px #595858;">
                 <button type="button" role="radio" aria-checked="true" data-state="checked" value="point"
@@ -280,12 +283,10 @@
                     </label>
                 </div>
             </div>
+
             <div class="flex flex-col gap-2 align-top p-8">
                 <div class="flex gap-2" style="margin-top: 40px; justify-content: space-between;">
-                    <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="name">
-                        <p style="line-height: 30px; font-size: 22px; color: white">본인 닉네임</p>
-                    </label>
-                    <input value="${sessionScope.usernickname}" style="width: 200px; text-align: center; font-size: 18px; box-shadow: 2px 2px 2px #595858;" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="name"/>
+                    <input value="${sessionScope.usernickname}" style="width: 200px; text-align: center; font-size: 18px; box-shadow: 2px 2px 2px #595858;" type="hidden" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="name"/>
                 </div>
                 <div class="flex gap-2" style="justify-content: space-between;">
                     <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="seller">
@@ -450,13 +451,11 @@
                                 </svg>
                                 <span class="sr-only">Settings</span>
                             </button>
-                        </c:if>
                         <div class="flex items-center gap-2 text-sm text-gray-500 ">
                             <span>나의 포인트 : </span> ${pointamount}P
                         </div>
                         <!-- 결제버튼 -->
-                        <c:if test="${sessionScope.usernum != null}">
-                            <div class="flex items-center gap-2 text-sm text-gray-500 ">
+                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
                                 <button onclick= "payopen()" id="pay" >
                                     <p>PAY</p>
                                 </button>
