@@ -480,7 +480,7 @@
             $.ajax({
                 type: "get",
                 dataType: "json",
-                url: "./emailcheck",
+                url: "/emailcheck",
                 data: { "searchemail": $("#email").val() },
                 async: false,
                 success: function(data) {

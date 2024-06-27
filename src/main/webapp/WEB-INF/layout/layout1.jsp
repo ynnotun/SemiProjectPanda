@@ -6,10 +6,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>PANDA</title>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <link href="/image/icon.png" rel="shortcut icon" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Dancing+Script:wght@400..700&family=East+Sea+Dokdo&family=Jua&family=Gaegu&family=Gamja+Flower&family=Pacifico&family=Single+Day&display=swap"
           rel="stylesheet">
@@ -28,19 +31,10 @@
             left: 30px;
             width: 70px;
             height: 50px;
-            background-color: rgba(0, 0, 0, 0.84);
+            background-color: rgba(0, 0, 0);
             border-radius: 20px;
-        }
-
-        #pay {
-            position: fixed;
-            bottom: 180px;
-            left: 30px;
-            width: 70px;
-            height: 50px;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 20px;
+            z-index: 800;
+            justify-content: center;
         }
 
         /* 위로 가는 버튼 */
@@ -80,14 +74,10 @@
         <tiles:insertAttribute name="main"/>
     </div>
     <!-- 챗봇버튼 -->
-    <button onclick="location.href='./chatbot'" id="bot">
+    <button onclick="chatbotShow()" id="bot">
         <img src="https://kr.object.ncloudstorage.com/semi/panda/logo.png">
     </button>
 
-    <!-- 결제버튼 -->
-    <button onclick="location.href='./pay'" id="pay">
-        <p>결제</p>
-    </button>
     <!-- 위로 가는 버튼 -->
     <button onclick="scrollToTop()" class="scroll-to-top" id="scrollToTopBtn">
         <i class="bi bi-caret-up-fill"></i>
@@ -167,6 +157,7 @@
         transform: scale(0) translateY(-100%);
         transition: 0.3s ease-in-out;
         transform-origin: 0 100%;
+        box-shadow: 10px 10px 20px rgb(0, 0, 0, 0.5);
 
         overflow: hidden;
     }
@@ -193,7 +184,7 @@
         chat_bubble
         </span>
     </div>
-    <div class="chat-content shadow-2xl">
+    <div class="chat-content">
         <div class="absolute right-3 top-3 chat-close" id="chat-close">
             <span class="material-symbols-outlined">
             close
@@ -284,7 +275,8 @@
     <input type="hidden" id="sessionId" value="">
     <input type="hidden" id="roomId" value="">
     <div id="chat-head">
-        <div id="chat-head-title">글 제목이 뜰거임</div>
+        <div id="chat-head-title" class="text-xl font-bold text-[black]">글 제목이 뜰거임</div>
+        <div id="chat-head-member"></div>
 
         <div class="absolute right-3 top-3 chat-close" id="chatting-close">
             <span class="material-symbols-outlined">
@@ -331,15 +323,16 @@
                 // 서버에서 반환된 ChatroomPrintDto 목록 처리
                 // href="/chatting/\${chatroom.chatroomnum}"
                 data.forEach(chatroom => {
-                    s += `
+                    if (chatroom.applyusernickname === "${sessionScope.usernickname}") {
+                        s += `
                     <a class="hover:bg-gray-100 p-2 flex items-center gap-2 transition-colors hover:bg-muted" onclick="chatStart(\${chatroom.chatroomnum})">
                       <span class="relative flex shrink-0 overflow-hidden rounded-full border w-12 h-12">
                         <img class="aspect-square h-full w-full" alt="Chatroom Image"
-                             src="https://kr.object.ncloudstorage.com/semi/panda/\${chatroom.applyprofile}"/>
+                             src="https://kr.object.ncloudstorage.com/semi/panda/\${chatroom.productuserprofile}"/>
                       </span>
                         <div class="flex-1 grid gap-1">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-base font-medium">\${chatroom.applyusernickname}</h3>
+                                <h3 class="text-base font-medium truncate w-1/3 text-left">\${chatroom.productusernickname}</h3>
                                 <span class="text-xs text-muted-foreground truncate w-2/3 text-right">
                                     \${chatroom.productaddress}
                                 </span>
@@ -350,11 +343,27 @@
                         </div>
                     </a>
                     `;
-                    console.log(`채팅방 번호: \${chatroom.chatroomnum}`);
-                    console.log(`채팅방 이름: \${chatroom.chatroomname}`);
-                    console.log(`상품 주소: \${chatroom.productaddress}`);
-                    console.log(`신청자 닉네임: \${chatroom.applyusernickname}`);
-                    console.log(`신청자 프로필: \${chatroom.applyprofile}`);
+                    } else {
+                        s += `
+                    <a class="hover:bg-gray-100 p-2 flex items-center gap-2 transition-colors hover:bg-muted" onclick="chatStart(\${chatroom.chatroomnum})">
+                      <span class="relative flex shrink-0 overflow-hidden rounded-full border w-12 h-12">
+                        <img class="aspect-square h-full w-full" alt="Chatroom Image"
+                             src="https://kr.object.ncloudstorage.com/semi/panda/\${chatroom.applyprofile}"/>
+                      </span>
+                        <div class="flex-1 grid gap-1">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-base font-medium truncate w-1/3 text-left">\${chatroom.applyusernickname}</h3>
+                                <span class="text-xs text-muted-foreground truncate w-2/3 text-right">
+                                    \${chatroom.productaddress}
+                                </span>
+                            </div>
+                            <p class="text-sm text-muted-foreground truncate">
+                                \${chatroom.chatroomname}
+                            </p>
+                        </div>
+                    </a>
+                    `;
+                    }
                 });
                 listArea.innerHTML = s;
                 document.getElementsByClassName("chat-symbol")[0].style.transform = "scale(0) translateY(-100%)";
@@ -372,11 +381,28 @@
     })
 
     function chatStart(chatRoom) {
-        document.getElementById("chattingArea").style.left = "30px";
-        ws = new WebSocket("ws://" + location.host + "/chatroom/" + chatRoom);
-        document.getElementById("chating").innerHTML = "";
-        document.getElementById("roomId").value = chatRoom;
-        wsEvt(chatRoom);
+        fetch(`/chat/name?chatroomnum=` + chatRoom)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("chattingArea").style.left = "30px";
+                ws = new WebSocket("ws://" + location.host + "/chatroom/" + chatRoom);
+                document.getElementById("chating").innerHTML = "";
+                document.getElementById("roomId").value = chatRoom;
+                wsEvt(chatRoom);
+                document.getElementById("chat-head-title").innerHTML =
+                    `<a href="/product/detail?productnum=\${data.productnum}">\${data.chatroomname}</a>`;
+                if (data.applyusernickname === "${sessionScope.usernickname}") {
+                    document.getElementById("chat-head-member").innerText = `\${data.productusernickname}님과 채팅`;
+                } else {
+                    document.getElementById("chat-head-member").innerText = `\${data.applyusernickname}님과 채팅`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching chat log:', error);
+                alert("접속 실패")
+                window.location.reload()
+            });
+
     }
 
     document.getElementById("chatting-close").addEventListener("click", function () {
@@ -384,8 +410,6 @@
         document.getElementById("sessionId").value = "";
         document.getElementById("roomId").value = "";
         ws.close();
-
-
     })
 </script>
 
@@ -433,8 +457,8 @@
                             `
                             <%--                   내 채팅 --%>
                                     <div class="flex items-start gap-3 justify-end">
-                                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">
-                                            <p class="font-medium">\${d.userNickName}</p>
+                                        <div class="bg-gray-200 text-gray-900 px-3 py-2 rounded-lg max-w-[75%]">
+                                            <!--<p class="font-medium">\${d.userNickName}</p>-->
                                             <p>\${d.msg}</p>
                                         </div>
                                         <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
@@ -459,8 +483,8 @@
                                                    onclick="location.href='/mypage?usernum=\${d.usernum}'"/>
                                           </span>
                                         </span>
-                                        <div class="bg-[#4CAF50] text-white px-4 py-2 rounded-lg max-w-[75%] relative">
-                                            <p class="font-medium">\${d.userNickName}</p>
+                                        <div class="bg-[#4CAF50] text-white px-3 py-2 rounded-lg max-w-[75%] relative">
+                                            <!--<p class="font-medium">\${d.userNickName}</p>-->
                                             <p>\${d.msg}</p>
                                         </div>
                                     </div>
@@ -477,9 +501,10 @@
 
         document.addEventListener("keypress", function (e) {
             if (e.keyCode == 13) { //enter press
-                if ($("#chatting").val().length > 0 || $("#roomId").val().length > 0) {
-                    send();
+                if ($("#chatting").val().length === 0 || $("#roomId").val().length === 0) {
+                    return;
                 }
+                send();
             }
         });
 
@@ -491,8 +516,8 @@
                         `
                 <%--                    내 채팅--%>
                     <div class="flex items-start gap-3 justify-end">
-                        <div class="bg-gray-200 text-gray-900 px-4 py-2 rounded-lg max-w-[75%]">
-                            <p class="font-medium">\${chat.usernickname}</p>
+                        <div class="bg-gray-200 text-gray-900 px-3 py-2 rounded-lg max-w-[75%]">
+
                             <p>\${chat.chattingmessage}</p>
                         </div>
                         <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
@@ -516,8 +541,8 @@
                                    onclick="location.href='/mypage?usernum=\${chat.sendusernum}'"/>
                           </span>
                         </span>
-                        <div class="bg-[#4CAF50] text-white px-4 py-2 rounded-lg max-w-[75%] relative">
-                            <p class="font-medium">\${chat.usernickname}</p>
+                        <div class="bg-[#4CAF50] text-white px-3 py-2 rounded-lg max-w-[75%] relative">
+
                             <p>\${chat.chattingmessage}</p>
 
                         </div>
@@ -533,18 +558,217 @@
 
 
     function send() {
-            let roomid = $("#roomId").val()
-            var option = {
-                type: "message",
-                roomNumber: roomid,
-                usernum: ${sessionScope.usernum},
-                userProfile: "${sessionScope.userprofileimage}",
-                userNickName: "${sessionScope.usernickname}",
-                msg: $("#chatting").val()
-            }
-            ws.send(JSON.stringify(option))
-            $('#chatting').val("");
+        let roomid = $("#roomId").val()
+        var option = {
+            type: "message",
+            roomNumber: roomid,
+            usernum: ${sessionScope.usernum},
+            userProfile: "${sessionScope.userprofileimage}",
+            userNickName: "${sessionScope.usernickname}",
+            msg: $("#chatting").val()
+        }
+        ws.send(JSON.stringify(option))
+        $('#chatting').val("");
     }
+</script>
+
+
+<style>
+    .chatbot-area {
+        z-index: 901;
+        position: fixed;
+        width: 500px;
+        height: 500px;
+        bottom: 30px;
+        left: -600px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 10px 10px 50px rgb(0, 0, 0, 0.6);
+        overflow: hidden;
+        transition: 0.3s ease-in-out;
+    }
+
+    #chatbot-send-form {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .chatbot-scroll {
+        overflow: auto;
+        margin-top: 10px;
+        height: calc(100% - 67px);
+    }
+</style>
+
+<%--챗봇--%>
+<div class="chatbot-area" style="">
+    <div class="absolute right-3 top-3 chat-close" id="chatbot-close" onclick="chatbotClose()">
+            <span class="material-symbols-outlined">
+            close
+            </span>
+    </div>
+
+    <div class="chatbot-scroll">
+        <div class="flex-1  p-4" id="conversation">
+            <div class="space-y-4 w-full" id="communicate">
+
+
+            </div>
+        </div>
+    </div>
+    <form class="rounded-b-2xl bg-white border-t border-gray-200 p-2 flex items-center" id="chatbot-send-form">
+        <input
+                class="flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1 bg-gray-100 border-none focus:ring-0 focus:outline-none"
+                id="msg"
+                placeholder="Type your message..."
+        />
+        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-[#4CAF50] hover:bg-green-600 text-white ml-2"
+                onclick="send()" id="send" disabled type="submit">
+            Send
+        </button>
+    </form>
+</div>
+
+
+<script>
+    function chatbotClose(){
+        document.getElementsByClassName("chatbot-area")[0].style.left = "-600px";
+    }
+
+    function chatbotShow(){
+        document.getElementsByClassName("chatbot-area")[0].style.left = "30px";
+    }
+
+    var stompClient = null;
+
+    function setConnected(connected) {
+        $("#connect").prop("disabled", connected);
+        $("#disconnect").prop("disabled", !connected);
+        $("#send").prop("disabled", !connected);
+        if (connected) {
+            $("#conversation").show();
+        } else {
+            $("#conversation").hide();
+        }
+        $("#msg").val("");
+    }
+
+    function connect() {
+        var socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+            console.log('Connected: ' + frame);
+            // 기본 안내멘트 추가
+            showMessage("판다챗봇에 오신 것을 환영합니다!<br>" +
+                "무엇을 도와드릴까요?<br><br>" +
+                "<button class='btn btn-info quick-btn' style='background-color: #fff; border: 0; font-size: 15px; margin-right: 10px;' data-question='거래'>거래방법</button>" +
+                "<button class='btn btn-info quick-btn' style='background-color: #fff; border: 0; font-size: 15px; margin-right: 10px;' data-question='배송'>배송관련</button>" +
+                "<button class='btn btn-info quick-btn' style='background-color: #fff; border: 0; font-size: 15px; margin-right: 10px;' data-question='사기'>사기문의</button>", "message-received");
+
+            stompClient.subscribe('/topic/public', function (message) {
+                showMessage(message.body, "message-received"); // 서버에 메시지 전달 후 리턴받는 메시지
+                // 채팅 내용이 갱신될 때 스크롤을 가장 아래로 이동
+                scrollToBottom();
+            });
+        });
+    }
+
+    function disconnect() {
+        if (stompClient !== null) {
+            stompClient.disconnect();
+        }
+        setConnected(false);
+        console.log("Disconnected");
+    }
+
+    function sendMessage() {
+        let message = $("#msg").val()
+        if (message.length === 0) {
+            return;
+        }
+        showMessage(message, "message-sent");
+        $("#msg").val(""); // 메시지를 보낸 후 입력 필드를 비우기
+
+        stompClient.send("/app/sendMessage", {}, JSON.stringify(message)); // 서버에 보낼 메시지
+
+        //스크롤을 가장 아래로 이동
+        scrollToBottom();
+    }
+
+    function sendQuickMessage(question) {
+        showMessage(question, "message-sent");
+        stompClient.send("/app/sendMessage", {}, JSON.stringify(question));
+        //스크롤을 가장 아래로 이동
+        scrollToBottom();
+    }
+
+    function showMessage(message, messageClass) {
+        if (messageClass === "message-received") {
+            $("#communicate").append(
+                // "<img src='../image/panda.png' style='width: 40px; height: auto'>" +
+                `
+                <div class="flex items-start gap-3">
+                    <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#fff] text-white flex items-center justify-center border-0 border-[#4CAF50]">
+                      <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
+                          <img class="aspect-square h-full w-full" alt="Seller"
+                               src='/image/panda.png'/>
+                      </span>
+                    </span>
+                    <div class="bg-[#4CAF50] text-white px-3 py-2 rounded-lg max-w-[75%] relative">
+                        <p>\${message}</p>
+                    </div>
+                </div>
+                `
+                // +
+                // "<tr class='received'><td class='message " + messageClass + "'>" +
+                // "<div class='received-message-content'>" +
+                // "<div class='message-text'>" + message + "</div>" +
+                // "</div></td></tr>"
+            );
+        } else {
+            $("#communicate").append(
+                `
+                <div class="flex items-start gap-3 justify-end">
+                    <div class="bg-gray-200 text-gray-900 px-3 py-2 rounded-lg max-w-[75%]">
+                        <p>\${message}</p>
+                    </div>
+                </div>
+                `
+                // "<tr class='sent'><td class='message " + messageClass + "'>" + message + "</td></tr>"
+            );
+        }
+        //스크롤을 가장 아래로 이동
+        scrollToBottom();
+    }
+
+    function scrollToBottom() {
+        var chatbotDiv = $(".chatbot-scroll");
+        chatbotDiv.scrollTop(chatbotDiv.prop("scrollHeight"));
+    }
+
+    $(function () {
+        connect();
+        $("#chatbot-send-form").on('submit', function (e) {
+            e.preventDefault();
+        });
+        $("#connect").click(function () {
+            connect();
+        });
+        $("#disconnect").click(function () {
+            disconnect();
+        });
+        $("#send").click(function () {
+            sendMessage();
+        });
+
+        $(document).on('click', '.quick-btn', function () {
+            let question = $(this).data('question');
+            sendQuickMessage(question);
+        });
+    });
+
 </script>
 
 

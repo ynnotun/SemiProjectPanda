@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.example.semiprojectpanda.dto.ProductDto;
 import org.example.semiprojectpanda.dto.ProductImageDto;
 import org.example.semiprojectpanda.dto.UserDto;
-import org.example.semiprojectpanda.dto.WishDto;
 import org.example.semiprojectpanda.mapperInter.ProductImageMapperInter;
 import org.example.semiprojectpanda.mapperInter.ProductMapperInter;
 import org.example.semiprojectpanda.mapperInter.UserMapperInter;
-import org.example.semiprojectpanda.mapperInter.WishMapperInter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +35,7 @@ public class DetailService {
     public boolean checkNickname(String nickname) {
         return userMapperInter.checkNickname(nickname) > 0;
     }
+
     //마이페이지 수정
     public void updateUser(UserDto userDto) {
         if (userDto.getUserprofileimage() == null || userDto.getUserprofileimage().isEmpty()) {
@@ -45,20 +44,30 @@ public class DetailService {
         }
         userMapperInter.updateUser(userDto);
     }
+
     //email값 받아서 usernum값 얻기
-    public int getUserNumByEmail(String email){
+    public int getUserNumByEmail(String email) {
         return userMapperInter.getUserNumByEmail(email);
     }
+
     //비밀번호 변경
     public boolean changePassword(int usernum, String newPassword) {
         return userMapperInter.changePassword(usernum, newPassword);
     }
+
     //회원탈되
     @Transactional
     public void deleteAccount(int usernum) throws Exception {
         userMapperInter.deleteUserByUsernum(usernum);
     }
 
+    @Transactional
+    public void deleteProduct(int usernum, int productnum) {
+        productMapperInter.deleteChatting(productnum);
+        productMapperInter.deleteChatroomByProductnum(productnum);
+        productMapperInter.deleteChatLogByProductnum(productnum);
+        productMapperInter.deleteProduct(productnum, usernum);
+    }
 
 
 }

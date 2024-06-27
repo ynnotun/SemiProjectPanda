@@ -1,11 +1,11 @@
 package org.example.semiprojectpanda.controller.account;
 
+import org.example.semiprojectpanda.config.SHA256;
 import org.example.semiprojectpanda.dto.UserDto;
 import org.example.semiprojectpanda.naver.cloud.NcpObjectStorageService;
 import org.example.semiprojectpanda.service.DetailService;
 import org.example.semiprojectpanda.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,11 +85,21 @@ public class MypageUpdateController {
     public String updateUser(@RequestBody UserDto userDto) {
         UserDto existingUser = detailService.getUserByUsernum(userDto.getUsernum());
 
+
+
         if (userDto.getUsernickname() == null || userDto.getUsernickname().isEmpty()) {
             userDto.setUsernickname(existingUser.getUsernickname());
         }
         if (userDto.getUserpassword() == null || userDto.getUserpassword().isEmpty()) {
             userDto.setUserpassword(existingUser.getUserpassword());
+        }else {
+            SHA256 sha256 = new SHA256();
+            try {
+                String password = sha256.encrypt(userDto.getUserpassword() + sha256.encrypt(existingUser.getUseremail()));
+                userDto.setUserpassword(password);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
         }
         if (userDto.getUserprofileimage() == null || userDto.getUserprofileimage().isEmpty()) {
             userDto.setUserprofileimage(existingUser.getUserprofileimage());
