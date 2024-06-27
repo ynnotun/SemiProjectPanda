@@ -85,7 +85,8 @@
 <body>
 <div class="w-full mx-auto p-6 md:p-8 container">
     <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
-    <form class="space-y-4" action="./save" method="post" enctype="multipart/form-data">
+    <form class="space-y-4" action="./save" method="post" enctype="multipart/form-data"
+          onsubmit="return check()">
         <div class="page" id="page1" style="width: 100%">
             <div style="padding-bottom: 15px; width: 40%; margin: auto;">
                 <label
@@ -125,7 +126,7 @@
                         id="address"
                         name="useraddress"
                         placeholder="Enter your address"
-                        onclick="openDaumPostcode()"/>
+                        />
             </div>
             <input type="hidden" id="latitude" name="productlocationx"/>
             <input type="hidden" id="longitude" name="productlocationy"/>
@@ -297,7 +298,8 @@
                         <button
                                 type="submit"
                                 id="save"
-                                class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                                onclick="check()">
                             Complete Registration
                         </button>
                     </div>
@@ -310,7 +312,13 @@
 <script>
     let isEmailVerified = false;
     let isRecaptchaVerified = false;
-    var timerInterval;
+    let timerInterval;
+    let jungbok=false;
+    let jungbok2=false;
+    let isChecked = false;
+    // 라디오 버튼 그룹과 서밋 버튼을 가져옵니다
+    let radioButtons = document.querySelectorAll('input[name="userprofileimage"]');
+    let submitButton = document.getElementById('save');
 
     $("#back").click(function() {
         $("#page1").css("transform", "translateX(0)");
@@ -449,27 +457,41 @@
                 success: function(data) {
                     if (data.count == 0) {
                         openModal('PANDA', '가입이 가능한 닉네임입니다.', `closeModal()`)
-                        jungbok = true;
+                        jungbok2 = true;
                     } else {
                         openModal('PANDA', '이미 사용중인 닉네임입니다.', `closeModal()`)
-                        jungbok = false;
+                        jungbok2 = false;
                         $("#nickname").val("");
                     }
                 }
             })
             //아이디를 입력시 다시 중복확인을 누르도록 중복변수를 초기화
             $("#nickname").keyup(function() {
-                jungbok = false;
+                jungbok2 = false;
             })
         })//
 
-        function check() {
-            if (!jungbok) {
-                openModal('PANDA', '닉네임 중복확인을 해주세요.', `closeModal()`)
-                return false; // false반환시 action 실행을 안함
-            }
-        }
     });
+    function check() {
+        // 모든 라디오 버튼을 확인하여 하나라도 체크되어 있는지 검사합니다
+        radioButtons.forEach(radio => {
+            if (radio.checked) {
+                isChecked = true;
+            }
+        });
+        // 하나라도 체크되어 있으면 서밋 버튼을 활성화하고, 그렇지 않으면 비활성화합니다
+        if (!isChecked) {
+            openModal('PANDA', '프로필을 선택해주세요.', `closeModal()`)
+            return false;
+        }
+
+        if (!jungbok2) {
+            openModal('PANDA', '닉네임 중복확인을 해주세요.', `closeModal()`)
+            return false; // false반환시 action 실행을 안함
+        }else {
+            openModal('PANDA', '회원가입이 완료되었습니다.', `closeModal()`)
+        }
+    }
 
     $(function() {
         $("#checkButton").click(function() {
@@ -537,27 +559,43 @@
         })
     });
 
-    function openDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var geocoder = new kakao.maps.services.Geocoder();
-                var roadAddr = data.roadAddress;
-                var callback = function(result, status) {
-                    if (status === kakao.maps.services.Status.OK) {
-                        console.log(result);
-                        var lat = result[0].y;
-                        var lng = result[0].x;
-                        document.getElementById('latitude').value = lat;
-                        document.getElementById('longitude').value = lng;
-                        console.log('위도:', lat, '경도:', lng);
-                    }
-                };
-                document.getElementById('address').value = roadAddr;
-                console.log(roadAddr);
-                geocoder.addressSearch(roadAddr, callback);
-            }
-        }).open();
-    }
+    $(function() {
+        // 공통으로 사용할 함수를 정의합니다.
+        function openPostcode() {
+
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var geocoder = new kakao.maps.services.Geocoder();
+                    var roadAddr = data.roadAddress;
+                    var callback = function (result, status) {
+                        if (status === kakao.maps.services.Status.OK) {
+                            console.log(result);
+                            var lat = result[0].y;
+                            var lng = result[0].x;
+                            document.getElementById('latitude').value = lat;
+                            document.getElementById('longitude').value = lng;
+                            console.log('위도:', lat, '경도:', lng);
+                        }
+                    };
+                    document.getElementById('address').value = roadAddr;
+                    console.log(roadAddr);
+                    geocoder.addressSearch(roadAddr, callback);
+                    // 다음 입력 필드로 포커스 이동
+                    document.getElementById('email').focus();
+                }
+            }).open();
+        }
+
+        // 포커스 이벤트에 반응하도록 합니다.
+        $("#address").on("focus", function () {
+            openPostcode();
+        });
+
+        // 클릭 이벤트에 반응하도록 합니다.
+        $("#address").on("click", function () {
+            openPostcode();
+        });
+    });
 </script>
 <!-- 주소입력 팝업 api -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script><!-- kakao 주소찾기 -->

@@ -51,6 +51,7 @@ public class LoginController {
         userService.insertMember(dto);
 
         return "account/login";
+
     }
     @ResponseBody
     @GetMapping("/member/login")
