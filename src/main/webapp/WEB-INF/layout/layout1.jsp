@@ -269,6 +269,10 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+    #chat-head-member {
+        font-weight: bold;
+        color: #333;
+    }
 </style>
 
 <div class="flex flex-col bg-white rounded-2xl shadow-2xl" id="chattingArea">
