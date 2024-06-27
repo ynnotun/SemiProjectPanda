@@ -712,7 +712,7 @@
                 onclick="alertChatLogClose()"
         >Cancel
         </button>
-        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-blue-500 bg-blue-500 text-white h-10 px-4 py-2"
+        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-blue-500 text-white h-10 px-4 py-2"
                 id="alertChatLogOkBtn"
         >Login
         </button>
@@ -750,7 +750,7 @@
         $("#alertChatLogOkBtn").addClass("bg-red-500")
 
         document.getElementById("alertChatLogOkBtn").onclick = function () {
-            fetch('product/cancel', {
+            fetch('/product/cancel', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

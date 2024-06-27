@@ -48,7 +48,7 @@ public interface ProductMapperInter {
                         GROUP BY productnum
                     ) i ON i.productnum = p.productnum
                     WHERE p.usernum = #{usernum}
-                    order by productnum""") //url에 ?usernum=1 ->파라미터(매개변수)를 받아온다.
+                    order by productnum desc""") //url에 ?usernum=1 ->파라미터(매개변수)를 받아온다.
     public List<ProductDto> getSellList(int usernum); //자바에서 어떤 이름으로 불러올지 메소드 이름 선정
 
     //구매내역 불러오기
@@ -61,7 +61,7 @@ public interface ProductMapperInter {
                     GROUP BY productnum
                 ) i ON i.productnum = p.productnum
                 WHERE p.customernum = #{customernum}
-                order by productnum""")
+                order by productnum desc""")
     public List<ProductDto> getBuyList(int customernum);
 
 
