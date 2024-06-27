@@ -143,7 +143,7 @@
             </a>
         </div>
     </form>
-    <div style="width: 50px;">
+    <div style="width: 50px; display: none;">
         <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=5453e845f3bfe0528d93713e153531c3&redirect_uri=http://localhost:9000/kakao/code">
             <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" />
         </a>
