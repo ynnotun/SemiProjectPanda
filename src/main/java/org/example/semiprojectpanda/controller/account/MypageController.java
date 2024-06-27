@@ -1,13 +1,12 @@
 package org.example.semiprojectpanda.controller.account;
 
+import org.example.semiprojectpanda.config.SHA256;
 import org.example.semiprojectpanda.dto.ProductDto;
 import org.example.semiprojectpanda.dto.ProductImageDto;
 import org.example.semiprojectpanda.dto.ReviewDto;
 import org.example.semiprojectpanda.dto.UserDto;
 import org.example.semiprojectpanda.mapperInter.ProductImageMapperInter;
-import org.example.semiprojectpanda.mapperInter.ProductMapperInter;
 import org.example.semiprojectpanda.mapperInter.UserMapperInter;
-import org.example.semiprojectpanda.mapperInter.WishMapperInter;
 import org.example.semiprojectpanda.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +40,9 @@ public class MypageController {
 
     @Autowired
     private ProductImageMapperInter productImageMapperInter;
+
+    @Autowired
+    private PayService payService;
 
 
     @GetMapping("/mypage")
@@ -85,22 +88,35 @@ public class MypageController {
         model.addAttribute("userGrade", userGrade);
 
 
+        //포인트
+        Object usernumObj = usernum;
+        if (usernumObj == null) {
+            model.addAttribute("pointamount", 0);
+            return "pay/payment";
+        }
+        int pointamount = payService.getPointAmountByUsernum(usernum);
+        model.addAttribute("pointamount", pointamount);
+
+
         return "account/mypage";
     }
 
 
     @PostMapping("/mypage/confirm-password")
     @ResponseBody
-    public String confirmPassword(@RequestBody Map<String, String> request, HttpSession session) {
+    public String confirmPassword(@RequestBody Map<String, String> request, HttpSession session) throws NoSuchAlgorithmException {
         String inputPassword = request.get("password");
 
         // 세션에서 현재 로그인한 사용자의 usernum 가져오기
         int usernum = (int) session.getAttribute("usernum");
+        String useremail = (String) session.getAttribute("useremail");
+        SHA256 sha256 = new SHA256();
+        String password = sha256.encrypt(inputPassword + sha256.encrypt(useremail));
 
         // 데이터베이스에서 현재 사용자의 비밀번호 가져오기
         String currentUserPassword = userService.getUserPassword(usernum);
 
-        if (inputPassword.equals(currentUserPassword)) {
+        if (password.equals(currentUserPassword)) {
             return "success";
         } else {
             return "fail";

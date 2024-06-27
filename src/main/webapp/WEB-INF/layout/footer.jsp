@@ -10,7 +10,7 @@
 <body>
 <div class="flex flex-col">
     <footer class="bg-black text-white py-4 px-6 md:px-8 flex items-center justify-between">
-        <p>© 2023 SecondHand. All rights reserved.</p>
+        <p>© 2024 PANDA. All rights reserved.</p>
         <nav class="flex items-center gap-4">
             <a class="hover:text-gray-200" href="#">
                 About

@@ -35,7 +35,13 @@ public class WriteController {
     private String folderName = "panda";
 
     @GetMapping("/product/write")
-    public String productWrite(Model model) {
+    public String productWrite(Model model, HttpSession session) {
+        // 로그인 여부 확인
+        var usernum = session.getAttribute("usernum");
+        if (usernum == null) {
+            return "redirect:/"; // 메인 페이지로 리다이렉트
+        }
+
         //CATEGORY 받아와서 나열하기
         List<CategoryDto> categories = productWriteService.getAllCategories();
         model.addAttribute("categories", categories);
@@ -54,6 +60,10 @@ public class WriteController {
         // 로그인한 사용자의 usernum을 productDto에 설정
         HttpSession session = request.getSession();
         var usernum = session.getAttribute("usernum");
+        if (usernum == null) {
+            return "redirect:/"; // 메인 페이지로 리다이렉트
+        }
+
         productDto.setUsernum((Integer) usernum);
 
         //product에 대한 insert
@@ -77,13 +87,17 @@ public class WriteController {
             }
         }
 
-        //hashtag에 대한 insert
-        List<String> hashtags = new ArrayList<>(Arrays.asList(hashtaglist.split(",")));
-        for (String tag : hashtags) {
-            HashtagDto hashtagDto = new HashtagDto();
-            hashtagDto.setProductnum(productnum);
-            hashtagDto.setHashtagname(tag);
-            productWriteService.insertHashtag(hashtagDto);
+        // hashtag에 대한 insert
+        if (hashtaglist != null && !hashtaglist.trim().isEmpty()) {
+            List<String> hashtags = new ArrayList<>(Arrays.asList(hashtaglist.split(",")));
+            for (String tag : hashtags) {
+                if (!tag.trim().isEmpty()) { // 빈 해시태그 무시
+                    HashtagDto hashtagDto = new HashtagDto();
+                    hashtagDto.setProductnum(productnum);
+                    hashtagDto.setHashtagname(tag.trim());
+                    productWriteService.insertHashtag(hashtagDto);
+                }
+            }
         }
 
         return "redirect:/product/detail/?productnum=" + productnum;

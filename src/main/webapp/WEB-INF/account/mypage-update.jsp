@@ -5,8 +5,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="${root}/js/modal.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <title></title>
+
+    <style>
+        .error-border {
+            border: 2px solid red !important;
+        }
+        .check-border{
+            border: 2px solid #45a049 !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -50,7 +60,7 @@
         <div>
             <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="password">비밀번호 변경</label>
             <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                   type="password" id="password" placeholder="Enter your password"/>
+                   type="password" id="new-password" placeholder="Enter your password"/>
         </div>
         <div>
             <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="confirm-password">비밀번호 확인</label>
@@ -62,7 +72,8 @@
             <div class="mt-1 grid grid-cols-3 gap-3">
                 <div class="relative">
                     <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
-                        <img id="photo" src="https://kr.object.ncloudstorage.com/semi/panda/${userDto.userprofileimage}" alt="Profile 1" class="h-full w-full object-cover"/>
+                        <img id="photo" src="https://kr.object.ncloudstorage.com/semi/panda/${userDto.userprofileimage}" alt="Profile 1" class="h-full w-full object-cover"
+                             style="aspect-ratio: 32 / 32; object-fit: cover;"/>
                         <input type="file" name="myfile" id="photoupload" style="display: none;">
                     </div>
                     <div class="absolute inset-0 flex items-center justify-center bg-green-500 bg-opacity-75 opacity-0 transition-opacity hover:opacity-100">
@@ -71,7 +82,7 @@
                 </div>
             </div>
             <div class="mt-3">
-                <button onclick="$('#photoupload').trigger('click')" type="file" class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                <button onclick="$('#photoupload').trigger('click')" type=button class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 h-5 w-5">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="17 8 12 3 7 8"></polyline>
@@ -83,7 +94,7 @@
         </div>
 
     </div>
-        <hr style="margin-bottom: 10px; margin-top: 30px;">
+    <hr style="margin-bottom: 10px; margin-top: 30px;">
     <div style="margin-bottom: 10px;">
         <button type="button" id="completeRegister" class="w-full inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">변경하기</button>
     </div>
@@ -95,6 +106,7 @@
     $(document).ready(function() {
         const urlParams = new URLSearchParams(window.location.search);
         const usernum = urlParams.get('usernum');
+        let isNicknameChecked = false; // 닉네임 중복 체크 여부를 저장하는 변수 추가
 
         $('#checkNickname').click(function() {
             const nickname = $('#nickname').val();
@@ -106,14 +118,17 @@
                 data: JSON.stringify({ nickname: nickname }),
                 success: function(response) {
                     if (response.exists) {
-                        alert('이미 사용중인 닉네임입니다.');
+                        openModal('PANDA', '이미 사용중인 닉네임입니다', `closeModal()`)
+                        isNicknameChecked = false;
+
                     } else {
-                        alert('사용가능한 닉네임입니다.');
+                        openModal('PANDA', '사용가능한 닉네임입니다.', `closeModal()`)
+                        isNicknameChecked = true;
                     }
                 },
                 error: function(xhr, status, error) {
                     console.log(error);
-                    alert(error);
+                    isNicknameChecked = false; // 에러 발생 시 false로 설정
                 }
             });
         });
@@ -153,8 +168,19 @@
 
         $('#completeRegister').click(function() {
             const usernickname = $('#nickname').val();
-            const userpassword = $('#password').val();
+            const userpassword = $('#new-password').val();
+            const confirmPassword = $('#confirm-password').val();
+
             const userprofileimage = $('#photo').attr('src'); // 업로드된 이미지의 URL
+
+            if (userpassword !== confirmPassword) {
+                openModal('PANDA', '비밀번호가 일치하지 않습니다', `closeModal()`)
+                return;
+            }
+            if (!isNicknameChecked) { // 닉네임 중복 체크 여부 확인
+                openModal('PANDA', '닉네임 중복체크를 해주세요.', `closeModal()`)
+                return;
+            }
 
             $.ajax({
                 url: '/mypage/updatecomplete',
@@ -203,6 +229,29 @@
             }
         });
     }
+
+    $(document).ready(function () {
+        $('#new-password, #confirm-password').on('keyup', function () {
+            var password = $('#new-password').val();
+            var confirmPassword = $('#confirm-password').val();
+
+            if (password === '' || confirmPassword === '') {
+                $('#confirm-password').removeClass('error-border check-border');
+            } else if (password !== confirmPassword) {
+                $('#confirm-password').removeClass('check-border');
+                $('#confirm-password').addClass('error-border');
+            } else {
+                $('#confirm-password').removeClass('error-border');
+                $('#confirm-password').addClass('check-border');
+            }
+
+        });
+
+    });
+
+
+
+
 </script>
 
 </body>
