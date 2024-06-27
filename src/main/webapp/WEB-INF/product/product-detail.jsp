@@ -214,8 +214,8 @@
 // https://v0.dev/t/4WkJbGjVd8r
 -->
 <div class="bg-white  text-gray-900  min-h-screen main">
-    <button onclick="login()">login</button>
-    <button onclick="logout()">logout</button>
+    <button onclick="login()" style="display: none;">login</button>
+    <button onclick="logout()" style="display: none;">logout</button>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             <div class="h-screen">
