@@ -56,9 +56,19 @@
         margin-bottom: 10px;
     }
 
+
+    .paymentLabels:hover{
+        background-color: #4CAF50;
+        cursor: pointer;
+    }
+    .paymentLabels.selected {
+        background-color: #4CAF50;
+        color: white;
+    }
     #pay-button {
         background-color: black;
         color: white;
+        cursor: pointer;
     }
     #pay-button:hover {
         background-color: black;
@@ -103,15 +113,10 @@
             pay(method);
         });
         $('label.paymentLabels').click(function() {
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
-                $(".pay-button").val("");
-            } else {
-                $('label.paymentLabels').removeClass('selected');
-                $(this).addClass('selected');
-                $(".pay-button").val($(this).attr("for"));
-                console.log($(this).attr("for"));
-            }
+            $('label.paymentLabels').removeClass('selected');
+            $(this).addClass('selected');
+            $(".pay-button").val($(this).attr("for"));
+            console.log($(this).attr("for"));
         });
     });
 
@@ -195,7 +200,7 @@
     });
 
     function payopen(){
-        document.getElementsByClassName("container2")[0].style.left = "1000px";
+        document.getElementsByClassName("container2")[0].style.left = "50%";
     }
     function payclose(){
         document.getElementsByClassName("container2")[0].style.left = "-1000px";
@@ -203,12 +208,12 @@
 
 </script>
 
-<div class="container2" style="position: fixed; width: 500px; height: auto; left: -1000px; top: 30px;">
+<div class="container2" style="box-shadow: 5px 5px 20px black; position: fixed; width: 500px; height: auto; left: -50%; top: -10%; transform: scale(0.7) translateX(-50%); transform-origin: 50%">
     <div class="rounded-lg bg-card text-card-foreground" data-v0-t="card">
         <div class="flex flex-col space-y-1.5 p-6" style="margin-bottom: 30px;">
             <img src="https://kr.object.ncloudstorage.com/semi/panda/logo.png" style="width: 200px; height: auto; position: fixed">
-            <div class="absolute right-3 top-3 chat-close" id="chatbot-close" onclick="payclose()">
-            <span class="material-symbols-outlined">
+            <div class="absolute right-3 top-3" onclick="payclose()">
+            <span class="material-symbols-outlined" style="cursor: pointer;">
             close
             </span>
             </div>
@@ -451,17 +456,20 @@
                                 </svg>
                                 <span class="sr-only">Settings</span>
                             </button>
-                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
-                            <span>나의 포인트 : </span> ${pointamount}P
-                        </div>
-                        <!-- 결제버튼 -->
-                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
-                                <button onclick= "payopen()" id="pay" >
-                                    <p>PAY</p>
-                                </button>
-                            </div>
-                        </c:if>
+
                     </div>
+                    <div style="display: flex">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 " style="margin-right: 20px;">
+                        <span>나의 포인트 : </span> ${pointamount}P
+                    </div>
+                    <!-- 결제버튼 -->
+                    <div class="flex items-center gap-2 text-sm text-gray-500 ">
+                        <button onclick= "payopen()" id="pay" >
+                            <p>PAY</p>
+                        </button>
+                    </div>
+                    </div>
+                    </c:if>
                 </div>
 
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
