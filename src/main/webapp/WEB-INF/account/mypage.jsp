@@ -213,7 +213,7 @@
         <div class="flex flex-col space-y-1.5 p-6" style="margin-bottom: 30px;">
             <img src="https://kr.object.ncloudstorage.com/semi/panda/logo.png" style="width: 200px; height: auto; position: fixed">
             <div class="absolute right-3 top-3" onclick="payclose()">
-            <span class="material-symbols-outlined">
+            <span class="material-symbols-outlined" style="cursor: pointer;">
             close
             </span>
             </div>
@@ -456,17 +456,20 @@
                                 </svg>
                                 <span class="sr-only">Settings</span>
                             </button>
-                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
-                            <span>나의 포인트 : </span> ${pointamount}P
-                        </div>
-                        <!-- 결제버튼 -->
-                        <div class="flex items-center gap-2 text-sm text-gray-500 ">
-                                <button onclick= "payopen()" id="pay" >
-                                    <p>PAY</p>
-                                </button>
-                            </div>
-                        </c:if>
+
                     </div>
+                    <div style="display: flex">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 " style="margin-right: 20px;">
+                        <span>나의 포인트 : </span> ${pointamount}P
+                    </div>
+                    <!-- 결제버튼 -->
+                    <div class="flex items-center gap-2 text-sm text-gray-500 ">
+                        <button onclick= "payopen()" id="pay" >
+                            <p>PAY</p>
+                        </button>
+                    </div>
+                    </div>
+                    </c:if>
                 </div>
 
                 <div data-orientation="horizontal" role="none" class="shrink-0 bg-gray-100 h-[1px] w-full"></div>
