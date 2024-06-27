@@ -99,12 +99,6 @@
                         value="on"
                         class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                         id="remember-me">
-                <input
-                        type="checkbox"
-                        aria-hidden="true"
-                        style="transform:translateX(-100%);position:absolute;pointer-events:none;opacity:0;margin:0"
-                        tabindex="-1"
-                        value="on"/>
                 <label
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ml-2"
                         for="remember-me">
