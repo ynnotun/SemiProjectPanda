@@ -45,7 +45,7 @@ public class HomeController {
             @RequestParam int categorynum,
             @RequestParam int page) {
 
-        int perPage = 4; // 한 페이지에 보여줄 아이템 수
+        int perPage = 8; // 한 페이지에 보여줄 아이템 수
         int start = (page - 1) * perPage;
 
         List<ProductDto> products = null;
