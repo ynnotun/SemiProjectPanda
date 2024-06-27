@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,8 +37,14 @@ public class UpdateController {
     @GetMapping("/product/update")
     public String productUpdate(
             @RequestParam("productnum") int productnum,
-            Model model)
+            Model model,
+            HttpSession session)
     {
+        var usernum = session.getAttribute("usernum");
+        if (usernum == null) {
+            return "redirect:/"; // 메인 페이지로 리다이렉트
+        }
+
         //CATEGORY 받아와서 나열하기
         List<CategoryDto> categories = productUpdateService.getAllCategories();
         model.addAttribute("categories", categories);
@@ -63,16 +70,20 @@ public class UpdateController {
             @RequestParam("productImages") List<MultipartFile> productImages,
             @RequestParam(value = "deletedImages", required = false) String deletedImagesJson,
             @RequestParam("hashtaglist") String hashtaglist,
-            HttpServletRequest request
+            HttpSession session
     )
     {
+        var usernum = session.getAttribute("usernum");
+        if (usernum == null) {
+            return "redirect:/"; // 메인 페이지로 리다이렉트
+        }
         //수정 폼이 제출된 상품의 상품번호
         int productnum = productDto.getProductnum();
 
         // product에 대한 update
         productUpdateService.updateProduct(productDto);
 
-        // 삭제된 이미지 처리
+        /*// 삭제된 이미지 처리
         if (deletedImagesJson != null && !deletedImagesJson.isEmpty()) {
             List<String> deletedImages = Arrays.asList(deletedImagesJson.replace("[", "").replace("]", "").replace("\"", "").split(","));
             for (String imageName : deletedImages) {
@@ -104,13 +115,39 @@ public class UpdateController {
                 }
             }
         }
+        */
 
-        //업데이트 결과 해시태그 행 삽입
-        if(hashtaglist.isEmpty())
+        // 삭제된 이미지 처리
+        if (deletedImagesJson != null && !deletedImagesJson.isEmpty()) {
+            List<String> deletedImages = Arrays.asList(deletedImagesJson.replace("[", "").replace("]", "").replace("\"", "").split(","));
+            for (String imageName : deletedImages) {
+                // 버켓에서 이미지 삭제
+                storageService.deleteFile(bucketName, folderName, imageName.trim());
+                // DB에서 이미지 행 삭제
+                productUpdateService.deleteProductImageByFilename(imageName.trim());
+            }
+        }
+
+        // 새로운 이미지 파일이 업로드된 경우 처리
+        if (!productImages.isEmpty() && productImages.get(0).getSize() > 0) {
+            for (MultipartFile image : productImages) {
+                if (!image.isEmpty()) {
+                    String filename = storageService.uploadFile(bucketName, folderName, image);
+                    // DB에 이미지 정보 저장
+                    ProductImageDto imageDto = new ProductImageDto();
+                    imageDto.setProductnum(productnum);
+                    imageDto.setImagefilename(filename);
+                    productUpdateService.insertProductImage(imageDto);
+                }
+            }
+        }
+
+        if(hashtaglist.isEmpty())//해시태그를 다 지워서 제출한 경우?
         {
             productUpdateService.deleteAllHashtags(productnum);
         }
-        if (hashtaglist != null && !hashtaglist.isEmpty()) {
+        else
+        {
             productUpdateService.deleteAllHashtags(productnum);
             List<String> hashtags = new ArrayList<>(Arrays.asList(hashtaglist.split(",")));
             for (String hashtag : hashtags) {
@@ -120,6 +157,7 @@ public class UpdateController {
                 productUpdateService.insertHashtag(hashtagDto);
             }
         }
+
 
         return "redirect:/product/detail/?productnum=" + productnum;
     }

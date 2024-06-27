@@ -186,7 +186,8 @@
                                 name="productaddress"
                                 required="required"
                                 value="${productDto.productaddress}"
-                                onclick="openDaumPostcode()"/>
+                                onfocus="openDaumPostcode()"
+                                <%--onclick="openDaumPostcode()"--%>/>
                     </div>
                     <input type="hidden" id="latitude" name="productlocationx" value="${productDto.productlocationx}"/>
                     <input type="hidden" id="longitude" name="productlocationy" value="${productDto.productlocationy}"/>
@@ -220,7 +221,7 @@
                 <div class="grid gap-2">
                     <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                         Hashtags
-                        <span style="font-size: x-small"> 최대 5개까지 입력 가능합니다.</span>
+                        <span style="font-size: x-small"> 최대 5개, 19자까지 입력 가능합니다.</span>
                     </label>
 
                     <div class="flex flex-wrap gap-2" id="hashtag-container">
@@ -312,21 +313,41 @@
                 return;
             }
 
-            // 이전 미리보기 내용 지우기 및 삭제 대기 목록에 추가
-            preview.innerHTML = '';
+            /*// 이전 미리보기 내용 지우기 및 삭제 대기 목록에 추가
+            //preview.innerHTML = '';
             uploadedFiles.forEach(file => {
                 if (!(file instanceof File)) {
                     deletedImages.push(file.name);
                 }
             });
-            uploadedFiles = [];
+            uploadedFiles = [];*/
 
             files.forEach(file => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    renderPreviewImage(file.name, e.target.result, true);
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('w-48', 'h-48', 'object-cover', 'rounded', 'border', 'cursor-pointer'); // TailwindCSS 클래스 사용
+                    img.dataset.filename = file.name; // 파일 이름을 데이터 속성으로 저장
+
+                    // 클릭 시 미리보기에서 이미지 제거
+                    img.addEventListener('click', function() {
+                        preview.removeChild(img);
+
+                        // 업로드된 파일 목록에서 해당 파일 제거
+                        uploadedFiles = uploadedFiles.filter(uploadedFile => uploadedFile.name !== file.name);
+
+                        // 파일 입력 요소 값 재설정
+                        const dataTransfer = new DataTransfer();
+                        uploadedFiles.forEach(file => dataTransfer.items.add(file));
+                        fileInput.files = dataTransfer.files;
+                    });
+
+                    preview.appendChild(img);
                 };
                 reader.readAsDataURL(file);
+
+                // 업로드된 파일 목록에 추가
                 uploadedFiles.push(file);
             });
 
@@ -334,39 +355,6 @@
             const dataTransfer = new DataTransfer();
             uploadedFiles.forEach(file => dataTransfer.items.add(file));
             fileInput.files = dataTransfer.files;
-        });
-
-        // 폼 제출 시 이미지 개수 확인
-        postItemButton.addEventListener('click', function(event) {
-            if (uploadedFiles.length === 0) {
-                event.preventDefault(); // 폼 제출 방지
-                modal.show(); // 모달 표시
-                fileInput.setAttribute('required', 'required'); // required 속성 추가
-            } else {
-                // 삭제된 이미지를 hidden input에 추가
-                const deletedImagesInput = document.createElement('input');
-                deletedImagesInput.type = 'hidden';
-                deletedImagesInput.name = 'deletedImages';
-                deletedImagesInput.value = JSON.stringify(deletedImages);
-                productForm.appendChild(deletedImagesInput);
-
-                // 업로드된 파일 목록을 hidden input에 추가
-                const dataTransfer = new DataTransfer();
-                uploadedFiles.forEach(file => {
-                    if (file instanceof File) {
-                        dataTransfer.items.add(file);
-                    }
-                });
-                fileInput.files = dataTransfer.files;
-            }
-        });
-
-        // 미리보기 이미지 가로 스크롤링
-        preview.addEventListener('wheel', function(event) {
-            if (event.deltaY !== 0) {
-                event.preventDefault();
-                this.scrollLeft += event.deltaY;
-            }
         });
 
         // 미리보기 이미지 렌더링 함수
@@ -395,12 +383,50 @@
 
             preview.appendChild(img);
         }
+
+        // 폼 제출 시 이미지 개수 확인
+        postItemButton.addEventListener('click', function(event) {
+            if (uploadedFiles.length === 0) {
+                event.preventDefault(); // 폼 제출 방지
+                modal.show(); // 모달 표시
+                //fileInput.setAttribute('required', 'required'); // required 속성 추가
+            }
+            else
+            {
+                // 삭제된 이미지를 hidden input에 추가
+                const deletedImagesInput = document.createElement('input');
+                deletedImagesInput.type = 'hidden';
+                deletedImagesInput.name = 'deletedImages';
+                deletedImagesInput.value = JSON.stringify(deletedImages);
+                productForm.appendChild(deletedImagesInput);
+
+                // 업로드된 파일 목록을 hidden input에 추가
+                const dataTransfer = new DataTransfer();
+                uploadedFiles.forEach(file =>
+                {
+                    if (file instanceof File)
+                    {
+                        dataTransfer.items.add(file);
+                    }
+                });
+                fileInput.files = dataTransfer.files;
+            }
+        });
+
+        // 미리보기 이미지 가로 스크롤링
+        preview.addEventListener('wheel', function(event) {
+            if (event.deltaY !== 0) {
+                event.preventDefault();
+                this.scrollLeft += event.deltaY;
+            }
+        });
     });
 </script>
 
 <!-- 해시태그 이벤트 -->
 <script>
     const maxHashtags = 5;
+    const maxHashtagLength = 19;
     const hashtagContainer = document.getElementById('hashtag-container');
     const hashtagInput = document.getElementById('hashtag-input');
     const hashtagListInput = document.getElementById('hashtaglist');
@@ -414,6 +440,7 @@
 
     // 페이지 로드 시 초기 해시태그 UI 업데이트
     document.addEventListener('DOMContentLoaded', function () {
+        updateHiddenInput();
         renderHashtags();
     });
 
@@ -435,6 +462,13 @@
         if (!tag.startsWith('#')) {
             tag = '#' + tag;
         }
+
+        // 해시태그 길이 확인
+        if (tag.length > maxHashtagLength) {
+            //alert('해시태그는 최대 19자까지 가능합니다.');
+            return;
+        }
+
         // hashtags 리스트에 중복되는 내용이 없을 경우만 renderHashtags() 함수로 전달
         if (!hashtags.includes(tag)) {
             hashtags.push(tag);
@@ -475,7 +509,7 @@
         });
     }
 
-    // 숨겨진 input 업데이트 함수
+    // hidden input 업데이트 함수
     function updateHiddenInput() {
         hashtagListInput.value = hashtags.join(',');
     }
@@ -487,6 +521,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         function openDaumPostcode() {
+            document.getElementById('location').blur();  // input의 포커스 잠시 제거
+
             new daum.Postcode({
                 oncomplete: function (data) {
                     var geocoder = new kakao.maps.services.Geocoder();
