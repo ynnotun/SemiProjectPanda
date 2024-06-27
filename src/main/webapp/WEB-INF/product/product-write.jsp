@@ -186,7 +186,8 @@
                                 name="productaddress"
                                 required="required"
                                 placeholder="판매장소를 등록해주세요."
-                                onclick="openDaumPostcode()"/>
+                                onfocus="openDaumPostcode()"
+                               <%-- onclick="openDaumPostcode()"--%>/>
                     </div>
                     <input type="hidden" id="latitude" name="productlocationx"/>
                     <input type="hidden" id="longitude" name="productlocationy"/>
@@ -200,7 +201,8 @@
                     <div class="flex items-center gap-2">
                         <select class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 id="category"
-                                name="categorynum">
+                                name="categorynum"
+                                required>
                             <option value="" selected disabled hidden>Select category</option>
                             <c:forEach var="category" items="${categories}">
                                 <option value="${category.categorynum}">${category.categoryname}</option>
@@ -216,7 +218,7 @@
                 <div class="grid gap-2">
                     <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                         Hashtags
-                        <span style="font-size: x-small"> 최대 5개까지 입력 가능합니다.</span>
+                        <span style="font-size: x-small"> 최대 5개, 19자까지 입력 가능합니다.</span>
                     </label>
 
                     <!-- 입력받은 해시태그들 나열 -->
@@ -270,7 +272,7 @@
         const preview = document.getElementById('preview');
         const modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
         const modalTooManyImages = new bootstrap.Modal(document.getElementById('toomanyimages'));
-        const productForm = document.getElementById('productForm');
+        //const productForm = document.getElementById('productForm');
         let uploadedFiles = [];
 
         // 이미지 업로드 버튼 클릭
@@ -281,7 +283,7 @@
         // 파일 선택 시 미리보기 표시 및 클릭 시 제거
         fileInput.addEventListener('change', function(event) {
             const files = Array.from(event.target.files);
-            preview.innerHTML = ''; // 이전 미리보기 내용 지우기
+            //preview.innerHTML = ''; // 이전 미리보기 내용 지우기
 
             // 이미지가 10장을 초과하는지 확인
             if (uploadedFiles.length + files.length > 10) {
@@ -323,7 +325,8 @@
             uploadedFiles.forEach(file => dataTransfer.items.add(file));
             fileInput.files = dataTransfer.files;
 
-            fileInput.removeAttribute('required'); // 파일이 선택되면 required 속성 제거
+            //fileInput.removeAttribute('required'); // 파일이 선택되면 required 속성 제거
+            //required 지워?
         });
 
         // 폼 제출 시 이미지 개수 확인
@@ -331,7 +334,8 @@
             if (fileInput.files.length === 0) {
                 event.preventDefault(); // 폼 제출 방지
                 modal.show(); // 모달 표시
-                fileInput.setAttribute('required', 'required'); // required 속성 추가
+                //fileInput.setAttribute('required', 'required'); // required 속성 추가
+                //required 지워?
             }
         });
 
@@ -348,6 +352,7 @@
 <!-- 해시태그 이벤트 -->
 <script>
     const maxHashtags = 5;
+    const maxHashtagLength = 19;
     const hashtagContainer = document.getElementById('hashtag-container');
     const hashtagInput = document.getElementById('hashtag-input');
     const hashtagListInput = document.getElementById('hashtaglist');
@@ -371,6 +376,13 @@
         if (!tag.startsWith('#')) {
             tag = '#' + tag;
         }
+
+        // 해시태그 길이 확인
+        if (tag.length > maxHashtagLength) {
+            //alert('해시태그는 최대 19자까지 가능합니다.');
+            return;
+        }
+
         // hashtags 리스트에 중복되는 내용이 없을 경우만 renderHashtags()함수로 전달
         if (!hashtags.includes(tag)) {
             hashtags.push(tag);
@@ -422,6 +434,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         function openDaumPostcode() {
+            document.getElementById('location').blur();  // input의 포커스 잠시 제거
+
             new daum.Postcode({
                 oncomplete: function (data) {
                     var geocoder = new kakao.maps.services.Geocoder();
