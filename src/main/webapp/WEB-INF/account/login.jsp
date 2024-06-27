@@ -11,6 +11,7 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="${root}/js/modal.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
@@ -29,6 +30,12 @@
 </style>
 <script>
     $(function () {
+        // 페이지 로드 시 로컬 스토리지에서 이메일 값 로드
+        if (localStorage.getItem('rememberEmail') === 'true') {
+            $('#email').val(localStorage.getItem('userEmail'));
+            $('#remember-me').prop('checked', true);
+        }
+
         $("#btnlogin").click(function () {
             // 폼 안의 입력값 읽기
             let fdata = $("#loginform").serialize();
@@ -41,18 +48,33 @@
                 success: function (data) {
                     console.log(data); // 디버깅용 로그 출력
                     if (data.status === "success") {
+                        // 'Remember me' 체크박스 상태 저장
+                        if ($('#remember-me').is(':checked')) {
+                            localStorage.setItem('userEmail', $('#email').val());
+                            localStorage.setItem('rememberEmail', 'true');
+                        } else {
+                            localStorage.removeItem('userEmail');
+                            localStorage.setItem('rememberEmail', 'false');
+                        }
                         // 페이지 새로고침
                         location.href = "/";
                     } else {
-                        alert("아이디 또는 비밀번호가 맞지 않습니다.");
+                        openModal('PANDA', '아이디 또는 비밀번호가 맞지 않습니다.', `closeModal()`);
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error("전송 오류 발생:", status, error); // 오류 로그 출력
-                    alert("전송 오류가 발생했습니다.");
                 }
             })
         })
+
+        // Enter 키를 누르면 로그인 버튼 클릭
+        $("#loginform").on('keypress', function (e) {
+            if (e.which === 13) {
+                $("#btnlogin").click();
+                return false;
+            }
+        });
     })
 </script>
 <body>
@@ -127,11 +149,11 @@
             </a>
         </div>
     </form>
-</div>
-<div style="width: auto;">
-    <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=5453e845f3bfe0528d93713e153531c3&redirect_uri=http://localhost:9000/kakao/code">
-        <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" />
-    </a>
+    <div style="width: 50px;">
+        <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=5453e845f3bfe0528d93713e153531c3&redirect_uri=http://localhost:9000/kakao/code">
+            <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" />
+        </a>
+    </div>
 </div>
 </body>
 </html>
