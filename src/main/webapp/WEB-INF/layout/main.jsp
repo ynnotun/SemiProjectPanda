@@ -253,20 +253,38 @@
                }
             } else {
                $.each(data, function(idx, ele) {
+                  let a = '';
+                  let b = '';
+                  if (ele.productstatus == '거래 완료' || ele.productstatus == '리뷰 완료'
+                          || ele.productstatus == '구매자 리뷰 완료' || ele.productstatus == '판매자 리뷰 완료'){
+                     a = 'grayscale';
+                     b = '<div class="overlay">SOLD</div>';
+                  }
+
                   s += `
-                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                            <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}" width="300" height="200" alt="Product" class="rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"/>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium mb-2">\${ele.producttitle}</h3>
-                                <div class="mb-2">
-                                    <span class="text-gray-500 mr-1">\${ele.productprice}원</span>
-                                    <span class="text-gray-500">\${ele.productstatus}</span>
-                                </div>
-                            </div>
+                  <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                     <div class="relative w-full h-48">
+                     <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}"
+                          width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48
+                          \${a}" style="aspect-ratio:300/200;object-fit:cover"
+                          onclick="location.href='${root}/product/detail?productnum=\${ele.productnum}'"/>
+                           \${b}
+                     </div>
+                     <div class="p-4">
+                        <h3 class="cursor-pointer text-lg font-medium mb-2"
+                            onclick="location.href='${root}/product/detail?productnum=\${ele.productnum}'">
+                              \${ele.producttitle}</h3>
+                        <div class="mb-2">
+                           <span class="text-gray-500 mr-1">\${ele.productprice}원</span>
+                           <span class="text-gray-500">\${ele.productstatus}</span>
                         </div>
+                     </div>
+                  </div>
                     `;
                });
                if(page === 1) {
+
+                  console.log(s)
                   $("#item-seciton").html(s);
                } else {
                   $("#item-seciton").append(s);
