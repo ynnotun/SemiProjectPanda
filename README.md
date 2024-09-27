@@ -14,7 +14,7 @@
 ## 팀원 구성
 <div align="center">
 | **유니** | **정민석** | **김창인** | **공병현** | **이병현** | **우태형** |
-| :------: |  :------: | :------: | :------: | :------: | :------: |
+| ----- |  ------ |------|------|------|------|
 | [@ynnotun](https://github.com/ynnotun) | [@minseok0507](https://github.com/minseok0507) | [@ckddls1024](https://github.com/ckddls1024) | [@kongbh730](https://github.com/kongbh730) | [@LBang98](https://github.com/LBang98) | [@taehyoung809](https://github.com/taehyoung809) |
 </div>
 
