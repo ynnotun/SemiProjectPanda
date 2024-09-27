@@ -95,11 +95,6 @@
 - 백엔드 개발  : 2024-06-14 ~ 2024-07-02
 
 <br>
-
-### 작업 관리
-- GitHub Projects와 Issues를 사용하여 진행 상황을 공유했습니다.
-- 주간회의를 진행하며 작업 순서와 방향성에 대한 고민을 나누고 GitHub Wiki에 회의 내용을 기록했습니다.
-
   
 ## 프로젝트 자료
 - [기능 시연 영상](https://www.youtube.com/watch?v=jMFjW18qeZ4)
