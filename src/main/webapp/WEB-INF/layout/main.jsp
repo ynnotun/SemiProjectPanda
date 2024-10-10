@@ -192,27 +192,27 @@
    <br>
    <section class="py-8 px-6 md:px-8">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="item-seciton">
-         <c:forEach var="ele" items="${products}">
-            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-               <div class="relative w-full h-48">
-               <img src="${MINIO_ENDPOINT}/semi-panda/panda/${ele.imagefilename}"
-                    width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48
-                    ${ele.productstatus == '거래 완료' ? 'grayscale' : ''}" style="aspect-ratio:300/200;object-fit:cover"
-                    onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'"/>
-                     ${ele.productstatus == '거래 완료' ? '<div class="overlay">SOLD</div>' : ''}
-               </div>
-               <div class="p-4">
+<%--         <c:forEach var="ele" items="${products}">--%>
+<%--            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">--%>
+<%--               <div class="relative w-full h-48">--%>
+<%--               <img src="${MINIO_ENDPOINT}/semi-panda/panda/${ele.imagefilename}"--%>
+<%--                    width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48--%>
+<%--                    ${ele.productstatus == '거래 완료' ? 'grayscale' : ''}" style="aspect-ratio:300/200;object-fit:cover"--%>
+<%--                    onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'"/>--%>
+<%--                     ${ele.productstatus == '거래 완료' ? '<div class="overlay">SOLD</div>' : ''}--%>
+<%--               </div>--%>
+<%--               <div class="p-4">--%>
 
-                  <h3 class="cursor-pointer text-lg font-medium mb-2"
-                      onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">
-                        ${ele.producttitle}</h3>
-                  <div class="mb-2">
-                     <span class="text-gray-500 mr-1">${ele.productprice}원</span>
-                     <span class="text-gray-500">${ele.productstatus}</span>
-                  </div>
-               </div>
-            </div>
-         </c:forEach>
+<%--                  <h3 class="cursor-pointer text-lg font-medium mb-2"--%>
+<%--                      onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'">--%>
+<%--                        ${ele.producttitle}</h3>--%>
+<%--                  <div class="mb-2">--%>
+<%--                     <span class="text-gray-500 mr-1">${ele.productprice}원</span>--%>
+<%--                     <span class="text-gray-500">${ele.productstatus}</span>--%>
+<%--                  </div>--%>
+<%--               </div>--%>
+<%--            </div>--%>
+<%--         </c:forEach>--%>
       </div>
    </section>
 </div>
@@ -264,7 +264,7 @@
                   s += `
                   <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                      <div class="relative w-full h-48">
-                     <img src="\${MINIO_ENDPOINT}/semi-panda/panda/\${ele.imagefilename}"
+                     <img src="${MINIO_ENDPOINT}/semi-panda/panda/\${ele.imagefilename}"
                           width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48
                           \${a}" style="aspect-ratio:300/200;object-fit:cover"
                           onclick="location.href='${root}/product/detail?productnum=\${ele.productnum}'"/>

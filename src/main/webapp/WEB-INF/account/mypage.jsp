@@ -211,7 +211,7 @@
 <div class="container2" style="box-shadow: 5px 5px 20px black; position: fixed; width: 500px; height: auto; left: -50%; top: -10%; transform: scale(0.7) translateX(-50%); transform-origin: 50%">
     <div class="rounded-lg bg-card text-card-foreground" data-v0-t="card">
         <div class="flex flex-col space-y-1.5 p-6" style="margin-bottom: 30px;">
-            <img src="${MINIO_ENDPOINT}/semi-panda/panda/logo.png" style="width: 200px; height: auto; position: fixed">
+            <img src="${root}/image/logo.png" style="width: 200px; height: auto; position: fixed">
             <div class="absolute right-3 top-3" onclick="payclose()">
             <span class="material-symbols-outlined" style="cursor: pointer;">
             close
