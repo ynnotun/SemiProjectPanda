@@ -184,7 +184,7 @@
 <div class="container">
     <div class="rounded-lg bg-card text-card-foreground" data-v0-t="card">
         <div class="flex flex-col space-y-1.5 p-6">
-            <img src="https://kr.object.ncloudstorage.com/semi/panda/logo.png" style="width: 200px; height: auto">
+            <img src="${root}/image/logo.png" style="width: 200px; height: auto">
         </div>
         <div class="p-6 grid gap-6">
             <div>

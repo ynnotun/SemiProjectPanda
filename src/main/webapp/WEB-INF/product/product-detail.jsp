@@ -226,7 +226,7 @@
                     <div class="swiper-wrapper">
                         <c:forEach items="${imageDtoList}" var="imageDto">
                             <div class="swiper-slide">
-                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${imageDto.imagefilename}"/>
+                                <img src="${MINIO_ENDPOINT}/semi-panda/panda/${imageDto.imagefilename}"/>
                             </div>
                         </c:forEach>
                     </div>
@@ -237,7 +237,7 @@
                     <div class="swiper-wrapper">
                         <c:forEach items="${imageDtoList}" var="imageDto">
                             <div class="swiper-slide">
-                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${imageDto.imagefilename}"/>
+                                <img src="${MINIO_ENDPOINT}/semi-panda/panda/${imageDto.imagefilename}"/>
                             </div>
                         </c:forEach>
                     </div>
@@ -289,7 +289,7 @@
                         <div class="flex items-center gap-2">
                             <span class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border-2 border-[#4CAF50]">
                                 <img class="aspect-square h-full w-full" alt="Seller"
-                                     src="https://kr.object.ncloudstorage.com/semi/panda/${productUserDto.userprofileimage}"/>
+                                     src="${MINIO_ENDPOINT}/semi-panda/panda/${productUserDto.userprofileimage}"/>
                             </span>
                             <div>
 
@@ -975,7 +975,7 @@
                         <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
                             <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
                                 <img class="aspect-square h-full w-full" alt="Seller"
-                                   src="https://kr.object.ncloudstorage.com/semi/panda/\${chat.userprofileimage}"/>
+                                   src="\${MINIO_ENDPOINT}/semi-panda/panda/\${chat.userprofileimage}"/>
                             </span>
                         </span>
                     </div>
@@ -989,7 +989,7 @@
                         <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
                           <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
                               <img class="aspect-square h-full w-full" alt="Seller"
-                                   src="https://kr.object.ncloudstorage.com/semi/panda/\${chat.userprofileimage}"/>
+                                   src="\${MINIO_ENDPOINT}/semi-panda/panda/\${chat.userprofileimage}"/>
                           </span>
                         </span>
                         <div class="bg-[#4CAF50] text-white px-4 py-2 rounded-lg max-w-[75%] relative">

@@ -7,6 +7,7 @@ import org.example.semiprojectpanda.dto.ReviewDto;
 import org.example.semiprojectpanda.dto.UserDto;
 import org.example.semiprojectpanda.mapperInter.ProductImageMapperInter;
 import org.example.semiprojectpanda.mapperInter.UserMapperInter;
+import org.example.semiprojectpanda.naver.cloud.NaverConfig;
 import org.example.semiprojectpanda.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,6 +44,9 @@ public class MypageController {
 
     @Autowired
     private PayService payService;
+
+    @Autowired
+    private NaverConfig naverConfig;
 
 
     @GetMapping("/mypage")
@@ -86,6 +90,11 @@ public class MypageController {
         model.addAttribute("reviewCount", reviewCount);
         model.addAttribute("reviews", reviews);
         model.addAttribute("userGrade", userGrade);
+
+        String minioEndpoint = naverConfig.getEndPoint();
+        model.addAttribute("MINIO_ENDPOINT", minioEndpoint);
+
+
 
 
         //포인트

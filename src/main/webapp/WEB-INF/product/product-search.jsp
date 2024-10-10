@@ -52,7 +52,7 @@
                         <a href="<c:url value="/product/detail?productnum=${ele.productnum}"/>">
                             <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                                 <div class="relative w-full h-48">
-                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}" width="300"
+                                    <img src="${MINIO_ENDPOINT}/semi-panda/panda/${ele.imagefilename}" width="300"
                                          height="200" alt="Product"
                                          class="rounded-t-lg object-cover w-full h-48
                                         ${ele.productstatus == '거래 완료' ? 'grayscale' : ''}"

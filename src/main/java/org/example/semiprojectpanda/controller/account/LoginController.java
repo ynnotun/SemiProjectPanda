@@ -21,7 +21,7 @@ public class LoginController {
     private final UserService userService;
     @Autowired
     private NcpObjectStorageService storageService;
-    private String buckname="semi";
+    private String buckname="semi-panda";
     private String folderName="panda";
 
     @GetMapping("/login")

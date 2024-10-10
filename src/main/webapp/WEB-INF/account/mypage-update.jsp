@@ -72,7 +72,7 @@
             <div class="mt-1 grid grid-cols-3 gap-3">
                 <div class="relative">
                     <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full">
-                        <img id="photo" src="https://kr.object.ncloudstorage.com/semi/panda/${userDto.userprofileimage}" alt="Profile 1" class="h-full w-full object-cover"
+                        <img id="photo" src="${MINIO_ENDPOINT}/semi-panda/panda/${userDto.userprofileimage}" alt="Profile 1" class="h-full w-full object-cover"
                              style="aspect-ratio: 32 / 32; object-fit: cover;"/>
                         <input type="file" name="myfile" id="photoupload" style="display: none;">
                     </div>

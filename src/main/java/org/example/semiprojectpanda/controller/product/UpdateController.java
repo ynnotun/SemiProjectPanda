@@ -5,6 +5,7 @@ import org.example.semiprojectpanda.dto.CategoryDto;
 import org.example.semiprojectpanda.dto.HashtagDto;
 import org.example.semiprojectpanda.dto.ProductDto;
 import org.example.semiprojectpanda.dto.ProductImageDto;
+import org.example.semiprojectpanda.naver.cloud.NaverConfig;
 import org.example.semiprojectpanda.naver.cloud.NcpObjectStorageService;
 import org.example.semiprojectpanda.service.ProductUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,8 +31,11 @@ public class UpdateController {
     // navercloudplatform
     @Autowired
     private NcpObjectStorageService storageService;
-    private String bucketName = "semi";
+    private String bucketName = "semi-panda";
     private String folderName = "panda";
+
+    @Autowired
+    private NaverConfig naverConfig;
 
     @GetMapping("/product/update")
     public String productUpdate(
@@ -60,6 +63,13 @@ public class UpdateController {
         //상품 해시태그 리스트로
         List<HashtagDto> hashtags = productUpdateService.getAllHashtags(productnum);
         model.addAttribute("hashtags", hashtags);
+
+
+        String minioEndpoint = naverConfig.getEndPoint();
+        model.addAttribute("MINIO_ENDPOINT", minioEndpoint);
+
+
+
 
         return "product/product-update";
     }

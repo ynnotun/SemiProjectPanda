@@ -31,7 +31,7 @@ public class WriteController {
     // navercloudplatform
     @Autowired
     private NcpObjectStorageService storageService;
-    private String bucketName = "semi";
+    private String bucketName = "semi-panda";
     private String folderName = "panda";
 
     @GetMapping("/product/write")

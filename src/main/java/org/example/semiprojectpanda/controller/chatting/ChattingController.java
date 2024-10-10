@@ -6,6 +6,7 @@ import org.example.semiprojectpanda.dto.ChatroomDto;
 import org.example.semiprojectpanda.dto.ChatroomPrintDto;
 import org.example.semiprojectpanda.dto.ChattingPrintDto;
 import org.example.semiprojectpanda.mapperInter.ChatroomMapperInter;
+import org.example.semiprojectpanda.naver.cloud.NaverConfig;
 import org.example.semiprojectpanda.service.ChattingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,13 +15,17 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 public class ChattingController {
     private final ChattingService chattingService;
     private final ChatroomMapperInter chatroomMapperInter;
+    private final NaverConfig naverConfig;
 
     @GetMapping("/chatting/{chattingRoomNum}")
     public String chattingRoomMapping(
@@ -39,6 +44,11 @@ public class ChattingController {
         }
 
         model.addAttribute("roomDto", chatroomDto);
+
+        String minioEndpoint = naverConfig.getEndPoint();
+        model.addAttribute("MINIO_ENDPOINT", minioEndpoint);
+
+
         return "websocket/chatting/chat";
     }
 

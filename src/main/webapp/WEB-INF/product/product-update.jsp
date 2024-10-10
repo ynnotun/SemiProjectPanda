@@ -289,7 +289,7 @@
         <c:forEach var="image" items="${productImages}">
         uploadedFiles.push({
             name: '${image.imagefilename}',
-            src: 'https://kr.object.ncloudstorage.com/semi/panda/${image.imagefilename}'
+            src: '${MINIO_ENDPOINT}/semi-panda/panda/${image.imagefilename}'
         });
         </c:forEach>
 

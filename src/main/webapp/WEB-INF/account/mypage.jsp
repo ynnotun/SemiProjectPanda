@@ -211,7 +211,7 @@
 <div class="container2" style="box-shadow: 5px 5px 20px black; position: fixed; width: 500px; height: auto; left: -50%; top: -10%; transform: scale(0.7) translateX(-50%); transform-origin: 50%">
     <div class="rounded-lg bg-card text-card-foreground" data-v0-t="card">
         <div class="flex flex-col space-y-1.5 p-6" style="margin-bottom: 30px;">
-            <img src="https://kr.object.ncloudstorage.com/semi/panda/logo.png" style="width: 200px; height: auto; position: fixed">
+            <img src="${MINIO_ENDPOINT}/semi-panda/panda/logo.png" style="width: 200px; height: auto; position: fixed">
             <div class="absolute right-3 top-3" onclick="payclose()">
             <span class="material-symbols-outlined" style="cursor: pointer;">
             close
@@ -357,7 +357,7 @@
                     <div class="flex items-center gap-4">
             <span class="relative flex shrink-0 overflow-hidden rounded-full w-16 h-16 border-2 border-green-500">
               <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
-                  <img src="https://kr.object.ncloudstorage.com/semi/panda/${dto.userprofileimage}" alt="" width="100%">
+                  <img src="${MINIO_ENDPOINT}/semi-panda/panda/${dto.userprofileimage}" alt="" width="100%">
               </span>
             </span>
                         <div class="grid gap-1">
@@ -487,7 +487,7 @@
 
                         <c:forEach var="ele" items="${sellList}">
                             <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
+                                <img src="${MINIO_ENDPOINT}/semi-panda/panda/${ele.imagefilename}"
                                      width="300" height="200" alt="Product"
                                      class="cursor-pointer rounded-t-lg object-cover w-full h-48"
                                      style="aspect-ratio:300/200;object-fit:cover"
@@ -543,7 +543,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             <c:forEach var="ele" items="${buyList}">
                                 <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
+                                    <img src="${MINIO_ENDPOINT}/semi-panda/panda/${ele.imagefilename}"
                                          width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48" style="aspect-ratio:300/200;object-fit:cover"
                                          onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'"/>
                                     <div class="p-4">
@@ -588,7 +588,7 @@
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center gap-2">
                                                 <img
-                                                        src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
+                                                        src="${MINIO_ENDPOINT}/semi-panda/panda/${ele.imagefilename}"
                                                         alt="Product Image"
                                                         width="48"
                                                         height="48"
@@ -625,7 +625,7 @@
                             <div class="flex items-start gap-4">
                           <span class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border">
                             <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
-                                <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.userimage}" alt="" width="100%" class="cursor-pointer"
+                                <img src="${MINIO_ENDPOINT}/semi-panda/panda/${ele.userimage}" alt="" width="100%" class="cursor-pointer"
                                      onclick="location.href='${root}/mypage?usernum=${ele.reviewsenduser}'">
                             </span>
                           </span>

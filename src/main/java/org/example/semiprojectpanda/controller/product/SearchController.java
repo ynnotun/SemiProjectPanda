@@ -1,6 +1,7 @@
 package org.example.semiprojectpanda.controller.product;
 
 import org.example.semiprojectpanda.dto.ProductDto;
+import org.example.semiprojectpanda.naver.cloud.NaverConfig;
 import org.example.semiprojectpanda.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,9 @@ public class SearchController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private NaverConfig naverConfig;
+
     @GetMapping("/search")
     public String search(@RequestParam("keyword") String keyword, Model model) {
         // 키워드를 리스트로 변환
@@ -28,6 +32,14 @@ public class SearchController {
         // 검색 결과를 모델에 추가
         model.addAttribute("searchResults", searchResults);
         model.addAttribute("keyword", keyword);
+
+
+        String minioEndpoint = naverConfig.getEndPoint();
+        model.addAttribute("MINIO_ENDPOINT", minioEndpoint);
+
+
+
+
         return "product/product-search"; // 검색 결과를 보여줄 JSP 파일
     }
 }

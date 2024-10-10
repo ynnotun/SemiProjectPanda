@@ -7,6 +7,7 @@ import org.example.semiprojectpanda.dto.UserDto;
 import org.example.semiprojectpanda.dto.WishDto;
 import org.example.semiprojectpanda.mapperInter.ProductMapperInter;
 import org.example.semiprojectpanda.mapperInter.UserMapperInter;
+import org.example.semiprojectpanda.naver.cloud.NaverConfig;
 import org.example.semiprojectpanda.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class DetailController {
     private final ReviewService reviewService;
     private final ProductMapperInter productMapperInter;
     private final ProductService productService;
-
+    private final NaverConfig naverConfig;
 
     @Transactional
     @GetMapping("/product/detail")
@@ -61,6 +62,11 @@ public class DetailController {
 
         model.addAttribute("imageDtoList", detailService.getAllProductImages(productnum));
         model.addAttribute("productUserDto", userDto);
+
+
+        String minioEndpoint = naverConfig.getEndPoint();
+        model.addAttribute("MINIO_ENDPOINT", minioEndpoint);
+
 
 
         return "product/product-detail";

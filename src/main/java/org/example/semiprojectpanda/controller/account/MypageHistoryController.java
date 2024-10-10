@@ -1,7 +1,7 @@
 package org.example.semiprojectpanda.controller.account;
 
 import org.example.semiprojectpanda.dto.ProductDto;
-import org.example.semiprojectpanda.dto.WishDto;
+import org.example.semiprojectpanda.naver.cloud.NaverConfig;
 import org.example.semiprojectpanda.service.ProductService;
 import org.example.semiprojectpanda.service.UserService;
 import org.example.semiprojectpanda.service.WishService;
@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class MypageHistoryController {
@@ -25,6 +23,8 @@ public class MypageHistoryController {
     private WishService wishService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private NaverConfig naverConfig;
 
     @GetMapping("/mypage/history") //진짜 주소
     public String mypageHistory(@RequestParam int usernum,
@@ -35,6 +35,11 @@ public class MypageHistoryController {
         model.addAttribute("usernum", usernum);
         model.addAttribute("usernickname", usernickname);
         model.addAttribute("listname", listname);
+
+        String minioEndpoint = naverConfig.getEndPoint();
+        model.addAttribute("MINIO_ENDPOINT", minioEndpoint);
+
+
         return "account/mypage-history"; // JSP 파일 위치
     }
 

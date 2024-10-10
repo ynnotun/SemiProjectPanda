@@ -42,6 +42,8 @@ public class NcpObjectStorageService implements ObjectStorageService {
 
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentType(file.getContentType());
+            objectMetadata.setContentLength(file.getSize()); // 콘텐츠 길이를 설정합니다.
+
 
             PutObjectRequest objectRequest = new PutObjectRequest(
                     bucketName,

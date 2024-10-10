@@ -2,9 +2,8 @@ package org.example.semiprojectpanda;
 
 import org.example.semiprojectpanda.dto.CategoryDto;
 import org.example.semiprojectpanda.dto.ProductDto;
-import org.example.semiprojectpanda.dto.ProductImageDto;
-import org.example.semiprojectpanda.mapperInter.CategoryMapperInter;
 import org.example.semiprojectpanda.mapperInter.ProductImageMapperInter;
+import org.example.semiprojectpanda.naver.cloud.NaverConfig;
 import org.example.semiprojectpanda.service.MainService;
 import org.example.semiprojectpanda.service.ProductUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.Map;
 
 
 @Controller
@@ -29,6 +27,9 @@ public class HomeController {
     @Autowired
     private MainService mainService;
 
+    @Autowired
+    private NaverConfig naverConfig;
+
     @GetMapping("/")
     public String home(
             Model model
@@ -36,6 +37,11 @@ public class HomeController {
         List<CategoryDto> categories = productUpdateService.getAllCategories();
 
         model.addAttribute("categories", categories);
+
+
+        String minioEndpoint = naverConfig.getEndPoint();
+        model.addAttribute("MINIO_ENDPOINT", minioEndpoint);
+
         return "layout/main";
     }
 

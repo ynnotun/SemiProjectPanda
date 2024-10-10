@@ -2,6 +2,7 @@ package org.example.semiprojectpanda.controller.account;
 
 import org.example.semiprojectpanda.config.SHA256;
 import org.example.semiprojectpanda.dto.UserDto;
+import org.example.semiprojectpanda.naver.cloud.NaverConfig;
 import org.example.semiprojectpanda.naver.cloud.NcpObjectStorageService;
 import org.example.semiprojectpanda.service.DetailService;
 import org.example.semiprojectpanda.service.UserService;
@@ -28,9 +29,11 @@ public class MypageUpdateController {
 
     @Autowired
     private UserService userService;
-    private String bucketName = "semi";
+    private String bucketName = "semi-panda";
     private String folderName = "panda";
 
+    @Autowired
+    private NaverConfig naverConfig;
 
     //마이페이지
     @GetMapping("/mypage/update")
@@ -47,6 +50,11 @@ public class MypageUpdateController {
 
         UserDto userDto = detailService.getUserByUsernum(usernum);
         model.addAttribute(userDto);
+
+
+        String minioEndpoint = naverConfig.getEndPoint();
+        model.addAttribute("MINIO_ENDPOINT", minioEndpoint);
+
 
         return "account/mypage-update";
     }

@@ -245,7 +245,7 @@
                         <div class="mt-1 grid grid-cols-3 gap-3">
                             <div class="relative">
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg1">
-                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%841.png"
+                                    <img src="${MINIO_ENDPOINT}/semi-panda/panda/profile1.jpeg"
                                          alt="Profile 1" class="h-full w-full object-cover profilephoto"
                                          id="photo"
                                          style="width: 100px; height: 100px;position: relative; top: 25px;left: 25px;"/>
@@ -255,18 +255,18 @@
                             </div>
                             <div class="relative">
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg2">
-                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/기본프로필2.jpeg"
+                                    <img src="${MINIO_ENDPOINT}/semi-panda/panda/profile2.jpeg"
                                          alt="Profile 2" class="h-full w-full object-cover profilephoto"
                                          style="width: 150px; height: 150px;"/>
-                                    <input type="radio" name="userprofileimage" value="기본프로필2.jpeg" id="radio2" style="display: none;">
+                                    <input type="radio" name="userprofileimage" value="profile2.jpeg" id="radio2" style="display: none;">
                                 </div>
                             </div>
                             <div class="relative">
                                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-full" id="propileimg3">
-                                    <img src="https://kr.object.ncloudstorage.com/semi/panda/기본프로필3.jpeg"
+                                    <img src="${MINIO_ENDPOINT}/semi-panda/panda/profile3.jpeg"
                                          alt="Profile 3" class="h-full w-full object-cover profilephoto"
                                          style="width: 150px; height: 150px;"/>
-                                    <input type="radio" name="userprofileimage" value="기본프로필3.jpeg" id="radio3" style="display: none;">
+                                    <input type="radio" name="userprofileimage" value="profile3.jpeg" id="radio3" style="display: none;">
                                 </div>
                             </div>
                         </div>

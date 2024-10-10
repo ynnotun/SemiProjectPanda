@@ -3,8 +3,8 @@ package org.example.semiprojectpanda.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.semiprojectpanda.dto.MailDto;
+import org.example.semiprojectpanda.naver.cloud.NaverConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -23,11 +23,17 @@ public class MailService {
     private JavaMailSender emailsender;
     @Autowired
     private  RedisService redisService;
+    @Autowired
+    private NaverConfig naverConfig;
 
     public void sendVerificationCode(MailDto mailDto){
 
         String verificationCode = generateVerificationCode();
         redisService.save(mailDto.getEmail(), verificationCode);
+
+
+        String minioEndpoint = naverConfig.getEndPoint();
+
 
         // MimeMessage 객체 생성
         MimeMessage mimeMessage = emailsender.createMimeMessage();
@@ -39,7 +45,7 @@ public class MailService {
 
             String htmlContent = "<div style=\"width: 600px; background-color: rgba(0,0,0,0.85); font-family: 'Noto Sans KR', sans-serif; padding: 20px; box-sizing: border-box;\">" +
                     "<div style=\"display: flex; align-items: center;\">" +
-                    "<img src=\"https://kr.object.ncloudstorage.com/semi/panda/logo.png\" style=\"width: 400px; height: auto;\">" +
+                    "<img src=\"" + mimeMessage + "/semi-panda/panda/panda.png\" style=\"width: 400px; height: auto;\">" +
                     "<div style=\"margin-left: 20px;\">" +
                     "</div>" +
                     "</div>" +

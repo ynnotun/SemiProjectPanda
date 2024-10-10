@@ -64,7 +64,7 @@
     </style>
 </head>
 <c:set var="root" value="<%=request.getContextPath() %>" scope="application"/>
-<c:set var="filepath" value="https://kr.object.ncloudstorage.com/semi/panda/"/>
+<c:set var="filepath" value="http://192.168.31.181:9000"/>
 <body>
 <div class="mainlayout">
     <div id="header-tile" class="header-tile">
@@ -75,7 +75,7 @@
     </div>
     <!-- 챗봇버튼 -->
     <button onclick="chatbotShow()" id="bot">
-        <img src="https://kr.object.ncloudstorage.com/semi/panda/logo.png">
+        <img src="${root}/image/logo.png">
     </button>
 
     <!-- 위로 가는 버튼 -->
@@ -332,7 +332,7 @@
                     <a class="hover:bg-gray-100 p-2 flex items-center gap-2 transition-colors hover:bg-muted" onclick="chatStart(\${chatroom.chatroomnum})">
                       <span class="relative flex shrink-0 overflow-hidden rounded-full border w-12 h-12">
                         <img class="aspect-square h-full w-full" alt="Chatroom Image"
-                             src="https://kr.object.ncloudstorage.com/semi/panda/\${chatroom.productuserprofile}"/>
+                             src="http://192.168.31.181:9000/semi-panda/panda/\${chatroom.productuserprofile}"/>
                       </span>
                         <div class="flex-1 grid gap-1">
                             <div class="flex items-center justify-between">
@@ -352,7 +352,7 @@
                     <a class="hover:bg-gray-100 p-2 flex items-center gap-2 transition-colors hover:bg-muted" onclick="chatStart(\${chatroom.chatroomnum})">
                       <span class="relative flex shrink-0 overflow-hidden rounded-full border w-12 h-12">
                         <img class="aspect-square h-full w-full" alt="Chatroom Image"
-                             src="https://kr.object.ncloudstorage.com/semi/panda/\${chatroom.applyprofile}"/>
+                             src="http://192.168.31.181:9000/semi-panda/panda/\${chatroom.applyprofile}"/>
                       </span>
                         <div class="flex-1 grid gap-1">
                             <div class="flex items-center justify-between">
@@ -468,7 +468,7 @@
                                         <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
                                             <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
                                                 <img class="aspect-square h-full w-full" alt="Seller"
-                                                   src="https://kr.object.ncloudstorage.com/semi/panda/\${d.userProfile}"/>
+                                                   src="http://192.168.31.181:9000/semi-panda/panda/\${d.userProfile}"/>
                                             </span>
                                         </span>
                                     </div>
@@ -483,7 +483,7 @@
                                         <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
                                           <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
                                               <img class="aspect-square h-full w-full" alt="Seller"
-                                                   src="https://kr.object.ncloudstorage.com/semi/panda/\${d.userProfile}"
+                                                   src="http://192.168.31.181:9000/semi-panda/panda/\${d.userProfile}"
                                                    onclick="location.href='/mypage?usernum=\${d.usernum}'"/>
                                           </span>
                                         </span>
@@ -527,7 +527,7 @@
                         <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
                             <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
                                 <img class="aspect-square h-full w-full" alt="Seller"
-                                   src="https://kr.object.ncloudstorage.com/semi/panda/\${chat.userprofileimage}"/>
+                                   src="http://192.168.31.181:9000/semi-panda/panda/\${chat.userprofileimage}"/>
                             </span>
                         </span>
                     </div>
@@ -541,7 +541,7 @@
                         <span class="relative shrink-0 overflow-hidden w-10 h-10 rounded-full bg-[#4CAF50] text-white flex items-center justify-center border-2 border-[#4CAF50]">
                           <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
                               <img class="aspect-square h-full w-full" alt="Seller"
-                                   src="https://kr.object.ncloudstorage.com/semi/panda/\${chat.userprofileimage}"
+                                   src="http://192.168.31.181:9000/semi-panda/panda/\${chat.userprofileimage}"
                                    onclick="location.href='/mypage?usernum=\${chat.sendusernum}'"/>
                           </span>
                         </span>

@@ -195,7 +195,7 @@
          <c:forEach var="ele" items="${products}">
             <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                <div class="relative w-full h-48">
-               <img src="https://kr.object.ncloudstorage.com/semi/panda/${ele.imagefilename}"
+               <img src="${MINIO_ENDPOINT}/semi-panda/panda/${ele.imagefilename}"
                     width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48
                     ${ele.productstatus == '거래 완료' ? 'grayscale' : ''}" style="aspect-ratio:300/200;object-fit:cover"
                     onclick="location.href='${root}/product/detail?productnum=${ele.productnum}'"/>
@@ -264,7 +264,7 @@
                   s += `
                   <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
                      <div class="relative w-full h-48">
-                     <img src="https://kr.object.ncloudstorage.com/semi/panda/\${ele.imagefilename}"
+                     <img src="\${MINIO_ENDPOINT}/semi-panda/panda/\${ele.imagefilename}"
                           width="300" height="200" alt="Product" class="cursor-pointer rounded-t-lg object-cover w-full h-48
                           \${a}" style="aspect-ratio:300/200;object-fit:cover"
                           onclick="location.href='${root}/product/detail?productnum=\${ele.productnum}'"/>
